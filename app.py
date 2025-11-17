@@ -53,14 +53,18 @@ app = Flask(__name__,
             static_folder='static')
 
 # Load configuration based on environment
-if os.environ.get('FLASK_ENV') == 'production':
+try:
+    if os.environ.get('FLASK_ENV') == 'production' or os.environ.get('RENDER'):
+        app.config.from_object(ProductionConfig)
+        print("[OK] Running in PRODUCTION mode")
+    else:
+        from config import get_config
+        config_obj = get_config()
+        app.config.from_object(config_obj)
+        print("[OK] Running in DEVELOPMENT mode")
+except Exception as e:
+    print(f"[WARNING] Config error: {e}, using production config")
     app.config.from_object(ProductionConfig)
-    print("[OK] Running in PRODUCTION mode")
-else:
-    from config import get_config
-    config_obj = get_config()
-    app.config.from_object(config_obj)
-    print("[OK] Running in DEVELOPMENT mode")
 
 # Initialize extensions
 from database import db
