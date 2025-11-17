@@ -1,4 +1,17 @@
-# 🚀 EduBot - PythonAnywhere Deployment Guide
+import sys
+import os
+
+# Add your project directory to the sys.path
+project_home = '/home/animesh15/edubotsmartassistant'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+# Set Flask environment variable
+os.environ['FLASK_APP'] = 'app.py'
+
+# Import your Flask app
+from app import app as application
+application.debug = False# 🚀 EduBot - PythonAnywhere Deployment Guide
 
 ## ✅ Step-by-Step Deployment
 

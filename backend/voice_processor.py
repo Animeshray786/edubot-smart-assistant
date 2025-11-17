@@ -7,6 +7,14 @@ from gtts import gTTS
 import tempfile
 from datetime import datetime
 
+# Try to import pyttsx3 (optional dependency)
+try:
+    import pyttsx3
+    PYTTSX3_AVAILABLE = True
+except ImportError:
+    PYTTSX3_AVAILABLE = False
+    print("⚠ pyttsx3 not available - using gTTS only")
+
 
 class VoiceProcessor:
     """Handles voice input/output processing"""
@@ -53,9 +61,11 @@ class VoiceProcessor:
     
     def _pyttsx3_convert(self, text):
         """Convert text to speech using pyttsx3 (offline)"""
+        if not PYTTSX3_AVAILABLE:
+            print("⚠ pyttsx3 not available, falling back to gTTS")
+            return self._gtts_convert(text, slow=False)
+        
         try:
-            import pyttsx3
-            
             engine = pyttsx3.init()
             
             # Set properties
