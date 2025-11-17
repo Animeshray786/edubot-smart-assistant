@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    
+    <!-- FEATURES 11-20: Extended Features -->
+    
+    <category>
+        <pattern>EXAM PATTERN</pattern>
+        <template>I can help you master different exam formats! Tell me: MCQ exam, Essay exam, or Practical exam?</template>
+    </category>
+    
+    <category>
+        <pattern>MCQ STRATEGY</pattern>
+        <template>exam pattern multiple choice</template>
+    </category>
+    
+    <category>
+        <pattern>SUBJECT DIFFICULTY *</pattern>
+        <template>subject difficulty <star/></template>
+    </category>
+    
+    <category>
+        <pattern>FLASHCARD *</pattern>
+        <template>flashcard <star/></template>
+    </category>
+    
+    <category>
+        <pattern>CREATE FLASHCARDS</pattern>
+        <template>flashcard general topic</template>
+    </category>
+    
+    <category>
+        <pattern>STUDY ENVIRONMENT</pattern>
+        <template>study environment optimization</template>
+    </category>
+    
+    <category>
+        <pattern>OPTIMIZE STUDY SPACE</pattern>
+        <template>study environment optimization</template>
+    </category>
+    
+    <category>
+        <pattern>MIND MAP *</pattern>
+        <template>mind map <star/></template>
+    </category>
+    
+    <category>
+        <pattern>CONCEPT MAP</pattern>
+        <template>mind map your topic</template>
+    </category>
+    
+    <category>
+        <pattern>PRODUCTIVITY HACK</pattern>
+        <template>productivity hack</template>
+    </category>
+    
+    <category>
+        <pattern>WORK SMARTER</pattern>
+        <template>productivity hack</template>
+    </category>
+    
+    <category>
+        <pattern>EXAM DAY</pattern>
+        <template>exam day plan</template>
+    </category>
+    
+    <category>
+        <pattern>TEST DAY PLAN</pattern>
+        <template>exam day plan</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO GROUP STUDY</pattern>
+        <template>group study how</template>
+    </category>
+    
+    <category>
+        <pattern>READING TECHNIQUE</pattern>
+        <template>reading technique guide</template>
+    </category>
+    
+    <category>
+        <pattern>SQ3R</pattern>
+        <template>sq3r reading technique</template>
+    </category>
+    
+    <category>
+        <pattern>SPEED READING</pattern>
+        <template>speed read technique</template>
+    </category>
+    
+    <category>
+        <pattern>MATH SHORTCUT</pattern>
+        <template>math shortcut guide</template>
+    </category>
+    
+    <category>
+        <pattern>MENTAL MATH</pattern>
+        <template>math shortcut guide</template>
+    </category>
+    
+    <!-- FEATURES 21-27: Advanced Features -->
+    
+    <category>
+        <pattern>CITATION</pattern>
+        <template>I can help you with citations! Which style? APA, MLA, or Chicago?</template>
+    </category>
+    
+    <category>
+        <pattern>APA CITATION</pattern>
+        <template>citation APA</template>
+    </category>
+    
+    <category>
+        <pattern>MLA CITATION</pattern>
+        <template>citation MLA</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO CITE</pattern>
+        <template>citation APA</template>
+    </category>
+    
+    <category>
+        <pattern>RESEARCH PAPER</pattern>
+        <template>research paper outline</template>
+    </category>
+    
+    <category>
+        <pattern>PAPER OUTLINE</pattern>
+        <template>research paper outline</template>
+    </category>
+    
+    <category>
+        <pattern>CONCENTRATION</pattern>
+        <template>concentration booster</template>
+    </category>
+    
+    <category>
+        <pattern>FOCUS BETTER</pattern>
+        <template>concentration booster</template>
+    </category>
+    
+    <category>
+        <pattern>DISTRACTED</pattern>
+        <template>concentration booster</template>
+    </category>
+    
+    <category>
+        <pattern>I CANT CONCENTRATE</pattern>
+        <template>concentration booster</template>
+    </category>
+    
+    <category>
+        <pattern>PROCRASTINATION</pattern>
+        <template>procrastination destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>I AM PROCRASTINATING</pattern>
+        <template>procrastination destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>CANT START</pattern>
+        <template>procrastination destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>BRAIN FOOD</pattern>
+        <template>brain food guide</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT TO EAT</pattern>
+        <template>brain food guide</template>
+    </category>
+    
+    <category>
+        <pattern>STUDY FOOD</pattern>
+        <template>brain food guide</template>
+    </category>
+    
+    <category>
+        <pattern>SLEEP</pattern>
+        <template>sleep optimization guide</template>
+    </category>
+    
+    <category>
+        <pattern>CANT SLEEP</pattern>
+        <template>sleep optimization guide</template>
+    </category>
+    
+    <category>
+        <pattern>INSOMNIA</pattern>
+        <template>sleep optimization guide</template>
+    </category>
+    
+    <category>
+        <pattern>STUDY MUSIC</pattern>
+        <template>study music guide</template>
+    </category>
+    
+    <category>
+        <pattern>MUSIC FOR STUDYING</pattern>
+        <template>study music guide</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT MUSIC</pattern>
+        <template>study music guide</template>
+    </category>
+    
+    <!-- FEATURES 28-30: Mega Features -->
+    
+    <category>
+        <pattern>EXAM ANXIETY</pattern>
+        <template>exam anxiety destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>TEST ANXIETY</pattern>
+        <template>exam anxiety destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>NERVOUS ABOUT EXAM</pattern>
+        <template>exam anxiety destroyer</template>
+    </category>
+    
+    <category>
+        <pattern>BUILD HABIT</pattern>
+        <template>habit building system</template>
+    </category>
+    
+    <category>
+        <pattern>STUDY HABIT</pattern>
+        <template>habit building system</template>
+    </category>
+    
+    <category>
+        <pattern>CONSISTENCY</pattern>
+        <template>habit building system</template>
+    </category>
+    
+    <category>
+        <pattern>SPEED LEARNING</pattern>
+        <template>speed learning system</template>
+    </category>
+    
+    <category>
+        <pattern>LEARN FASTER</pattern>
+        <template>speed learning system</template>
+    </category>
+    
+    <category>
+        <pattern>FEYNMAN</pattern>
+        <template>speed learning system</template>
+    </category>
+    
+    <!-- Feature Discovery -->
+    
+    <category>
+        <pattern>MORE FEATURES</pattern>
+        <template>more features list</template>
+    </category>
+    
+    <category>
+        <pattern>ALL FEATURES</pattern>
+        <template>all features list</template>
+    </category>
+    
+    <category>
+        <pattern>FEATURE LIST</pattern>
+        <template>all features list</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT CAN YOU DO</pattern>
+        <template>🎯 I have 30+ advanced features including:
+        
+📚 Study Tools (1-10): Study planner, Pomodoro timer, Stress relief, Note-taking, Memory techniques, Career advice, Revision generator, Focus challenges, Study buddy, Performance predictor
+
+⚡ Extended Features (11-20): Exam pattern analysis, Difficulty analyzer, Flashcard generator, Environment optimizer, Mind mapping, Productivity hacks, Exam day planning, Group study guide, Reading techniques, Math shortcuts
+
+🚀 Advanced Features (21-27): Citation generator, Research paper outliner, Concentration boosters, Procrastination destroyer, Brain food guide, Sleep optimization, Study music guide
+
+💪 Mega Features (28-30): Exam anxiety management, Habit building system, Speed learning techniques
+
+Type 'more features' to see all 60 features!
+Type any feature name to try it!</template>
+    </category>
+    
+    <!-- Quick Access Patterns -->
+    
+    <category>
+        <pattern>HELP WITH EXAM</pattern>
+        <template>I can help you with exams! Try:
+• 'exam pattern' - Master different exam types
+• 'exam day' - Complete exam day plan
+• 'exam anxiety' - Manage test anxiety
+• 'predict performance' - Estimate your score
+• 'quick revision' - Generate revision sheets</template>
+    </category>
+    
+    <category>
+        <pattern>HELP WITH FOCUS</pattern>
+        <template>🎯 Focus Help Available:
+• 'concentration' - Instant focus techniques
+• 'pomodoro' - Timer-based focus sessions
+• 'procrastination' - Stop avoiding tasks
+• 'study music' - Best music for focus
+• 'study environment' - Optimize your space</template>
+    </category>
+    
+    <category>
+        <pattern>HELP WITH LEARNING</pattern>
+        <template>🧠 Learning Tools:
+• 'speed learning' - Learn faster techniques
+• 'memory techniques' - Remember better
+• 'reading technique' - Read smarter
+• 'flashcard' - Create smart flashcards
+• 'mind map' - Visualize concepts</template>
+    </category>
+    
+</aiml>

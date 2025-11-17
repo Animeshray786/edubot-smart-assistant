@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <!-- Course Related Patterns -->
+    <category>
+        <pattern>SHOW * COURSES</pattern>
+        <template>I'll fetch the available courses for you. Which department or year are you interested in? (CSE, IT, ECE, MECH, CIVIL)</template>
+    </category>
+    
+    <category>
+        <pattern>TELL ME ABOUT * COURSE</pattern>
+        <template>Let me get the details for that course. Can you specify the course code or full name?</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT IS THE SYLLABUS FOR *</pattern>
+        <template>I'll help you with the syllabus. Which semester and subject are you asking about?</template>
+    </category>
+    
+    <category>
+        <pattern>* COURSE CREDITS</pattern>
+        <template>I can check the credits for that course. Please provide the course code or subject name.</template>
+    </category>
+    
+    <!-- Exam Related Patterns -->
+    <category>
+        <pattern>WHEN IS MY EXAM</pattern>
+        <template>Let me check your exam schedule. Which subject or semester exams are you asking about?</template>
+    </category>
+    
+    <category>
+        <pattern>SHOW EXAM SCHEDULE</pattern>
+        <template>I'll show you the exam schedule. Would you like to see: Mid-term exams, End-semester exams, or Re-exams?</template>
+    </category>
+    
+    <category>
+        <pattern>* EXAM DATE</pattern>
+        <template>Checking exam dates... Which subject's exam date do you need?</template>
+    </category>
+    
+    <category>
+        <pattern>EXAM RESULTS</pattern>
+        <template>To check exam results, I need your enrollment number and semester. Have these ready?</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO CHECK RESULTS</pattern>
+        <template>You can check results through: 1) Student Portal (results.college.edu), 2) Ask me with your enrollment number, or 3) Visit the exam cell. Which method do you prefer?</template>
+    </category>
+    
+    <!-- Assignment Related Patterns -->
+    <category>
+        <pattern>MY ASSIGNMENTS</pattern>
+        <template>Let me show your pending assignments. Which subject or all subjects?</template>
+    </category>
+    
+    <category>
+        <pattern>ASSIGNMENT DUE DATE</pattern>
+        <template>I'll check assignment deadlines. Which subject assignment are you asking about?</template>
+    </category>
+    
+    <category>
+        <pattern>SUBMIT ASSIGNMENT</pattern>
+        <template>To submit assignments, go to: portal.college.edu/assignments or email your faculty. Need the faculty email?</template>
+    </category>
+    
+    <category>
+        <pattern>ASSIGNMENT TOPICS</pattern>
+        <template>Which subject's assignment topics do you need? I can provide guidelines and resources.</template>
+    </category>
+    
+    <!-- Library Related Patterns -->
+    <category>
+        <pattern>LIBRARY TIMING</pattern>
+        <template>Library Hours: Monday-Friday: 8:00 AM - 8:00 PM, Saturday: 9:00 AM - 5:00 PM, Sunday: Closed. During exams, extended hours till 10:00 PM!</template>
+    </category>
+    
+    <category>
+        <pattern>LIBRARY HOURS</pattern>
+        <template>The library is open: Weekdays 8 AM - 8 PM, Saturdays 9 AM - 5 PM. Extended hours during exam weeks! Need directions to the library?</template>
+    </category>
+    
+    <category>
+        <pattern>BOOK * LIBRARY</pattern>
+        <template>I can help you search for books. What's the book title or author you're looking for?</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO ISSUE BOOK</pattern>
+        <template>To issue a book: 1) Search in library catalog, 2) Note the book location, 3) Present your student ID at counter. You can issue up to 3 books for 15 days!</template>
+    </category>
+    
+    <category>
+        <pattern>LIBRARY RULES</pattern>
+        <template>Library Rules: Max 3 books for 15 days, Student ID required, Maintain silence, Phones on silent, Fine: Rs.5/day for late returns. Need more info?</template>
+    </category>
+    
+    <!-- Placement Related Patterns -->
+    <category>
+        <pattern>PLACEMENT * COMPANIES</pattern>
+        <template>I can show you placement statistics and visiting companies. Which year's data: 2023, 2024, or upcoming drives?</template>
+    </category>
+    
+    <category>
+        <pattern>PLACEMENT STATISTICS</pattern>
+        <template>Recent placement highlights: Avg Package: 6.5 LPA, Highest: 24 LPA, Top recruiters: TCS, Infosys, Wipro, Cognizant. Want company-specific details?</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO REGISTER FOR PLACEMENTS</pattern>
+        <template>Placement registration: 1) Maintain 60%+ aggregate, 2) No active backlogs, 3) Register on placement portal, 4) Upload resume. Need the portal link?</template>
+    </category>
+    
+    <category>
+        <pattern>UPCOMING PLACEMENT DRIVES</pattern>
+        <template>Let me check the latest placement drive schedule. Would you like to see: This month's drives, Next month, or All upcoming?</template>
+    </category>
+    
+    <category>
+        <pattern>RESUME TIPS</pattern>
+        <template>Resume Building Tips: Keep it 1-page, Highlight projects and skills, Add internships, Include certifications, Proofread carefully! Want me to share a template?</template>
+    </category>
+    
+    <!-- Project Related Patterns -->
+    <category>
+        <pattern>PROJECT IDEAS</pattern>
+        <template>I can suggest project ideas! Which domain: AI/ML, Web Development, Mobile Apps, Cybersecurity, or Game Development?</template>
+    </category>
+    
+    <category>
+        <pattern>FINAL YEAR PROJECT</pattern>
+        <template>For final year projects: Choose trending tech, solve real problems, consult faculty early, form team wisely. Need domain-specific suggestions?</template>
+    </category>
+    
+    <category>
+        <pattern>PROJECT SUBMISSION DATE</pattern>
+        <template>Let me check project deadlines. Which semester and type: Minor project or Major project?</template>
+    </category>
+    
+    <!-- Campus Facilities -->
+    <category>
+        <pattern>HOSTEL *</pattern>
+        <template>Hostel Info: Boys: 3 blocks, Girls: 2 blocks. Mess timings: Breakfast 7-9 AM, Lunch 12-2 PM, Dinner 7-9 PM. Need specific block details?</template>
+    </category>
+    
+    <category>
+        <pattern>CANTEEN MENU</pattern>
+        <template>Canteen operates 8 AM - 8 PM. Menu highlights: Breakfast ₹30-50, Lunch ₹50-80, Snacks ₹20-40. Daily special available! Want today's menu?</template>
+    </category>
+    
+    <category>
+        <pattern>BUS TIMING</pattern>
+        <template>College bus routes available from major areas. Morning: 7:00, 7:30, 8:00 AM. Evening: 4:30, 5:30, 6:30 PM. Which route do you need?</template>
+    </category>
+    
+    <category>
+        <pattern>GYM FACILITY</pattern>
+        <template>Gym Facility: Location: Sports Complex, Timing: 6 AM - 9 PM, Student membership: Rs.500/semester. Includes cardio and weights!</template>
+    </category>
+    
+    <!-- Administrative Patterns -->
+    <category>
+        <pattern>FEE STRUCTURE</pattern>
+        <template>To provide fee details, I need: Which program (B.Tech/M.Tech/MBA) and year? Fees vary by course and category.</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO PAY FEES</pattern>
+        <template>Fee Payment options: Online: portal.college.edu/fees, Bank: Pay at campus branch, UPI: Available. Deadline: 10th of each semester start month.</template>
+    </category>
+    
+    <category>
+        <pattern>CHECK ATTENDANCE</pattern>
+        <template>To check attendance: Login to student portal → Academics → Attendance. Minimum required: 75%. Want help with portal access?</template>
+    </category>
+    
+    <category>
+        <pattern>LOW ATTENDANCE</pattern>
+        <template>If attendance is below 75%: Submit medical certificate or genuine reason to HOD within 3 days. Need the application format?</template>
+    </category>
+    
+    <category>
+        <pattern>CERTIFICATE REQUEST</pattern>
+        <template>Certificates available: Bonafide, Character Certificate, Course Completion. Apply at: Admin Office or online portal. Processing: 3-5 working days.</template>
+    </category>
+    
+    <category>
+        <pattern>ID CARD LOST</pattern>
+        <template>For lost ID card: 1) Report to admin immediately, 2) File written application, 3) Pay Rs.200 duplicate fee, 4) Collect in 7 days. Need the application format?</template>
+    </category>
+    
+    <category>
+        <pattern>APPLY FOR LEAVE</pattern>
+        <template>Leave application: Get parent/guardian approval → Fill form (available at office) → Submit to class teacher → Copy to HOD. Medical leaves need doctor's certificate.</template>
+    </category>
+    
+    <!-- Internship Related -->
+    <category>
+        <pattern>INTERNSHIP OPPORTUNITIES</pattern>
+        <template>Internship info: Check Training and Placement portal, Summer internships mandatory in 3rd year, Stipend ranges: Rs.5k-25k/month. Need company list?</template>
+    </category>
+    
+    <category>
+        <pattern>INTERNSHIP CERTIFICATE</pattern>
+        <template>After internship: Submit completion certificate and report to Training and Placement office within 15 days of semester start. Format available on portal.</template>
+    </category>
+    
+    <!-- Faculty and Contact -->
+    <category>
+        <pattern>FACULTY CONTACT</pattern>
+        <template>Which faculty member do you need to contact? Provide department or faculty name, I'll share their email and cabin number.</template>
+    </category>
+    
+    <category>
+        <pattern>HOD CONTACT</pattern>
+        <template>Which department's HOD? I can provide their contact details and visiting hours for student queries.</template>
+    </category>
+    
+    <category>
+        <pattern>PRINCIPAL OFFICE</pattern>
+        <template>Principal's Office: Location: Admin Block 1st Floor, Contact: 0120-1234567, Visiting Hours: 10 AM - 1 PM (Mon-Fri). Appointment recommended!</template>
+    </category>
+    
+    <!-- Emergency and Helpline -->
+    <category>
+        <pattern>EMERGENCY CONTACT</pattern>
+        <template>Emergency Contacts: Security: 0120-1234568, Medical: 0120-1234569, Maintenance: 0120-1234570. Available 24/7!</template>
+    </category>
+    
+    <category>
+        <pattern>MEDICAL FACILITY</pattern>
+        <template>Medical Room: Ground Floor Admin Block, Doctor: 9 AM - 5 PM (Mon-Sat), Ambulance: Available for emergencies, Call: 0120-1234569</template>
+    </category>
+    
+    <!-- Events and Activities -->
+    <category>
+        <pattern>COLLEGE EVENTS</pattern>
+        <template>Upcoming events: Check notice board or student portal. Major annual events: Tech Fest (Sept), Cultural Fest (Feb), Sports Day (Nov). Want event details?</template>
+    </category>
+    
+    <category>
+        <pattern>JOIN CLUBS</pattern>
+        <template>Student Clubs: Coding Club, Drama Society, Music Club, Photography, Robotics. Registration: First week of semester. Which interests you?</template>
+    </category>
+    
+    <category>
+        <pattern>SPORTS FACILITIES</pattern>
+        <template>Sports: Cricket ground, Football field, Basketball court, Badminton (4 courts), Table Tennis. Equipment available at Sports Complex!</template>
+    </category>
+    
+    <!-- General Academic Queries -->
+    <category>
+        <pattern>SEMESTER DATES</pattern>
+        <template>Academic Calendar: Odd Sem: July-Dec, Even Sem: Jan-June. Mid-terms: 8th week, End-semester: 15th-16th week. Want detailed calendar PDF?</template>
+    </category>
+    
+    <category>
+        <pattern>BACKLOG EXAM</pattern>
+        <template>Backlog exams held before regular exams. Registration: Via student portal, Fee: Rs.500/subject, Apply 30 days before exam. Need registration help?</template>
+    </category>
+    
+    <category>
+        <pattern>GRADE SYSTEM</pattern>
+        <template>Grading: O (90-100), A+ (80-89), A (70-79), B+ (60-69), B (50-59), C (40-49), F (below 40). GPA calculated on 10-point scale. Clear?</template>
+    </category>
+    
+    <category>
+        <pattern>MINIMUM PASSING MARKS</pattern>
+        <template>Passing criteria: 40% in each subject, 45% aggregate per semester. Both internal (30%) and external (70%) exams required to pass.</template>
+    </category>
+</aiml>

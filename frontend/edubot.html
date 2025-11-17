@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduBot - Smart Student Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --chat-bg: #f8fafc;
+            --user-msg-bg: #2563eb;
+            --bot-msg-bg: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Educational Background Animation */
+        .edu-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.1;
+        }
+
+        .edu-icon {
+            position: absolute;
+            font-size: 40px;
+            color: white;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-50px) rotate(90deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+            75% { transform: translateY(-50px) rotate(270deg); }
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Chat Interface */
+        .chat-wrapper {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 1.5rem;
+            height: calc(100vh - 200px);
+        }
+
+        /* Quick Actions Sidebar */
+        .quick-actions-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            overflow-y: auto;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .quick-actions-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-action-btn {
+            width: 100%;
+            padding: 0.875rem;
+            margin-bottom: 0.75rem;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quick-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-action-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Categories */
+        .category-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .category-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Messages Area */
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: var(--chat-bg);
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        @keyframes messageSlideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .message-user {
+            text-align: right;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            max-width: 70%;
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            word-wrap: break-word;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-user .message-bubble {
+            background: var(--user-msg-bg);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-bot .message-bubble {
+            background: var(--bot-msg-bg);
+            color: #1e293b;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin: 0 0.75rem;
+            vertical-align: bottom;
+        }
+
+        .message-user .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message-bot .message-avatar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        /* Quick Actions in Messages */
+        .message-quick-actions {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .quick-action-chip {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            font-size: 0.875rem;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-chip:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            padding: 1rem;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Input Area */
+        .input-container {
+            padding: 1.5rem;
+            border-top: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 24px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #messageInput:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .send-btn, .voice-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .voice-btn {
+            background: var(--secondary-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .voice-btn:hover {
+            background: #059669;
+            transform: scale(1.1);
+        }
+
+        .voice-btn.recording {
+            animation: pulse-red 1s infinite;
+            background: #ef4444;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #64748b;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .welcome-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Quick Start Section */
+        .quick-start {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            border-radius: 12px;
+            border: 2px dashed #818cf8;
+        }
+
+        .quick-start p {
+            margin-bottom: 1rem;
+            color: #4338ca;
+            font-size: 1rem;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .quick-buttons button {
+            padding: 0.65rem 1.25rem;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .quick-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+        }
+
+        .quick-buttons button:active {
+            transform: translateY(0);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .chat-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions-panel {
+                display: none;
+            }
+
+            .header-stats {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text h1 {
+                font-size: 1.25rem;
+            }
+
+            .welcome-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Educational Background -->
+    <div class="edu-background" id="eduBg"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>EduBot</h1>
+                    <p>Smart Student Assistant</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalChats">0</div>
+                    <div class="stat-label">Conversations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="helpedToday">0</div>
+                    <div class="stat-label">Students Today</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="chat-wrapper">
+            <!-- Quick Actions Sidebar -->
+            <div class="quick-actions-panel">
+                <div class="quick-actions-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                </div>
+
+                <div class="category-section">
+                    <div class="category-title">📚 Academics</div>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Show me available courses')">
+                        <i class="fas fa-book"></i>
+                        <span>View Courses</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Show exam schedule')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Exam Schedule</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Show my assignments')">
+                        <i class="fas fa-tasks"></i>
+                        <span>My Assignments</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Check attendance')">
+                        <i class="fas fa-user-check"></i>
+                        <span>Check Attendance</span>
+                    </button>
+                </div>
+
+                <div class="category-section">
+                    <div class="category-title">🏫 Campus</div>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Library timing')">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Library Hours</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Canteen menu')">
+                        <i class="fas fa-utensils"></i>
+                        <span>Canteen Menu</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Bus timing')">
+                        <i class="fas fa-bus"></i>
+                        <span>Bus Schedule</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Hostel information')">
+                        <i class="fas fa-building"></i>
+                        <span>Hostel Info</span>
+                    </button>
+                </div>
+
+                <div class="category-section">
+                    <div class="category-title">💼 Career</div>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Placement statistics')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Placements</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Internship opportunities')">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Internships</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Suggest project ideas')">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Project Ideas</span>
+                    </button>
+                </div>
+
+                <div class="category-section">
+                    <div class="category-title">⚙️ Admin</div>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Fee structure')">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Fees Info</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Request certificate')">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificates</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Apply for leave')">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Leave Application</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-status">
+                        <div class="status-dot"></div>
+                        <span style="font-weight: 600; color: #1e293b;">EduBot is Online</span>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="icon-btn" title="Clear Chat" onclick="clearChat()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="icon-btn" title="Download History" onclick="downloadHistory()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="icon-btn" title="Settings" onclick="showSettings()">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Welcome Screen -->
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <div class="welcome-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h2 class="welcome-title">Welcome to EduBot! 🎓</h2>
+                        <p class="welcome-text">
+                            Your AI-powered study companion with <strong>30+ smart features</strong> for academic excellence,<br>
+                            campus life, career guidance, and powerful learning tools. Let's ace this together! 🚀
+                        </p>
+                        <div class="welcome-features">
+                            <div class="feature-card">
+                                <div class="feature-icon">📚</div>
+                                <div class="feature-title">Academic Hub</div>
+                                <div class="feature-desc">Courses, exams, assignments & results</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🧠</div>
+                                <div class="feature-title">Study Tools</div>
+                                <div class="feature-desc">Planners, timers, memory & focus hacks</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🏫</div>
+                                <div class="feature-title">Campus Life</div>
+                                <div class="feature-desc">Library, hostel, transport & facilities</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">💼</div>
+                                <div class="feature-title">Career Boost</div>
+                                <div class="feature-desc">Placements, internships & guidance</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">⚡</div>
+                                <div class="feature-title">Speed Learning</div>
+                                <div class="feature-desc">Read faster, remember longer, ace tests</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🎯</div>
+                                <div class="feature-title">Exam Mastery</div>
+                                <div class="feature-desc">Anxiety control, strategies & predictions</div>
+                            </div>
+                        </div>
+                        <div class="quick-start">
+                            <p><strong>💡 Try these commands:</strong></p>
+                            <div class="quick-buttons">
+                                <button onclick="sendQuickMessage('what can you do')">All Features</button>
+                                <button onclick="sendQuickMessage('study plan')">Study Planner</button>
+                                <button onclick="sendQuickMessage('exam anxiety')">Exam Help</button>
+                                <button onclick="sendQuickMessage('pending assignments')">My Tasks</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages will appear here -->
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="messageInput" 
+                            placeholder="Type anything... Try 'study plan', 'exam anxiety', 'what can you do' 💬"
+                            onkeypress="handleKeyPress(event)"
+                        >
+                        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Voice Input">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="send-btn" onclick="sendMessage()" title="Send Message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Educational background animation
+        function initEduBackground() {
+            const bg = document.getElementById('eduBg');
+            const icons = ['📚', '🎓', '📖', '✏️', '🔬', '💡', '🏆', '📊'];
+            
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'edu-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = `${Math.random() * 100}%`;
+                icon.style.top = `${Math.random() * 100}%`;
+                icon.style.animationDelay = `${Math.random() * 20}s`;
+                bg.appendChild(icon);
+            }
+        }
+
+        // Initialize
+        let messageCount = 0;
+        let isRecording = false;
+
+        // Send message function
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Hide welcome screen
+            document.getElementById('welcomeScreen').style.display = 'none';
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            document.getElementById('typingIndicator').classList.add('active');
+
+            // Send to API
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('typingIndicator').classList.remove('active');
+                
+                if (data.status === 'success') {
+                    const response = data.data.response;
+                    const quickActions = data.data.quick_actions || [];
+                    addMessage(response, 'bot', quickActions);
+                    
+                    // Update stats
+                    messageCount++;
+                    document.getElementById('totalChats').textContent = messageCount;
+                    document.getElementById('helpedToday').textContent = Math.floor(messageCount / 2);
+                } else {
+                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('typingIndicator').classList.remove('active');
+                addMessage('Connection error. Please check your internet and try again.', 'bot');
+            });
+        }
+
+        // Send quick message
+        function sendQuickMessage(text) {
+            document.getElementById('messageInput').value = text;
+            sendMessage();
+        }
+
+        // Add message to chat
+        function addMessage(text, sender, quickActions = []) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${sender}`;
+            
+            const icon = sender === 'user' ? 'fa-user' : 'fa-robot';
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            let html = `
+                ${sender === 'bot' ? `<span class="message-avatar"><i class="fas ${icon}"></i></span>` : ''}
+                <div class="message-content">
+                    <div class="message-bubble">${text}</div>
+                    ${quickActions.length > 0 ? `
+                        <div class="message-quick-actions">
+                            ${quickActions.map(action => `
+                                <span class="quick-action-chip" onclick="sendQuickMessage('${action}')">${action}</span>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="message-time">${time}</div>
+                </div>
+                ${sender === 'user' ? `<span class="message-avatar"><i class="fas ${icon}"></i></span>` : ''}
+            `;
+            
+            messageDiv.innerHTML = html;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Voice input toggle
+        function toggleVoice() {
+            const btn = document.getElementById('voiceBtn');
+            if (!isRecording) {
+                isRecording = true;
+                btn.classList.add('recording');
+                btn.innerHTML = '<i class="fas fa-stop"></i>';
+                // Add actual voice recording logic here
+            } else {
+                isRecording = false;
+                btn.classList.remove('recording');
+                btn.innerHTML = '<i class="fas fa-microphone"></i>';
+                // Stop recording and process
+            }
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Quick message sender (for welcome screen buttons)
+        function sendQuickMessage(text) {
+            const input = document.getElementById('messageInput');
+            input.value = text;
+            sendMessage();
+        }
+
+        // Clear chat
+        function clearChat() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            messageCount = 0;
+            document.getElementById('totalChats').textContent = '0';
+        }
+
+        // Download history
+        function downloadHistory() {
+            alert('Download feature coming soon!');
+        }
+
+        // Show settings
+        function showSettings() {
+            alert('Settings panel coming soon!');
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initEduBackground();
+        });
+    </script>
+</body>
+</html>

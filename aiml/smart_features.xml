@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    
+    <!-- Smart Features Patterns -->
+    
+    <category>
+        <pattern>STUDY TIP</pattern>
+        <template>
+            🎯 Here's a proven study tip:
+            
+            Use the Pomodoro Technique: Study for 25 minutes, then take a 5-minute break. After 4 sessions, take a longer 15-30 minute break.
+            
+            Why it works:
+            • Maintains focus and energy
+            • Prevents burnout
+            • Improves retention
+            
+            Try saying "pomodoro timer" to get started!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>MOTIVATE ME</pattern>
+        <template>
+            💪 You've got this! Remember:
+            
+            "Success is the sum of small efforts repeated day in and day out."
+            
+            Every minute you study counts. Every problem you solve makes you stronger. Keep pushing forward! 🌟
+            
+            Need a study plan? Say "study plan YYYY-MM-DD"
+        </template>
+    </category>
+    
+    <category>
+        <pattern>STUDY PLAN *</pattern>
+        <template>
+            Creating your personalized study plan...
+            
+            For exam on <star/>, I'll analyze:
+            • Days remaining
+            • Optimal daily hours
+            • Topic breakdown
+            • Revision schedule
+            
+            Type: study plan 2025-12-31 (your exam date)
+        </template>
+    </category>
+    
+    <category>
+        <pattern>POMODORO *</pattern>
+        <template>
+            🍅 Setting up your Pomodoro study session!
+            
+            I'll create a focused study plan with:
+            • 25-minute work sessions
+            • 5-minute short breaks
+            • 15-minute long breaks
+            • Progress tracking
+            
+            Ready to boost your productivity?
+        </template>
+    </category>
+    
+    <category>
+        <pattern>I AM STRESSED</pattern>
+        <template>
+            😌 It's okay to feel stressed. Let me help you relax.
+            
+            Quick 60-second stress relief:
+            
+            4-7-8 Breathing:
+            1. Breathe in for 4 seconds
+            2. Hold for 7 seconds  
+            3. Exhale for 8 seconds
+            4. Repeat 3 times
+            
+            Try this now. I'll wait... ⏳
+            
+            Need more techniques? Say "stress relief"
+        </template>
+    </category>
+    
+    <category>
+        <pattern>STRESS RELIEF</pattern>
+        <template>
+            😊 Multiple stress relief techniques available:
+            
+            • 4-7-8 Breathing
+            • 5-4-3-2-1 Grounding
+            • Progressive muscle relaxation
+            • Quick meditation
+            
+            Each technique takes 2-5 minutes and really works!
+            
+            Want a specific technique? Just ask!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO TAKE NOTES</pattern>
+        <template>
+            📝 Note-taking is an art! Here are proven methods:
+            
+            ✨ Cornell Method:
+            • Divide page: Notes | Cues | Summary
+            • Review within 24 hours
+            
+            ✨ Mind Mapping:
+            • Central idea in middle
+            • Branch out with related concepts
+            • Use colors and images
+            
+            ✨ Outline Method:
+            • Hierarchical structure
+            • Main points → Sub-points
+            
+            Which subject? (Math/Science/History/etc)
+        </template>
+    </category>
+    
+    <category>
+        <pattern>MEMORY TECHNIQUE</pattern>
+        <template>
+            🧠 Powerful memory techniques:
+            
+            1. **Acronyms**: VIBGYOR for rainbow colors
+            2. **Memory Palace**: Link facts to rooms in your home
+            3. **Story Method**: Create silly stories
+            4. **Chunking**: Break into smaller parts
+            5. **Visual Association**: Create mental images
+            
+            Which topic do you want to memorize?
+            Say: "memory technique for [topic]"
+        </template>
+    </category>
+    
+    <category>
+        <pattern>CAREER ADVICE</pattern>
+        <template>
+            💼 Let me guide your career path!
+            
+            What interests you?
+            • 💻 Technology (AI, Software, Data)
+            • 📊 Business (Management, Finance)
+            • 🎨 Creative (Design, Content, Marketing)
+            • 🔬 Science (Research, Healthcare, Bio-tech)
+            
+            Say: "career in [field]" for detailed guidance!
+            
+            I'll show you:
+            ✅ Top career paths
+            ✅ Required skills
+            ✅ Learning resources
+            ✅ Next steps
+        </template>
+    </category>
+    
+    <category>
+        <pattern>QUICK REVISION</pattern>
+        <template>
+            ⚡ Smart Quick Revision Generator!
+            
+            Tell me:
+            1. Subject name
+            2. Topics to cover
+            
+            Format: "quick revision [subject] [topics]"
+            Example: "quick revision Math Calculus, Algebra"
+            
+            I'll create a customized revision sheet with:
+            • Key concepts checklist
+            • Important formulas
+            • Common mistakes
+            • Practice problems
+            • Last-minute tips
+        </template>
+    </category>
+    
+    <category>
+        <pattern>FOCUS CHALLENGE</pattern>
+        <template>
+            🎮 Gamified Study Challenge!
+            
+            Turn studying into a game:
+            
+            Today's Challenges:
+            • 📚 30-min Deep Work → +50 points
+            • 🎯 10 Problems solved → +75 points
+            • 📝 5 pages notes → +60 points
+            • 🧠 20 concepts recalled → +80 points
+            
+            Earn points, climb leaderboard, get rewards!
+            
+            Ready to level up? Accept a challenge!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>STUDY BUDDY</pattern>
+        <template>
+            👥 Find Your Perfect Study Partner!
+            
+            Benefits of study groups:
+            • Share knowledge &amp; resources
+            • Stay motivated together
+            • Practice teaching (best learning)
+            • Get different perspectives
+            
+            Available study partners online now!
+            
+            Want to:
+            • Join existing group?
+            • Create new group?
+            • Find study partner?
+            
+            Say "study group" to see options!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>PREDICT MY PERFORMANCE</pattern>
+        <template>
+            📊 Smart Performance Predictor!
+            
+            I'll analyze your chances and create a success plan.
+            
+            Tell me:
+            1. Current score (%)
+            2. Target score (%)
+            3. Days left
+            
+            Format: "predict performance 60 85 30"
+            
+            I'll calculate:
+            ✓ Daily improvement needed
+            ✓ Success probability
+            ✓ Personalized study plan
+            ✓ Week-by-week breakdown
+        </template>
+    </category>
+    
+    <category>
+        <pattern>EXAM TIPS</pattern>
+        <template>
+            📚 Ultimate Exam Success Tips:
+            
+            **Before Exam:**
+            ✅ Get 8 hours sleep
+            ✅ Eat healthy breakfast
+            ✅ Review formula sheets
+            ✅ Arrive 15 mins early
+            
+            **During Exam:**
+            ✅ Read all questions first
+            ✅ Start with easy ones
+            ✅ Manage time per question
+            ✅ Review answers before submitting
+            
+            **Avoid:**
+            ❌ All-night cramming
+            ❌ New topics day before
+            ❌ Heavy meals before exam
+            ❌ Panic!
+            
+            You're prepared. Trust yourself! 💪
+        </template>
+    </category>
+    
+    <category>
+        <pattern>CONCENTRATION</pattern>
+        <template>
+            🎯 Boost Your Concentration:
+            
+            **Environment:**
+            • 📱 Phone on silent/away
+            • 🎧 Use focus music (lo-fi, classical)
+            • 💡 Good lighting
+            • 🪑 Comfortable seat
+            
+            **Techniques:**
+            • ⏰ Time blocking (Pomodoro)
+            • 🎯 One task at a time
+            • 💧 Stay hydrated
+            • 🏃 Short exercise breaks
+            
+            **Brain Foods:**
+            • 🥜 Nuts (omega-3)
+            • 🍎 Fruits (natural sugar)
+            • 🐟 Fish (brain power)
+            • 💧 Water (crucial!)
+            
+            Try "pomodoro timer" for structured focus!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>LEARNING STYLES</pattern>
+        <template>
+            🎨 Discover Your Learning Style!
+            
+            **Visual Learners:**
+            • Use diagrams, charts, colors
+            • Watch video tutorials
+            • Mind mapping
+            
+            **Auditory Learners:**
+            • Listen to lectures/podcasts
+            • Discuss topics aloud
+            • Record and replay notes
+            
+            **Kinesthetic Learners:**
+            • Hands-on practice
+            • Take breaks to move
+            • Use physical objects
+            
+            **Reading/Writing:**
+            • Make detailed notes
+            • Read multiple sources
+            • Write summaries
+            
+            Mix multiple styles for best results!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>TIME MANAGEMENT</pattern>
+        <template>
+            ⏰ Master Your Time!
+            
+            **Priority Matrix:**
+            1. Urgent + Important → Do NOW
+            2. Important, Not Urgent → Schedule
+            3. Urgent, Not Important → Delegate
+            4. Neither → Eliminate
+            
+            **Daily Planning:**
+            • 🌅 Morning: Hardest tasks
+            • ☀️ Afternoon: Meetings/collaboration
+            • 🌙 Evening: Review &amp; planning
+            
+            **Time Blockers:**
+            • 📱 Social media (use app blockers)
+            • 📺 Excessive TV/gaming
+            • 💤 Procrastination
+            
+            **Tools:**
+            • Pomodoro timer
+            • To-do lists
+            • Calendar blocking
+            
+            Say "pomodoro" to start time-blocking!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>EXAM ANXIETY</pattern>
+        <template>
+            😰 Managing Exam Anxiety:
+            
+            **Physical Symptoms?**
+            Try: Deep breathing, progressive relaxation
+            
+            **Racing Thoughts?**
+            Try: Write them down, practice mindfulness
+            
+            **Can't Sleep?**
+            Try: No screens 1hr before bed, warm milk
+            
+            **Quick Fixes:**
+            • 🧘 5-min meditation
+            • 🚶 Short walk
+            • 💧 Drink water
+            • 😊 Smile (tricks brain!)
+            • 🎵 Calming music
+            
+            Remember: Anxiety means you care!
+            Channel it into focused preparation.
+            
+            Say "stress relief" for techniques.
+        </template>
+    </category>
+    
+    <category>
+        <pattern>STUDY MUSIC</pattern>
+        <template>
+            🎵 Best Music for Studying:
+            
+            **Recommended:**
+            ✅ Classical (Mozart, Bach)
+            ✅ Lo-fi hip hop beats
+            ✅ Nature sounds (rain, waves)
+            ✅ Binaural beats (focus frequency)
+            ✅ Instrumental jazz
+            
+            **Avoid:**
+            ❌ Songs with lyrics (distracting)
+            ❌ Very loud/fast music
+            ❌ Your favorite songs (too engaging)
+            
+            **Volume:** Keep at 50-60% (background level)
+            
+            **Platforms:**
+            • YouTube: "lofi study beats"
+            • Spotify: "Deep Focus" playlist
+            • Brain.fm (science-based)
+            
+            Experiment to find what works for YOU!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>MOTIVATION *</pattern>
+        <template>
+            🌟 Staying Motivated:
+            
+            **Set SMART Goals:**
+            • Specific: "Solve 20 math problems"
+            • Measurable: Track progress
+            • Achievable: Realistic targets
+            • Relevant: Aligned with exam
+            • Time-bound: Daily/weekly deadlines
+            
+            **Reward System:**
+            • Small win → 15min break
+            • Big milestone → Favorite treat
+            • Weekly goal → Movie/gaming time
+            
+            **Visual Motivation:**
+            • 📊 Progress charts
+            • ✅ Daily checklists
+            • 🎯 Goal vision board
+            
+            **Remember WHY you're studying!**
+            Your future self will thank you! 💪
+            
+            Need a challenge? Say "focus challenge"!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>BREAK TIME</pattern>
+        <template>
+            ☕ Smart Study Breaks:
+            
+            **Short Breaks (5-10 min):**
+            • 🚶 Walk around
+            • 💧 Drink water
+            • 👀 Look away from screen (20-20-20 rule)
+            • 🧘 Stretch exercises
+            • 🎵 Listen to 1-2 songs
+            
+            **Long Breaks (15-30 min):**
+            • 🍎 Healthy snack
+            • 🏃 Light exercise
+            • 🌞 Get sunlight
+            • 📱 Check messages (set timer!)
+            • 😊 Chat with friend
+            
+            **DON'T:**
+            ❌ Social media scrolling
+            ❌ Starting video games
+            ❌ Heavy meals
+            
+            Set timer! Breaks should refresh, not distract.
+        </template>
+    </category>
+    
+</aiml>

@@ -1,0 +1,725 @@
+"""
+EduBot - Student Helpdesk Module
+Specialized assistant for educational institutions
+Handles academic queries, campus info, and student services
+"""
+from datetime import datetime, timedelta
+import json
+
+
+class StudentHelpdeskBot:
+    """Smart Student Assistant with comprehensive educational features"""
+    
+    def __init__(self):
+        self.categories = {
+            'academic': self.handle_academic,
+            'campus': self.handle_campus,
+            'administrative': self.handle_administrative,
+            'career': self.handle_career,
+            'exam': self.handle_exam,
+            'assignment': self.handle_assignment,
+            'library': self.handle_library,
+            'events': self.handle_events
+        }
+        
+        # Sample data - In production, fetch from database
+        self.courses_data = self._load_courses_data()
+        self.exam_schedule = self._load_exam_schedule()
+        self.assignments = self._load_assignments()
+        self.events_calendar = self._load_events()
+    
+    def process_query(self, query, user_id=None):
+        """Process student query and return appropriate response"""
+        query_lower = query.lower()
+        
+        # Detect query category
+        category = self._detect_category(query_lower)
+        
+        if category:
+            handler = self.categories.get(category)
+            if handler:
+                return handler(query_lower, user_id)
+        
+        # Default response if no specific handler found
+        return {
+            'response': self._get_help_message(),
+            'category': 'help',
+            'quick_actions': ['Courses', 'Exams', 'Assignments', 'Campus Info']
+        }
+    
+    def _detect_category(self, query):
+        """Detect query category using keywords"""
+        keywords_map = {
+            'academic': ['course', 'syllabus', 'subject', 'class', 'lecture', 'semester', 'credit'],
+            'exam': ['exam', 'test', 'quiz', 'marks', 'results', 'score', 'grade'],
+            'assignment': ['assignment', 'homework', 'project', 'submission', 'deadline'],
+            'library': ['library', 'book', 'borrow', 'return', 'reading'],
+            'campus': ['hostel', 'canteen', 'transport', 'bus', 'gym', 'sports'],
+            'administrative': ['fees', 'attendance', 'certificate', 'leave', 'admission'],
+            'career': ['placement', 'internship', 'job', 'company', 'package', 'interview'],
+            'events': ['event', 'fest', 'competition', 'workshop', 'seminar', 'conference']
+        }
+        
+        for category, keywords in keywords_map.items():
+            if any(keyword in query for keyword in keywords):
+                return category
+        
+        return None
+    
+    def handle_academic(self, query, user_id):
+        """Handle academic-related queries"""
+        if 'course' in query or 'subject' in query:
+            return self._get_courses_info()
+        elif 'syllabus' in query:
+            return self._get_syllabus_info()
+        elif 'semester' in query:
+            return self._get_semester_info()
+        elif 'credit' in query:
+            return self._get_credit_info()
+        else:
+            return self._get_courses_info()
+    
+    def handle_exam(self, query, user_id):
+        """Handle exam-related queries"""
+        if 'schedule' in query or 'date' in query:
+            return self._get_exam_schedule_info()
+        elif 'result' in query or 'marks' in query:
+            return self._get_results_info()
+        elif 'preparation' in query or 'tips' in query:
+            return self._get_exam_tips()
+        else:
+            return self._get_exam_schedule_info()
+    
+    def handle_assignment(self, query, user_id):
+        """Handle assignment-related queries"""
+        if 'pending' in query or 'due' in query:
+            return self._get_pending_assignments(user_id)
+        elif 'submit' in query:
+            return self._get_submission_info()
+        elif 'guidelines' in query:
+            return self._get_assignment_guidelines()
+        else:
+            return self._get_pending_assignments(user_id)
+    
+    def handle_library(self, query, user_id):
+        """Handle library-related queries"""
+        if 'timing' in query or 'hours' in query:
+            return self._get_library_timings()
+        elif 'search' in query or 'find' in query:
+            return self._get_book_search_info()
+        elif 'issue' in query or 'borrow' in query:
+            return self._get_issue_info()
+        else:
+            return self._get_library_info()
+    
+    def handle_campus(self, query, user_id):
+        """Handle campus facility queries"""
+        if 'hostel' in query:
+            return self._get_hostel_info()
+        elif 'canteen' in query or 'food' in query:
+            return self._get_canteen_info()
+        elif 'transport' in query or 'bus' in query:
+            return self._get_transport_info()
+        elif 'gym' in query or 'sports' in query:
+            return self._get_sports_info()
+        else:
+            return self._get_campus_overview()
+    
+    def handle_administrative(self, query, user_id):
+        """Handle administrative queries"""
+        if 'fees' in query:
+            return self._get_fees_info()
+        elif 'attendance' in query:
+            return self._get_attendance_info(user_id)
+        elif 'certificate' in query:
+            return self._get_certificate_info()
+        elif 'leave' in query:
+            return self._get_leave_info()
+        else:
+            return self._get_admin_help()
+    
+    def handle_career(self, query, user_id):
+        """Handle career and placement queries"""
+        if 'placement' in query or 'job' in query:
+            return self._get_placement_info()
+        elif 'internship' in query:
+            return self._get_internship_info()
+        elif 'resume' in query or 'cv' in query:
+            return self._get_resume_tips()
+        elif 'interview' in query:
+            return self._get_interview_tips()
+        else:
+            return self._get_placement_info()
+    
+    def handle_events(self, query, user_id):
+        """Handle events and activities queries"""
+        return self._get_upcoming_events()
+    
+    # ==================== Data Retrieval Methods ====================
+    
+    def _get_courses_info(self):
+        """Get courses information"""
+        return {
+            'response': """
+📚 **Available Courses at Our Institution**
+
+**Engineering Programs:**
+1️⃣ Computer Science & Engineering (CSE)
+   • Duration: 4 Years (8 Semesters)
+   • Intake: 120 Students
+   • CGPA Required: 6.0+
+
+2️⃣ Information Technology (IT)
+   • Duration: 4 Years (8 Semesters)
+   • Intake: 90 Students
+   • CGPA Required: 6.0+
+
+3️⃣ Electronics & Communication (ECE)
+   • Duration: 4 Years (8 Semesters)
+   • Intake: 60 Students
+   • CGPA Required: 6.0+
+
+4️⃣ Mechanical Engineering (ME)
+   • Duration: 4 Years (8 Semesters)
+   • Intake: 60 Students
+   • CGPA Required: 6.0+
+
+**Specializations Available:**
+• Artificial Intelligence & Machine Learning
+• Data Science
+• Cyber Security
+• Cloud Computing
+• IoT & Embedded Systems
+
+Would you like detailed syllabus for any specific course?
+            """,
+            'category': 'academic',
+            'quick_actions': ['CSE Syllabus', 'IT Syllabus', 'Specializations', 'Fee Structure']
+        }
+    
+    def _get_exam_schedule_info(self):
+        """Get exam schedule"""
+        return {
+            'response': """
+📅 **Upcoming Examination Schedule**
+
+**Mid-Semester Exams (November 2025):**
+• Dates: 20th - 25th November 2025
+• Time: 10:00 AM - 1:00 PM
+• Mode: Offline (On-Campus)
+• Admit Card: Available on student portal
+
+**Detailed Schedule:**
+📖 Monday, Nov 20: Database Management Systems
+📖 Tuesday, Nov 21: Operating Systems
+📖 Wednesday, Nov 22: Computer Networks
+📖 Thursday, Nov 23: Software Engineering
+📖 Friday, Nov 25: Web Technologies
+
+**End-Semester Exams:**
+• Dates: 15th - 22nd December 2025
+• Time: 10:00 AM - 1:00 PM
+• Seating arrangement will be displayed 2 days prior
+
+**Important Notes:**
+⚠️ Carry your ID card and admit card
+⚠️ Report 30 minutes before exam
+⚠️ No electronic devices allowed
+
+📥 Download detailed schedule from: portal.college.edu/exams
+            """,
+            'category': 'exam',
+            'quick_actions': ['Exam Tips', 'Study Material', 'Previous Papers', 'Results']
+        }
+    
+    def _get_pending_assignments(self, user_id):
+        """Get pending assignments"""
+        return {
+            'response': """
+📝 **Your Pending Assignments**
+
+**Urgent - Due This Week:**
+
+1️⃣ **Database Management Systems**
+   📅 Due: November 18, 2025 (2 days left)
+   📌 Topic: ER Diagram Design for Hospital Management
+   📊 Marks: 20
+   📤 Submit at: assignments.portal.edu
+
+2️⃣ **Web Technologies**
+   📅 Due: November 20, 2025 (4 days left)
+   📌 Topic: Responsive Portfolio Website
+   📊 Marks: 25
+   📤 Submit: GitHub Repository Link
+
+3️⃣ **Machine Learning**
+   📅 Due: November 22, 2025 (6 days left)
+   📌 Topic: Classification Model Implementation
+   📊 Marks: 30
+   📤 Submit: Jupyter Notebook + Report
+
+**Next Week:**
+
+4️⃣ **Software Engineering**
+   📅 Due: November 28, 2025
+   📌 Topic: SRS Document Preparation
+   📊 Marks: 20
+
+**Assignment Statistics:**
+✅ Completed: 12
+⏳ Pending: 4
+📊 Average Score: 87.5%
+
+Need help with any assignment? I can provide guidelines and resources!
+            """,
+            'category': 'assignment',
+            'quick_actions': ['Submit Assignment', 'Guidelines', 'Past Assignments', 'Extensions']
+        }
+    
+    def _get_library_info(self):
+        """Get library information"""
+        return {
+            'response': """
+📖 **Library Information & Services**
+
+**Library Timings:**
+🕐 Monday - Friday: 8:00 AM - 8:00 PM
+🕐 Saturday: 9:00 AM - 5:00 PM
+🕐 Sunday & Holidays: Closed
+
+**Services Available:**
+✅ Book Issue/Return (Max 5 books for 14 days)
+✅ Digital Library Access (IEEE, Springer, ACM)
+✅ E-Journals & Research Papers
+✅ Reading Room (100+ seats)
+✅ Photocopy & Printing Services
+✅ Group Study Rooms (Bookable)
+
+**Popular Collections:**
+📚 Technical Books: 50,000+
+📰 Magazines & Journals: 200+
+💻 E-Books: 10,000+
+🎓 Reference Books: 5,000+
+
+**How to Search Books:**
+1. Visit: library.college.edu
+2. Login with student ID
+3. Search by title/author/ISBN
+4. Check availability
+5. Reserve online or visit counter
+
+**Current Holdings for Your Course:**
+• Database Systems: 150 copies
+• Data Structures: 200 copies
+• Operating Systems: 180 copies
+• Web Development: 120 copies
+
+📞 Contact: library@college.edu | +91-XXXX-XXXXX
+            """,
+            'category': 'library',
+            'quick_actions': ['Search Books', 'Renew Books', 'Reading Room Booking', 'Digital Access']
+        }
+    
+    def _get_placement_info(self):
+        """Get placement information"""
+        return {
+            'response': """
+💼 **Placement & Career Opportunities**
+
+**Placement Statistics (Academic Year 2024-25):**
+📊 Total Students Placed: 450+ out of 500
+📊 Average Package: ₹6.8 LPA
+📊 Highest Package: ₹45 LPA (Google)
+📊 Companies Visited: 180+
+
+**Top Recruiters:**
+🏢 **Tier-1:** Google, Microsoft, Amazon, Adobe, Oracle
+🏢 **Tier-2:** TCS, Infosys, Wipro, Cognizant, Accenture
+🏢 **Startups:** Razorpay, CRED, Meesho, Urban Company
+
+**Upcoming Placement Drives:**
+📅 **Nov 18, 2025 - Amazon**
+   • Role: SDE-1
+   • Package: ₹22 LPA
+   • Eligibility: 7.0+ CGPA, No backlogs
+   • Registration: Open till Nov 16
+
+📅 **Nov 22, 2025 - Microsoft**
+   • Role: Software Engineer
+   • Package: ₹28 LPA
+   • Eligibility: 7.5+ CGPA
+   • Registration: Open till Nov 19
+
+📅 **Nov 25, 2025 - TCS Ninja**
+   • Role: Assistant Systems Engineer
+   • Package: ₹3.6 LPA
+   • Eligibility: 6.0+ CGPA
+   • Registration: Open
+
+**Eligibility Criteria:**
+✅ Minimum 60% aggregate in all semesters
+✅ No active backlogs
+✅ Updated resume on placement portal
+✅ Attend pre-placement training sessions
+
+**Preparation Resources:**
+📚 Coding Practice: LeetCode, HackerRank, GeeksforGeeks
+📚 Interview Prep: InterviewBit, Pramp
+📚 Aptitude: IndiaBIX, Freshersworld
+📚 Resume Building: Workshops every Friday
+
+📧 Register at: placements@college.edu
+🌐 Portal: careers.college.edu
+            """,
+            'category': 'career',
+            'quick_actions': ['Apply for Drive', 'Resume Tips', 'Interview Prep', 'Coding Practice']
+        }
+    
+    def _get_campus_overview(self):
+        """Get campus facilities overview"""
+        return {
+            'response': """
+🏫 **Campus Facilities & Amenities**
+
+**Academic Facilities:**
+🏛️ Central Library (3 floors, 500+ seats)
+🏛️ Computer Labs (10 labs, 600+ systems)
+🏛️ Smart Classrooms (All AC, projector-equipped)
+🏛️ Research Labs & Innovation Center
+🏛️ Seminar Halls (Capacity: 300-500)
+
+**Residential:**
+🏠 Boys Hostel: 800 rooms (AC & Non-AC)
+🏠 Girls Hostel: 600 rooms (AC & Non-AC)
+🏠 24/7 Security & CCTV surveillance
+🏠 WiFi connectivity (100 Mbps)
+🏠 Mess with multi-cuisine options
+
+**Recreation & Sports:**
+⚽ Football & Cricket grounds
+🏀 Basketball & Volleyball courts
+🏊 Swimming pool (Olympic size)
+🎾 Indoor badminton & table tennis
+🏋️ Fully-equipped gymnasium
+🎮 Gaming & Recreation room
+
+**Medical & Wellness:**
+🏥 Health Center (24/7)
+🏥 Ambulance service
+🏥 Counseling center
+🏥 Yoga & meditation center
+
+**Food & Dining:**
+🍕 Main Canteen (Veg & Non-veg)
+☕ Coffee House & Juice Bar
+🍔 Food Court (Multiple cuisines)
+🍰 Bakery & Ice Cream Parlor
+
+**Banking & Services:**
+🏦 ATM (3 machines)
+🏦 Bank branch (on campus)
+📮 Post office
+📄 Photocopy & Printing centers
+🚐 College transport (15 routes)
+
+**Student Amenities:**
+📚 Stationery shop
+👕 Laundry services
+📱 Mobile recharge & services
+🛒 General store
+
+Need specific information about any facility?
+            """,
+            'category': 'campus',
+            'quick_actions': ['Hostel Info', 'Canteen Menu', 'Transport Routes', 'Sports Booking']
+        }
+    
+    def _get_help_message(self):
+        """Get help message"""
+        return """
+╔══════════════════════════════════════════════════════╗
+║     👋 Welcome to EduBot - Your AI Study Companion!     ║
+╚══════════════════════════════════════════════════════╝
+
+I'm here to supercharge your academic journey! 🚀
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 **ACADEMICS** | Master Your Courses
+   ✦ Course syllabi & credit details
+   ✦ Faculty profiles & office hours
+   ✦ Class schedules & room locations
+   ✦ Subject prerequisites & outcomes
+
+📅 **EXAMINATIONS** | Ace Your Tests
+   ✦ Exam timetables & hall tickets
+   ✦ Results & grade reports (instant!)
+   ✦ Re-evaluation & reappear info
+   ✦ Smart exam prep strategies
+
+📝 **ASSIGNMENTS** | Stay On Track
+   ✦ Pending work & deadlines
+   ✦ Submission portals & formats
+   ✦ Extension request procedures
+   ✦ Project guidance & resources
+
+📖 **LIBRARY** | Access Knowledge
+   ✦ Book search (10,000+ titles!)
+   ✦ Issue/return in 30 seconds
+   ✦ Digital library 24/7 access
+   ✦ Study room reservations
+
+🏫 **CAMPUS LIFE** | Live Better
+   ✦ Hostel facilities & mess menu
+   ✦ Transport schedules & routes
+   ✦ Sports complex bookings
+   ✦ Medical center timings
+
+💰 **ADMIN** | Handle Paperwork Fast
+   ✦ Fee payment & receipts
+   ✦ Attendance tracker (75% alerts!)
+   ✦ Certificates in 48 hours
+   ✦ Leave applications made easy
+
+💼 **CAREER** | Launch Your Future
+   ✦ Placement stats & top recruiters
+   ✦ Upcoming company drives
+   ✦ Mock interviews & prep
+   ✦ Internship opportunities
+
+🎉 **EVENTS** | Never Miss Out
+   ✦ Campus fests & cultural nights
+   ✦ Tech workshops & hackathons
+   ✦ Competitions with prizes
+   ✦ Club activities & socials
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 **PLUS: 30+ Smart Study Features!**
+   🎯 Study planner & Pomodoro timer
+   🧠 Memory techniques & mind maps
+   📊 Exam anxiety management
+   ⚡ Speed learning & focus hacks
+   🎵 Study music recommendations
+   
+   Type "what can you do" to see all features!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 **QUICK START - Try These:**
+   💬 "Show pending assignments"
+   💬 "When is next exam?"
+   💬 "Library timings"
+   💬 "Placement drives this month"
+   💬 "Study plan for tomorrow"
+   💬 "I'm stressed about exams"
+   💬 "Math shortcuts"
+
+🔥 Type anything to get started! I understand natural language. 🔥
+        """
+    
+    def _get_exam_tips(self):
+        """Get exam preparation tips"""
+        return {
+            'response': """
+💡 **Exam Preparation Tips for Success**
+
+**1. Time Management:**
+⏰ Start preparation 2 weeks before
+⏰ Create a study timetable
+⏰ Allocate time based on difficulty
+⏰ Include breaks every 90 minutes
+
+**2. Study Strategy:**
+📖 Read theory from textbooks
+📝 Make short notes & mind maps
+💻 Practice problems & coding
+🔄 Revise daily (last 3 days)
+❓ Solve previous year papers
+
+**3. Important Topics (Based on weightage):**
+✅ Database: Normalization, SQL, Transactions
+✅ OS: Process scheduling, Deadlocks, Memory
+✅ Networks: OSI Model, TCP/IP, Routing
+✅ Software Engineering: SDLC, UML diagrams
+✅ Web Tech: HTML/CSS/JS, React basics
+
+**4. During Exam:**
+📋 Read all questions first (5 mins)
+✏️ Attempt easy questions first
+⏱️ Manage time per question
+✅ Review answers before submitting
+
+**5. Resources:**
+📚 Lecture notes (available on LMS)
+📚 Previous year papers (library website)
+📚 Reference books (check library)
+📚 Online tutorials (YouTube playlists)
+
+**6. Last Minute Tips:**
+🎯 Revise formulas & concepts
+🎯 Don't study new topics
+🎯 Get 7-8 hours sleep
+🎯 Eat healthy breakfast
+🎯 Reach 30 mins early
+
+**Need subject-specific guidance?** Just ask!
+
+Good luck! 🍀 You've got this! 💪
+            """,
+            'category': 'exam',
+            'quick_actions': ['Study Material', 'Previous Papers', 'Time Table', 'Notes']
+        }
+    
+    def _load_courses_data(self):
+        """Load courses data (mock data)"""
+        return {}
+    
+    def _load_exam_schedule(self):
+        """Load exam schedule (mock data)"""
+        return {}
+    
+    def _load_assignments(self):
+        """Load assignments (mock data)"""
+        return {}
+    
+    def _load_events(self):
+        """Load events calendar (mock data)"""
+        return {}
+    
+    def _get_syllabus_info(self):
+        """Get syllabus information"""
+        return self._get_courses_info()
+    
+    def _get_semester_info(self):
+        """Get semester information"""
+        return self._get_courses_info()
+    
+    def _get_credit_info(self):
+        """Get credit information"""
+        return self._get_courses_info()
+    
+    def _get_results_info(self):
+        """Get results information"""
+        return self._get_exam_schedule_info()
+    
+    def _get_submission_info(self):
+        """Get assignment submission info"""
+        return self._get_pending_assignments(None)
+    
+    def _get_assignment_guidelines(self):
+        """Get assignment guidelines"""
+        return self._get_pending_assignments(None)
+    
+    def _get_library_timings(self):
+        """Get library timings"""
+        return self._get_library_info()
+    
+    def _get_book_search_info(self):
+        """Get book search info"""
+        return self._get_library_info()
+    
+    def _get_issue_info(self):
+        """Get book issue info"""
+        return self._get_library_info()
+    
+    def _get_hostel_info(self):
+        """Get hostel information"""
+        return self._get_campus_overview()
+    
+    def _get_canteen_info(self):
+        """Get canteen information"""
+        return self._get_campus_overview()
+    
+    def _get_transport_info(self):
+        """Get transport information"""
+        return self._get_campus_overview()
+    
+    def _get_sports_info(self):
+        """Get sports facilities info"""
+        return self._get_campus_overview()
+    
+    def _get_fees_info(self):
+        """Get fees information"""
+        return {
+            'response': "Fee information available. Contact administration.",
+            'category': 'administrative',
+            'quick_actions': ['Pay Fees', 'Fee Receipt', 'Scholarship']
+        }
+    
+    def _get_attendance_info(self, user_id):
+        """Get attendance information"""
+        return {
+            'response': "Attendance details available on student portal.",
+            'category': 'administrative',
+            'quick_actions': ['View Attendance', 'Leave Request']
+        }
+    
+    def _get_certificate_info(self):
+        """Get certificate information"""
+        return {
+            'response': "Certificate requests can be submitted online.",
+            'category': 'administrative',
+            'quick_actions': ['Request Certificate', 'Track Status']
+        }
+    
+    def _get_leave_info(self):
+        """Get leave information"""
+        return {
+            'response': "Leave applications available on portal.",
+            'category': 'administrative',
+            'quick_actions': ['Apply Leave', 'Check Status']
+        }
+    
+    def _get_admin_help(self):
+        """Get administrative help"""
+        return {
+            'response': "Administrative services available. How can I help?",
+            'category': 'administrative',
+            'quick_actions': ['Fees', 'Attendance', 'Certificates', 'Leave']
+        }
+    
+    def _get_internship_info(self):
+        """Get internship information"""
+        return {
+            'response': "Internship opportunities available. Check careers portal.",
+            'category': 'career',
+            'quick_actions': ['View Internships', 'Apply', 'Guidelines']
+        }
+    
+    def _get_resume_tips(self):
+        """Get resume tips"""
+        return {
+            'response': "Resume building workshops every Friday.",
+            'category': 'career',
+            'quick_actions': ['Resume Template', 'Workshop', 'Review']
+        }
+    
+    def _get_interview_tips(self):
+        """Get interview tips"""
+        return {
+            'response': "Interview preparation resources available.",
+            'category': 'career',
+            'quick_actions': ['Mock Interview', 'Tips', 'Common Questions']
+        }
+    
+    def _get_upcoming_events(self):
+        """Get upcoming events"""
+        return {
+            'response': """
+🎉 **Upcoming Events & Activities**
+
+**This Week:**
+📅 Nov 18 - Technical Quiz Competition
+📅 Nov 20 - Guest Lecture on AI/ML
+📅 Nov 22 - Cultural Night
+
+**This Month:**
+📅 Nov 25 - Annual Tech Fest
+📅 Nov 28 - Sports Day
+
+More events on: events.college.edu
+            """,
+            'category': 'events',
+            'quick_actions': ['Register', 'View All Events', 'Calendar']
+        }

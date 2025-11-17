@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>HELLO</pattern>
+        <template>Hello! I'm your hybrid voice chatbot. How can I assist you today?</template>
+    </category>
+    
+    <category>
+        <pattern>HI</pattern>
+        <template>Hi there! I'm here to help. What would you like to know?</template>
+    </category>
+    
+    <category>
+        <pattern>HEY</pattern>
+        <template>Hey! What can I do for you today?</template>
+    </category>
+    
+    <category>
+        <pattern>GOOD MORNING</pattern>
+        <template>Good morning! How can I help you today?</template>
+    </category>
+    
+    <category>
+        <pattern>GOOD AFTERNOON</pattern>
+        <template>Good afternoon! What can I assist you with?</template>
+    </category>
+    
+    <category>
+        <pattern>GOOD EVENING</pattern>
+        <template>Good evening! How may I help you?</template>
+    </category>
+    
+    <category>
+        <pattern>BYE</pattern>
+        <template>Goodbye! Have a great day!</template>
+    </category>
+    
+    <category>
+        <pattern>GOODBYE</pattern>
+        <template>Goodbye! Feel free to come back anytime!</template>
+    </category>
+    
+    <category>
+        <pattern>SEE YOU</pattern>
+        <template>See you later! Take care!</template>
+    </category>
+    
+    <category>
+        <pattern>THANK YOU</pattern>
+        <template>You're welcome! Is there anything else I can help you with?</template>
+    </category>
+    
+    <category>
+        <pattern>THANKS</pattern>
+        <template>You're welcome! Feel free to ask more questions!</template>
+    </category>
+</aiml>

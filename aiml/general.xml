@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>WHAT IS YOUR NAME</pattern>
+        <template>I'm EduBot, your Smart Student Assistant! I help with academics, campus info, and student services.</template>
+    </category>
+    
+    <category>
+        <pattern>WHO ARE YOU</pattern>
+        <template>I'm EduBot - an AI-powered student assistant designed to help with courses, exams, assignments, library, placements, and all campus-related queries!</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT CAN YOU DO</pattern>
+        <template>I can help you with: Courses and Syllabus, Exam Schedules, Assignments, Library Services, Campus Facilities, Placements, and much more! Just ask me anything!</template>
+    </category>
+    
+    <category>
+        <pattern>HOW ARE YOU</pattern>
+        <template>I'm functioning perfectly! Ready to help you with all your academic queries. How about you?</template>
+    </category>
+    
+    <category>
+        <pattern>HELP</pattern>
+        <template>I'm here to help with: Courses, Exams, Assignments, Library, Placements, Campus Info, Fees, and more. Just ask your question!</template>
+    </category>
+    
+    <category>
+        <pattern>WHAT IS *</pattern>
+        <template>I'm searching for information about <star/>. Let me help you with that.</template>
+    </category>
+    
+    <category>
+        <pattern>HOW TO *</pattern>
+        <template>To <star/>, you would typically need to follow specific steps. Could you be more specific about what you need help with?</template>
+    </category>
+    
+    <category>
+        <pattern>WHO IS *</pattern>
+        <template><star/> is someone or something I can help you learn about. Could you provide more context?</template>
+    </category>
+    
+    <category>
+        <pattern>WHERE IS *</pattern>
+        <template>You're asking about the location of <star/>. I can help you find that information.</template>
+    </category>
+    
+    <category>
+        <pattern>WHEN *</pattern>
+        <template>Regarding when <star/>, that depends on the specific context. Can you provide more details?</template>
+    </category>
+    
+    <category>
+        <pattern>WHY *</pattern>
+        <template>That's a great question about why <star/>. Let me think about that.</template>
+    </category>
+    
+    <category>
+        <pattern>*</pattern>
+        <template>I'm still learning about that topic. Could you help me improve by providing more information? You can also provide feedback to help me learn!</template>
+    </category>
+</aiml>
