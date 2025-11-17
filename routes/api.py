@@ -10,6 +10,8 @@ from backend.smart_features import smart_features
 from backend.extended_features import extended_features
 from backend.advanced_features_part2 import advanced_features
 from backend.mega_features import mega_features
+from backend.ai_features import ai_features
+from backend.student_tools import student_tools
 from datetime import datetime
 import re
 

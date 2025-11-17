@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    
+    <!-- Nalanda College Information Patterns -->
+    
+    <!-- College Name and Basic Info -->
+    <category>
+        <pattern>WHAT IS THE COLLEGE NAME</pattern>
+        <template>The college is Nalanda Institute of Technology (NIT Nalanda), located in Bhubaneswar, Odisha. It's NAAC A+ Accredited with 15,000+ students!</template>
+    </category>
+    
+    <category>
+        <pattern>COLLEGE NAME</pattern>
+        <template><srai>WHAT IS THE COLLEGE NAME</srai></template>
+    </category>
+    
+    <!-- Contact Information -->
+    <category>
+        <pattern>COLLEGE * CONTACT</pattern>
+        <template>📞 Phone: +91 99371 65074
+📧 Email: info@thenalanda.com
+🌐 Website: https://www.thenalanda.com</template>
+    </category>
+    
+    <category>
+        <pattern>PHONE NUMBER</pattern>
+        <template>You can call Nalanda Institute at +91 99371 65074</template>
+    </category>
+    
+    <category>
+        <pattern>EMAIL ADDRESS</pattern>
+        <template>Email the college at: info@thenalanda.com</template>
+    </category>
+    
+    <!-- Address and Location -->
+    <category>
+        <pattern>WHERE IS * COLLEGE</pattern>
+        <template>📍 Nalanda Institute of Technology
+Buddhist Villa, Chandaka
+Bhubaneswar, Odisha 751024
+
+View on Google Maps: https://www.google.com/maps/dir//Nalanda+Institute+of+Technology</template>
+    </category>
+    
+    <category>
+        <pattern>COLLEGE ADDRESS</pattern>
+        <template><srai>WHERE IS THE COLLEGE</srai></template>
+    </category>
+    
+    <!-- Accreditation -->
+    <category>
+        <pattern>* ACCREDITATION</pattern>
+        <template>Nalanda Institute of Technology is NAAC A+ Accredited! 🏆</template>
+    </category>
+    
+    <!-- Student Statistics -->
+    <category>
+        <pattern>HOW MANY STUDENTS</pattern>
+        <template>Nalanda Institute has:
+👥 15,000+ current students
+🎓 50,000+ alumni worldwide
+📚 150+ programs offered</template>
+    </category>
+    
+    <!-- Departments -->
+    <category>
+        <pattern>WHAT * DEPARTMENTS</pattern>
+        <template>Major Departments at Nalanda Institute:
+
+🖥️ Computer Science & Engineering
+📡 Electronics & Communication Engineering
+⚙️ Mechanical Engineering
+🏗️ Civil Engineering
+⚡ Electrical Engineering
+
+Each offers B.Tech, M.Tech, and PhD programs!</template>
+    </category>
+    
+    <category>
+        <pattern>* COURSES</pattern>
+        <template><srai>WHAT ARE THE DEPARTMENTS</srai></template>
+    </category>
+    
+    <!-- Admissions -->
+    <category>
+        <pattern>HOW TO * ADMISSION</pattern>
+        <template>🎯 Admission Process:
+
+1️⃣ Apply online: https://www.thenalanda.com/admissions
+2️⃣ Entrance exam (JEE Main for B.Tech)
+3️⃣ Merit-based selection
+4️⃣ Document verification
+5️⃣ Fee payment
+
+📋 Eligibility:
+B.Tech: 10+2 PCM with 50%+ marks
+M.Tech: B.Tech/BE with 55%+ marks</template>
+    </category>
+    
+    <category>
+        <pattern>ADMISSION *</pattern>
+        <template><srai>HOW TO GET ADMISSION</srai></template>
+    </category>
+    
+    <!-- Fees -->
+    <category>
+        <pattern>* FEE * STRUCTURE</pattern>
+        <template>💰 Fee Structure (Approximate):
+
+B.Tech: ₹80,000 - ₹1,20,000 per year
+M.Tech: ₹60,000 - ₹90,000 per year
+Hostel: ₹40,000 - ₹60,000 per year
+Mess: ₹25,000 - ₹30,000 per year
+
+📋 Payment modes: Online, DD, Cash
+📞 For exact details: +91 99371 65074
+🌐 Visit: https://www.thenalanda.com/fees</template>
+    </category>
+    
+    <category>
+        <pattern>BTECH FEE</pattern>
+        <template>B.Tech fees are approximately ₹80,000 to ₹1,20,000 per year. Contact +91 99371 65074 for exact details.</template>
+    </category>
+    
+    <category>
+        <pattern>HOSTEL FEE</pattern>
+        <template>Hostel fees range from ₹40,000 to ₹60,000 per year (AC/Non-AC options). Mess charges are additional ₹25,000-₹30,000 annually.</template>
+    </category>
+    
+    <!-- Facilities -->
+    <category>
+        <pattern>WHAT * FACILITIES</pattern>
+        <template>🏛️ Campus Facilities:
+
+📚 Academic:
+• Modern Library
+• Computer Labs
+• Research Centers
+• Smart Classrooms
+• Laboratories
+
+🏠 Accommodation:
+• Separate Hostels (Boys & Girls)
+• 24/7 Security
+• Wi-Fi Campus
+
+🎯 Student Life:
+• Sports Facilities
+• Cafeteria
+• Medical Center
+• Student Creativity Hub
+• Multiple Clubs</template>
+    </category>
+    
+    <!-- Hostel -->
+    <category>
+        <pattern>* HOSTEL</pattern>
+        <template>🏠 Hostel Facilities:
+• Separate hostels for boys and girls
+• 24/7 security
+• Wi-Fi enabled
+• Mess facilities
+• Recreation rooms
+
+More info: https://www.thenalanda.com/hostel</template>
+    </category>
+    
+    <!-- Library -->
+    <category>
+        <pattern>* LIBRARY</pattern>
+        <template>📚 Library Facilities:
+• Well-equipped with books and journals
+• Digital resources
+• Online databases
+• Reading halls
+• Study spaces
+
+Visit: https://www.thenalanda.com/library</template>
+    </category>
+    
+    <!-- Placement -->
+    <category>
+        <pattern>* PLACEMENT</pattern>
+        <template>💼 Placement Highlights:
+
+📊 Placement Rate: 85-90%
+💰 Highest Package: ₹45 LPA
+💵 Average Package: ₹6.5 LPA
+🏢 Companies: 150+ visit annually
+
+Top Recruiters:
+TCS, Infosys, Wipro, Amazon, Microsoft, Google, Adobe, Accenture, L&T, NTPC
+
+🎯 Training: Aptitude, coding, soft skills, mock interviews
+🌐 More: https://www.thenalanda.com/placement</template>
+    </category>
+    
+    <category>
+        <pattern>HIGHEST PACKAGE</pattern>
+        <template>The highest package offered in 2024 was ₹45 LPA! Average package is ₹6.5 LPA with 85-90% placement rate.</template>
+    </category>
+    
+    <category>
+        <pattern>PLACEMENT * COMPANIES</pattern>
+        <template>Top recruiters include:
+🔹 Tech: Amazon, Microsoft, Google, Adobe, TCS, Infosys, Wipro
+🔹 Core: L&T, Siemens, ABB, BHEL, NTPC
+🔹 Consulting: Deloitte, E&Y, KPMG, PwC
+🔹 Startups: Flipkart, Paytm, PhonePe, Swiggy
+
+150+ companies visit annually!</template>
+    </category>
+    
+    <category>
+        <pattern>* INTERNSHIP</pattern>
+        <template>🎯 Internship Programs:
+
+📅 Duration: 2-6 months
+💰 Stipend: ₹5,000 - ₹50,000/month
+🏢 Companies: 200+ offer internships
+✨ Conversion: 40% interns get PPO
+
+Contact placement cell for opportunities!</template>
+    </category>
+    
+    <!-- Scholarships -->
+    <category>
+        <pattern>* SCHOLARSHIP</pattern>
+        <template>💰 Scholarship Information:
+
+Nalanda Institute offers various scholarships for deserving students.
+
+For details visit: https://www.thenalanda.com/scholarships
+Or call: +91 99371 65074</template>
+    </category>
+    
+    <!-- Student Portal -->
+    <category>
+        <pattern>* STUDENT PORTAL</pattern>
+        <template>🔐 Student Portal Access:
+
+Login at: https://www.thenalanda.com/student-portal
+
+Features:
+• Attendance tracking
+• Exam results
+• Course materials
+• Fee payment
+• Notices & updates</template>
+    </category>
+    
+    <!-- Exam and Results -->
+    <category>
+        <pattern>* EXAM *</pattern>
+        <template>📝 Examination Information:
+
+Exam Portal: https://www.thenalanda.com/examination
+Results: https://www.thenalanda.com/results
+Calendar: https://www.thenalanda.com/calendar</template>
+    </category>
+    
+    <!-- Clubs and Activities -->
+    <category>
+        <pattern>* CLUBS</pattern>
+        <template>🎨 Student Clubs & Activities:
+
+• Digital Art Club
+• Photography Club
+• Music Club
+• Writing Club
+• Technical Clubs
+• Sports Teams
+• Cultural Events
+
+Explore: https://www.thenalanda.com/clubs</template>
+    </category>
+    
+    <!-- Sports -->
+    <category>
+        <pattern>* SPORTS</pattern>
+        <template>⚽ Sports Facilities:
+
+• Indoor & Outdoor grounds
+• Basketball, Cricket, Football
+• Badminton, Tennis
+• Gym & Fitness center
+• Regular tournaments
+
+More: https://www.thenalanda.com/sports</template>
+    </category>
+    
+    <!-- Alumni -->
+    <category>
+        <pattern>* ALUMNI</pattern>
+        <template>🎓 Alumni Network:
+
+50,000+ Alumni worldwide!
+
+Benefits:
+• Career support
+• Mentorship programs
+• Networking events
+• Continued learning
+
+Join: https://www.thenalanda.com/alumni</template>
+    </category>
+    
+    <!-- Research -->
+    <category>
+        <pattern>* RESEARCH</pattern>
+        <template>🔬 Research at Nalanda:
+
+• Cutting-edge technology research
+• Innovation labs
+• Industry collaborations
+• Student research projects
+• Faculty publications
+
+Learn more: https://www.thenalanda.com/research</template>
+    </category>
+    
+    <!-- Social Media -->
+    <category>
+        <pattern>* SOCIAL MEDIA</pattern>
+        <template>📱 Follow Nalanda Institute:
+
+Facebook: https://www.facebook.com/share/1AG6TvcnQi/
+Instagram: https://www.instagram.com/nalandabbsr
+Twitter: https://x.com/NALANDABHUBANE1
+LinkedIn: https://www.linkedin.com/company/nalanda-institute-of-technology-bhubaneswar/
+YouTube: https://youtube.com/@nalandabhubaneswar4971</template>
+    </category>
+    
+    <!-- About College -->
+    <category>
+        <pattern>TELL ME ABOUT * COLLEGE</pattern>
+        <template>🏛️ Nalanda Institute of Technology
+
+📍 Location: Bhubaneswar, Odisha
+🏆 Accreditation: NAAC A+
+👥 Students: 15,000+
+🎓 Alumni: 50,000+
+📚 Programs: 150+
+
+Leading the future of academic excellence with innovative programs, world-class faculty, and cutting-edge research facilities!
+
+Website: https://www.thenalanda.com</template>
+    </category>
+    
+    <!-- General Website -->
+    <category>
+        <pattern>* WEBSITE</pattern>
+        <template>🌐 Official Website: https://www.thenalanda.com
+
+Quick Links:
+• Admissions: /admissions
+• Departments: /departments
+• Student Portal: /student-portal
+• Placement: /placement
+• Library: /library</template>
+    </category>
+    
+</aiml>
