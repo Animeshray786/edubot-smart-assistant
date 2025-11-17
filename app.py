@@ -94,14 +94,24 @@ app.register_blueprint(chat_bp, url_prefix='/')
 app.register_blueprint(auth_bp, url_prefix='/auth')
 
 # Initialize AIML Engine
-from backend.aiml_engine import AIMLEngine
-aiml_engine = AIMLEngine(app.config['AIML_DIR'])
-app.aiml_engine = aiml_engine
+try:
+    from backend.aiml_engine import AIMLEngine
+    aiml_engine = AIMLEngine(app.config['AIML_DIR'])
+    app.aiml_engine = aiml_engine
+    print("[OK] AIML Engine initialized")
+except Exception as e:
+    print(f"[WARNING] AIML Engine failed: {e}")
+    app.aiml_engine = None
 
 # Initialize Database Manager
-from database.db_manager import DatabaseManager
-db_manager = DatabaseManager(db)
-app.db_manager = db_manager
+try:
+    from database.db_manager import DatabaseManager
+    db_manager = DatabaseManager(db)
+    app.db_manager = db_manager
+    print("[OK] Database Manager initialized")
+except Exception as e:
+    print(f"[WARNING] Database Manager failed: {e}")
+    app.db_manager = None
 
 
 def initialize_database():
