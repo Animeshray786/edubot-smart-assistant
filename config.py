@@ -102,9 +102,7 @@ class ProductionConfig(Config):
     SQLALCHEMY_ECHO = False
     
     # Security enhancements
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    if not SECRET_KEY:
-        raise ValueError("SECRET_KEY must be set in production!")
+    SECRET_KEY = os.getenv('SECRET_KEY', 'edubot-prod-key-' + os.urandom(24).hex())
 
 
 class TestingConfig(Config):
