@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduBot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .dashboard-header h1 {
+            color: var(--dark);
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .stat-trend {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        .trend-up {
+            color: var(--success);
+        }
+        
+        .trend-down {
+            color: var(--danger);
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .chart-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .tab-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tabs {
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .nav-tabs .nav-link {
+            color: #6b7280;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            background: transparent;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .table {
+            margin-top: 1rem;
+        }
+        
+        .badge-status {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-action {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            margin: 0 0.2rem;
+        }
+        
+        .refresh-indicator {
+            display: inline-block;
+            margin-left: 1rem;
+            color: var(--success);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .time-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .time-filter .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                    <p class="text-muted mb-0">
+                        <span class="live-indicator"></span>
+                        Real-time monitoring and analytics
+                    </p>
+                </div>
+                <div>
+                    <button class="btn btn-outline-primary me-2" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <a href="/" class="btn btn-outline-secondary">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Filter -->
+        <div class="time-filter">
+            <button class="btn btn-sm btn-primary" onclick="changeTimeRange(7)">7 Days</button>
+            <button class="btn btn-sm btn-outline-primary" onclick="changeTimeRange(30)">30 Days</button>
+            <button class="btn btn-sm btn-outline-primary" onclick="changeTimeRange(90)">90 Days</button>
+        </div>
+
+        <!-- Overview Stats -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="ms-3 flex-grow-1">
+                            <p class="stat-label">Total Users</p>
+                            <p class="stat-value" id="totalUsers">0</p>
+                            <p class="stat-trend trend-up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="activeUsers">0</span> active
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="ms-3 flex-grow-1">
+                            <p class="stat-label">Conversations</p>
+                            <p class="stat-value" id="totalConversations">0</p>
+                            <p class="stat-trend trend-up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="recentConversations">0</span> recent
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div class="ms-3 flex-grow-1">
+                            <p class="stat-label">Satisfaction Rate</p>
+                            <p class="stat-value" id="satisfactionRate">0%</p>
+                            <p class="stat-trend">
+                                <i class="fas fa-star text-warning"></i>
+                                <span id="avgSentiment">0%</span> positive
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a, #fee140);">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="ms-3 flex-grow-1">
+                            <p class="stat-label">Pending Reviews</p>
+                            <p class="stat-value" id="pendingKnowledge">0</p>
+                            <p class="stat-trend">
+                                <i class="fas fa-clock text-warning"></i>
+                                Knowledge base
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1 -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-line"></i> Conversations Timeline</h3>
+                    </div>
+                    <canvas id="conversationsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-pie"></i> Sentiment Distribution</h3>
+                    </div>
+                    <canvas id="sentimentChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-bar"></i> Category Breakdown</h3>
+                    </div>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-trophy"></i> Top Active Users</h3>
+                    </div>
+                    <div id="topUsersList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Management Tabs -->
+        <div class="tab-card">
+            <ul class="nav nav-tabs" id="managementTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button">
+                        <i class="fas fa-users"></i> Users
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="knowledge-tab" data-bs-toggle="tab" data-bs-target="#knowledge" type="button">
+                        <i class="fas fa-brain"></i> Knowledge Base
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="patterns-tab" data-bs-toggle="tab" data-bs-target="#patterns" type="button">
+                        <i class="fas fa-code"></i> AIML Patterns
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="conversations-tab" data-bs-toggle="tab" data-bs-target="#conversations" type="button">
+                        <i class="fas fa-comments"></i> Live Conversations
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="system-tab" data-bs-toggle="tab" data-bs-target="#system" type="button">
+                        <i class="fas fa-cog"></i> System
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="managementTabContent">
+                <!-- Users Tab -->
+                <div class="tab-pane fade show active" id="users" role="tabpanel">
+                    <div class="table-container">
+                        <div id="usersTable"></div>
+                    </div>
+                </div>
+                
+                <!-- Knowledge Base Tab -->
+                <div class="tab-pane fade" id="knowledge" role="tabpanel">
+                    <div class="table-container">
+                        <div id="knowledgeTable"></div>
+                    </div>
+                </div>
+                
+                <!-- AIML Patterns Tab -->
+                <div class="tab-pane fade" id="patterns" role="tabpanel">
+                    <div class="table-container">
+                        <div id="patternsTable"></div>
+                    </div>
+                </div>
+                
+                <!-- Conversations Tab -->
+                <div class="tab-pane fade" id="conversations" role="tabpanel">
+                    <div class="table-container">
+                        <div id="conversationsTable"></div>
+                    </div>
+                </div>
+                
+                <!-- System Tab -->
+                <div class="tab-pane fade" id="system" role="tabpanel">
+                    <div class="mt-3">
+                        <h5>System Configuration</h5>
+                        <div id="systemConfig"></div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>System Actions</h5>
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-warning" onclick="reloadAIML()">
+                                <i class="fas fa-sync-alt"></i> Reload AIML Patterns
+                            </button>
+                            <button class="btn btn-danger" onclick="clearCache()">
+                                <i class="fas fa-trash"></i> Clear Cache
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentTimeRange = 7;
+        let charts = {};
+        
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOverviewStats();
+            loadCharts();
+            loadUsers();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(() => {
+                loadOverviewStats();
+                loadCharts();
+            }, 30000);
+        });
+        
+        function changeTimeRange(days) {
+            currentTimeRange = days;
+            loadOverviewStats();
+            loadCharts();
+            
+            // Update active button
+            document.querySelectorAll('.time-filter .btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+            event.target.classList.remove('btn-outline-primary');
+            event.target.classList.add('btn-primary');
+        }
+        
+        function refreshDashboard() {
+            location.reload();
+        }
+        
+        async function loadOverviewStats() {
+            try {
+                const response = await fetch(`/admin/stats/overview?days=${currentTimeRange}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const stats = data.data.overview;
+                    document.getElementById('totalUsers').textContent = stats.total_users;
+                    document.getElementById('activeUsers').textContent = stats.active_users;
+                    document.getElementById('totalConversations').textContent = stats.total_conversations;
+                    document.getElementById('recentConversations').textContent = stats.recent_conversations;
+                    document.getElementById('satisfactionRate').textContent = stats.satisfaction_rate + '%';
+                    document.getElementById('avgSentiment').textContent = stats.avg_sentiment_score + '%';
+                    document.getElementById('pendingKnowledge').textContent = stats.pending_knowledge;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        async function loadCharts() {
+            await loadConversationsTimeline();
+            await loadSentimentDistribution();
+            await loadCategoryBreakdown();
+            await loadTopUsers();
+        }
+        
+        async function loadConversationsTimeline() {
+            try {
+                const response = await fetch(`/admin/stats/conversations-timeline?days=${currentTimeRange}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const ctx = document.getElementById('conversationsChart');
+                    
+                    if (charts.conversations) {
+                        charts.conversations.destroy();
+                    }
+                    
+                    charts.conversations = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.data.labels,
+                            datasets: [{
+                                label: 'Conversations',
+                                data: data.data.values,
+                                borderColor: '#6366f1',
+                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+            }
+        }
+        
+        async function loadSentimentDistribution() {
+            try {
+                const response = await fetch(`/admin/stats/sentiment-distribution?days=${currentTimeRange}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const ctx = document.getElementById('sentimentChart');
+                    
+                    if (charts.sentiment) {
+                        charts.sentiment.destroy();
+                    }
+                    
+                    const colors = data.data.labels.map(label => data.data.colors[label.toLowerCase()]);
+                    
+                    charts.sentiment = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.data.labels,
+                            datasets: [{
+                                data: data.data.values,
+                                backgroundColor: colors
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading sentiment:', error);
+            }
+        }
+        
+        async function loadCategoryBreakdown() {
+            try {
+                const response = await fetch(`/admin/stats/category-breakdown?days=${currentTimeRange}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const ctx = document.getElementById('categoryChart');
+                    
+                    if (charts.category) {
+                        charts.category.destroy();
+                    }
+                    
+                    charts.category = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.data.labels,
+                            datasets: [{
+                                label: 'Conversations',
+                                data: data.data.values,
+                                backgroundColor: '#6366f1'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+        
+        async function loadTopUsers() {
+            try {
+                const response = await fetch(`/admin/stats/top-users?days=${currentTimeRange}&limit=10`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const list = document.getElementById('topUsersList');
+                    let html = '<div class="list-group">';
+                    
+                    data.data.top_users.forEach((user, index) => {
+                        html += `
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge bg-primary me-2">${index + 1}</span>
+                                    <strong>${user.username}</strong>
+                                    <small class="text-muted ms-2">${user.email}</small>
+                                </div>
+                                <span class="badge bg-success">${user.conversations} conversations</span>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                    list.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading top users:', error);
+            }
+        }
+        
+        async function loadUsers() {
+            try {
+                const response = await fetch('/admin/users');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const table = document.getElementById('usersTable');
+                    let html = `
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    data.data.users.forEach(user => {
+                        const statusBadge = user.is_active ? 
+                            '<span class="badge bg-success badge-status">Active</span>' :
+                            '<span class="badge bg-danger badge-status">Inactive</span>';
+                        
+                        html += `
+                            <tr>
+                                <td><strong>${user.username}</strong></td>
+                                <td>${user.email}</td>
+                                <td><span class="badge bg-primary">${user.role}</span></td>
+                                <td>${statusBadge}</td>
+                                <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning btn-action" onclick="toggleUserStatus(${user.user_id})">
+                                        <i class="fas fa-toggle-on"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-info btn-action" onclick="changeUserRole(${user.user_id})">
+                                        <i class="fas fa-user-shield"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += '</tbody></table>';
+                    table.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+        
+        // Tab event listeners
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function(event) {
+                const targetId = event.target.getAttribute('data-bs-target').replace('#', '');
+                
+                if (targetId === 'knowledge') {
+                    loadKnowledge();
+                } else if (targetId === 'patterns') {
+                    loadPatterns();
+                } else if (targetId === 'conversations') {
+                    loadConversations();
+                } else if (targetId === 'system') {
+                    loadSystemConfig();
+                }
+            });
+        });
+        
+        async function loadKnowledge() {
+            // TODO: Implement
+            document.getElementById('knowledgeTable').innerHTML = '<p class="text-muted">Loading knowledge base...</p>';
+        }
+        
+        async function loadPatterns() {
+            // TODO: Implement
+            document.getElementById('patternsTable').innerHTML = '<p class="text-muted">Loading AIML patterns...</p>';
+        }
+        
+        async function loadConversations() {
+            // TODO: Implement
+            document.getElementById('conversationsTable').innerHTML = '<p class="text-muted">Loading conversations...</p>';
+        }
+        
+        async function loadSystemConfig() {
+            // TODO: Implement
+            document.getElementById('systemConfig').innerHTML = '<p class="text-muted">Loading system configuration...</p>';
+        }
+        
+        function toggleUserStatus(userId) {
+            // TODO: Implement
+            alert('Toggle user status: ' + userId);
+        }
+        
+        function changeUserRole(userId) {
+            // TODO: Implement
+            alert('Change user role: ' + userId);
+        }
+        
+        function reloadAIML() {
+            if (confirm('Reload AIML patterns? This may take a few seconds.')) {
+                // TODO: Implement
+                alert('AIML patterns reloaded successfully');
+            }
+        }
+        
+        function clearCache() {
+            if (confirm('Clear system cache? This action cannot be undone.')) {
+                // TODO: Implement
+                alert('Cache cleared successfully');
+            }
+        }
+    </script>
+</body>
+</html>

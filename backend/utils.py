@@ -72,7 +72,23 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            return jsonify({'error': 'Authentication required', 'status': 401}), 401
+            return error_response('Authentication required', 401)
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def admin_required(f):
+    """Decorator to require admin role"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return error_response('Authentication required', 401)
+        
+        from database.models import User
+        user = User.query.get(session['user_id'])
+        if not user or user.role != 'admin':
+            return error_response('Admin access required', 403)
+        
         return f(*args, **kwargs)
     return decorated_function
 

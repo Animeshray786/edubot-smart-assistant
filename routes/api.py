@@ -12,6 +12,7 @@ from backend.advanced_features_part2 import advanced_features
 from backend.mega_features import mega_features
 from backend.ai_features import ai_features
 from backend.student_tools import student_tools
+from backend.intelligent_response_system import IntelligentResponseSystem
 from datetime import datetime
 import re
 
@@ -35,6 +36,9 @@ def chat():
         # Get AIML engine from app
         aiml_engine = current_app.aiml_engine
         
+        # Initialize Intelligent Response System
+        intelligent_system = IntelligentResponseSystem()
+        
         # Check for smart features first
         smart_response = handle_smart_features(message)
         if smart_response:
@@ -42,21 +46,32 @@ def chat():
             quick_actions = []
             category = 'smart_feature'
         else:
-            # Try Student Helpdesk first for educational queries
-            from backend.student_helpdesk import StudentHelpdeskBot
-            helpdesk = StudentHelpdeskBot()
-            helpdesk_response = helpdesk.process_query(message, user_id)
+            # Try Intelligent Response System for deep analysis
+            analysis_result = intelligent_system.analyze_and_respond(message, {
+                'user_id': user_id,
+                'session_id': session.get('session_id', 'default')
+            })
             
-            # If helpdesk handled it, use that response
-            if helpdesk_response and 'response' in helpdesk_response:
-                response = helpdesk_response['response']
-                quick_actions = helpdesk_response.get('quick_actions', [])
-                category = helpdesk_response.get('category', 'general')
+            if analysis_result:
+                response = analysis_result
+                quick_actions = ['Ask Another Question', 'Get More Help', 'Talk to Counselor']
+                category = 'intelligent'
             else:
-                # Fall back to AIML engine
-                response = aiml_engine.get_response(message, session.get('session_id', 'default'))
-                quick_actions = []
-                category = 'general'
+                # Try Student Helpdesk for educational queries
+                from backend.student_helpdesk import StudentHelpdeskBot
+                helpdesk = StudentHelpdeskBot()
+                helpdesk_response = helpdesk.process_query(message, user_id)
+                
+                # If helpdesk handled it, use that response
+                if helpdesk_response and 'response' in helpdesk_response:
+                    response = helpdesk_response['response']
+                    quick_actions = helpdesk_response.get('quick_actions', [])
+                    category = helpdesk_response.get('category', 'general')
+                else:
+                    # Fall back to AIML engine
+                    response = aiml_engine.get_response(message, session.get('session_id', 'default'))
+                    quick_actions = []
+                    category = 'general'
         
         # Analyze sentiment
         from backend.learning_module import LearningModule
