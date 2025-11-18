@@ -14,10 +14,25 @@ class DatabaseManager:
     def __init__(self, db_instance):
         self.db = db_instance
     
+    def _sanitize_input(self, text, max_length=1000):
+        """Sanitize text input for database operations"""
+        if not text:
+            return text
+        
+        text = str(text)[:max_length]
+        text = text.replace('\x00', '')  # Remove null bytes
+        text = ''.join(char for char in text if char.isprintable() or char in ['\n', '\t', '\r'])
+        return text.strip()
+    
     # ==================== User Operations ====================
     
     def create_user(self, username, email, password, role='user'):
         """Create a new user"""
+        # Sanitize inputs
+        username = self._sanitize_input(username, 50)
+        email = self._sanitize_input(email, 100)
+        role = self._sanitize_input(role, 20)
+        
         user = User(username=username, email=email, role=role)
         user.set_password(password)
         
@@ -32,12 +47,50 @@ class DatabaseManager:
         return user
     
     def get_user_by_id(self, user_id):
-        """Get user by ID"""
-        return User.query.get(user_id)
+        """Get user by ID - returns dictionary for API compatibility"""
+        user = User.query.get(user_id)
+        if not user:
+            return None
+        return {
+            'user_id': user.user_id,
+            'username': user.username,
+            'email': user.email,
+            'password_hash': user.password_hash,
+            'role': user.role,
+            'is_active': user.is_active,
+            'created_at': user.created_at,
+            'updated_at': user.updated_at
+        }
     
     def get_user_by_username(self, username):
         """Get user by username"""
         return User.query.filter_by(username=username).first()
+    
+    def authenticate_user(self, username, password):
+        """
+        Authenticate user with username and password
+        
+        Args:
+            username: Username
+            password: Plain text password
+            
+        Returns:
+            dict: User data if authentication successful, None otherwise
+        """
+        user = self.get_user_by_username(username)
+        if not user or not user.check_password(password):
+            return None
+        
+        return {
+            'user_id': user.user_id,
+            'username': user.username,
+            'email': user.email,
+            'password_hash': user.password_hash,
+            'role': user.role,
+            'is_active': user.is_active,
+            'created_at': user.created_at,
+            'updated_at': user.updated_at
+        }
     
     def get_user_by_email(self, email):
         """Get user by email"""
@@ -109,6 +162,10 @@ class DatabaseManager:
     
     def search_conversations(self, query, user_id=None):
         """Search conversations by message content"""
+        # Sanitize search query
+        query = self._sanitize_input(query, 500)
+        
+        # Use parameterized queries (SQLAlchemy automatically escapes)
         search = f"%{query}%"
         q = Conversation.query.filter(
             db.or_(

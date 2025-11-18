@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
     <style>
         :root {
             --primary-color: #2563eb;
@@ -949,17 +951,20 @@
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
-            if (!message) return;
+            if (!message) {
+                window.AnimationUtils.ShakeEffect.shakeOnError(input);
+                return;
+            }
 
             // Hide welcome screen
             document.getElementById('welcomeScreen').style.display = 'none';
 
-            // Add user message
+            // Add user message with animation
             addMessage(message, 'user');
             input.value = '';
 
-            // Show typing indicator
-            document.getElementById('typingIndicator').classList.add('active');
+            // Show skeleton loader instead of typing indicator
+            const loaderId = window.skeletonLoader.showMessageSkeleton(false);
 
             // Send to API
             fetch('/api/chat', {
@@ -971,25 +976,47 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('typingIndicator').classList.remove('active');
+                // Remove skeleton loader
+                window.skeletonLoader.remove(loaderId);
                 
                 if (data.status === 'success') {
                     const response = data.data.response;
                     const quickActions = data.data.quick_actions || [];
                     addMessage(response, 'bot', quickActions);
                     
-                    // Update stats
+                    // Update stats with animation
                     messageCount++;
-                    document.getElementById('totalChats').textContent = messageCount;
-                    document.getElementById('helpedToday').textContent = Math.floor(messageCount / 2);
+                    const totalChatsEl = document.getElementById('totalChats');
+                    const helpedTodayEl = document.getElementById('helpedToday');
+                    
+                    if (totalChatsEl) {
+                        window.AnimationUtils.CounterAnimation.animateElement(totalChatsEl, messageCount);
+                    }
+                    if (helpedTodayEl) {
+                        window.AnimationUtils.CounterAnimation.animateElement(helpedTodayEl, Math.floor(messageCount / 2));
+                    }
+
+                    // Success haptic feedback
+                    if (window.hapticFeedback) {
+                        window.hapticFeedback.light();
+                    }
+
+                    // Show success toast
+                    window.toastManager.show('Response received!', 'success', 2000);
                 } else {
                     addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                    window.toastManager.show('Failed to get response', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('typingIndicator').classList.remove('active');
+                window.skeletonLoader.remove(loaderId);
                 addMessage('Connection error. Please check your internet and try again.', 'bot');
+                window.toastManager.show('Connection error. Please try again.', 'error');
+                
+                if (window.hapticFeedback) {
+                    window.hapticFeedback.error();
+                }
             });
         }
 
@@ -1000,48 +1027,58 @@
         }
 
         // Add message to chat
-        function addMessage(text, sender, quickActions = []) {
+        function addMessage(text, sender, quickActions = [], saveToContext = true) {
             const container = document.getElementById('messagesContainer');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message message-${sender}`;
+            messageDiv.className = `message message-${sender} fade-in-up`;
             
             const icon = sender === 'user' ? 'fa-user' : 'fa-robot';
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             let html = `
-                ${sender === 'bot' ? `<span class="message-avatar"><i class="fas ${icon}"></i></span>` : ''}
+                ${sender === 'bot' ? `<span class="message-avatar scale-in"><i class="fas ${icon}"></i></span>` : ''}
                 <div class="message-content">
                     <div class="message-bubble">${text}</div>
                     ${quickActions.length > 0 ? `
                         <div class="message-quick-actions">
                             ${quickActions.map(action => `
-                                <span class="quick-action-chip" onclick="sendQuickMessage('${action}')">${action}</span>
+                                <span class="quick-action-chip hover-lift" onclick="sendQuickMessage('${action}')">${action}</span>
                             `).join('')}
                         </div>
                     ` : ''}
                     <div class="message-time">${time}</div>
                 </div>
-                ${sender === 'user' ? `<span class="message-avatar"><i class="fas ${icon}"></i></span>` : ''}
+                ${sender === 'user' ? `<span class="message-avatar scale-in"><i class="fas ${icon}"></i></span>` : ''}
             `;
             
             messageDiv.innerHTML = html;
             container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // Voice input toggle
+            
+            // Smooth scroll to bottom
+            container.scrollTo({
+                top: container.scrollHeight,
+                behavior: 'smooth'
+            });
+            
+            // Auto-speak bot responses
+            if (sender === 'bot' && window.voiceManager && window.voiceManager.settings.autoSpeak) {
+                // Extract plain text from HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = text;
+                const plainText = tempDiv.textContent || tempDiv.innerText;
+                window.voiceManager.speak(plainText);
+            }
+            
+            // Save to context memory
+            if (saveToContext && window.contextMemory) {
+                window.contextMemory.addMessage(sender, text);
+            }
+        }        // Voice input toggle
         function toggleVoice() {
-            const btn = document.getElementById('voiceBtn');
-            if (!isRecording) {
-                isRecording = true;
-                btn.classList.add('recording');
-                btn.innerHTML = '<i class="fas fa-stop"></i>';
-                // Add actual voice recording logic here
+            if (window.voiceManager) {
+                window.voiceManager.toggleListening();
             } else {
-                isRecording = false;
-                btn.classList.remove('recording');
-                btn.innerHTML = '<i class="fas fa-microphone"></i>';
-                // Stop recording and process
+                window.toastManager.show('Voice feature not available in your browser', 'error');
             }
         }
 
@@ -1060,22 +1097,40 @@
         }
 
         // Clear chat
-        function clearChat() {
+        async function clearChat() {
+            if (!confirm('Are you sure you want to clear the chat history?')) return;
+            
             const container = document.getElementById('messagesContainer');
             container.innerHTML = '';
             document.getElementById('welcomeScreen').style.display = 'block';
             messageCount = 0;
-            document.getElementById('totalChats').textContent = '0';
+            
+            const totalChatsEl = document.getElementById('totalChats');
+            const helpedTodayEl = document.getElementById('helpedToday');
+            
+            if (totalChatsEl) totalChatsEl.textContent = '0';
+            if (helpedTodayEl) helpedTodayEl.textContent = '0';
+            
+            // Clear context memory
+            if (window.contextMemory) {
+                await window.contextMemory.clearContext();
+            }
+            
+            window.toastManager.show('Chat history cleared!', 'info');
         }
 
         // Download history
         function downloadHistory() {
-            alert('Download feature coming soon!');
+            if (window.chatExporter) {
+                window.chatExporter.showExportModal();
+            } else {
+                window.toastManager.show('Export feature not available', 'error');
+            }
         }
 
         // Show settings
         function showSettings() {
-            alert('Settings panel coming soon!');
+            window.toastManager.show('Settings panel coming soon!', 'info');
         }
 
         // Initialize on load
@@ -1083,5 +1138,13 @@
             initEduBackground();
         });
     </script>
+    <script src="/static/js/mobile.js"></script>
+    <script src="/static/js/animations.js"></script>
+    <script src="/static/js/i18n.js"></script>
+    <script src="/static/js/voice.js"></script>
+    <script src="/static/js/chat-export.js"></script>
+    <script src="/static/js/context-memory.js"></script>
+    <script src="/static/js/autocomplete.js"></script>
+    <script src="/static/js/image-recognition.js"></script>
 </body>
 </html>

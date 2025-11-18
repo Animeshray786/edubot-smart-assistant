@@ -14,9 +14,25 @@ from flask_session import Session
 import os
 from datetime import datetime
 from dotenv import load_dotenv
+import sys
 
 # Load environment variables
 load_dotenv()
+
+# Validate configuration
+from backend.config_validator import ConfigValidator
+is_valid, errors, warnings = ConfigValidator.validate_environment()
+
+if errors:
+    print("\n[ERROR] Configuration errors found:")
+    for error in errors:
+        print(f"  - {error}")
+    sys.exit(1)
+
+if warnings:
+    print("\n[WARNING] Configuration warnings:")
+    for warning in warnings:
+        print(f"  - {warning}")
 
 # Production configuration class
 class ProductionConfig:
@@ -51,6 +67,18 @@ class ProductionConfig:
 app = Flask(__name__, 
             template_folder='frontend',
             static_folder='static')
+
+# Initialize logging system
+from backend.logging_system import StructuredLogger
+logger = StructuredLogger.get_logger(
+    name='edubot',
+    log_file=os.getenv('LOG_FILE', 'logs/edubot.log'),
+    level=os.getenv('LOG_LEVEL', 'INFO'),
+    max_bytes=int(os.getenv('LOG_MAX_SIZE', 10485760)),
+    backup_count=int(os.getenv('LOG_BACKUP_COUNT', 5))
+)
+app.logger = logger
+logger.info('EduBot application starting...')
 
 # Load configuration based on environment
 try:
@@ -89,6 +117,16 @@ from routes.auth import auth_bp
 from routes.lecture_routes import lecture_bp
 from routes.admin_lecture import admin_lecture_bp
 from routes.admin_advanced import admin_advanced_bp
+from routes.i18n_routes import i18n_bp
+from routes.context_routes import context_bp
+from routes.autocomplete_routes import autocomplete_bp
+from routes.image_routes import image_bp
+from routes.security_routes import security_bp
+
+# Register error handlers
+from backend.error_handlers import register_error_handlers
+register_error_handlers(app)
+logger.info('Error handlers registered')
 
 # Register blueprints
 app.register_blueprint(api_bp, url_prefix='/api')
@@ -98,6 +136,11 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(lecture_bp, url_prefix='/api/lecture')
 app.register_blueprint(admin_lecture_bp, url_prefix='/admin/lecture')
 app.register_blueprint(admin_advanced_bp, url_prefix='/admin/advanced')
+app.register_blueprint(i18n_bp, url_prefix='/api/i18n')
+app.register_blueprint(context_bp, url_prefix='/api/context')
+app.register_blueprint(autocomplete_bp, url_prefix='/api/autocomplete')
+app.register_blueprint(image_bp, url_prefix='/api/image')
+app.register_blueprint(security_bp, url_prefix='/api/security')
 
 # Initialize AIML Engine
 try:
@@ -119,6 +162,75 @@ except Exception as e:
     print(f"[WARNING] Database Manager failed: {e}")
     app.db_manager = None
 
+# Initialize I18n Support
+try:
+    from backend.i18n_manager import init_i18n
+    i18n = init_i18n(app)
+    app.i18n = i18n
+    print("[OK] I18n Manager initialized")
+except Exception as e:
+    print(f"[WARNING] I18n initialization failed: {e}")
+    app.i18n = None
+
+# Initialize Context Memory Manager
+try:
+    from backend.context_manager import init_context_manager
+    context_mgr = init_context_manager(app)
+    app.context_manager = context_mgr
+except Exception as e:
+    print(f"[WARNING] Context Manager initialization failed: {e}")
+    app.context_manager = None
+
+# Initialize Autocomplete Engine
+try:
+    from backend.autocomplete_engine import init_autocomplete
+    autocomplete = init_autocomplete(app.aiml_engine)
+    app.autocomplete = autocomplete
+except Exception as e:
+    print(f"[WARNING] Autocomplete Engine initialization failed: {e}")
+    app.autocomplete = None
+
+# Initialize Image Processor
+try:
+    from backend.image_processor import init_image_processor
+    img_processor = init_image_processor()
+    app.image_processor = img_processor
+except Exception as e:
+    print(f"[WARNING] Image Processor initialization failed: {e}")
+    app.image_processor = None
+
+# Initialize Security Manager
+try:
+    from backend.security_manager import SecurityManager, SecureHeaders
+    security_manager = SecurityManager(app)
+    secure_headers = SecureHeaders(app)
+    app.security_manager = security_manager
+    print("[OK] Security Manager initialized")
+    print("[OK] Secure Headers middleware enabled")
+except Exception as e:
+    print(f"[WARNING] Security Manager initialization failed: {e}")
+    app.security_manager = None
+
+# Initialize JWT Authentication
+try:
+    from routes.auth_routes import init_auth
+    jwt_auth = init_auth(app)
+    app.jwt_auth = jwt_auth
+    print("[OK] JWT Authentication initialized")
+except Exception as e:
+    print(f"[WARNING] JWT Auth initialization failed: {e}")
+    app.jwt_auth = None
+
+# Initialize XSS Protection
+try:
+    from backend.xss_protection import XSSProtection
+    xss_protection = XSSProtection()
+    app.xss_protection = xss_protection
+    print("[OK] XSS Protection initialized")
+except Exception as e:
+    print(f"[WARNING] XSS Protection initialization failed: {e}")
+    app.xss_protection = None
+
 # Initialize Advanced Features
 try:
     from backend.performance_monitor import performance_monitor
@@ -134,6 +246,33 @@ try:
     print("[OK] Knowledge Gap Analyzer initialized")
 except Exception as e:
     print(f"[WARNING] Advanced features initialization failed: {e}")
+
+
+# Request/Response Logging Middleware
+import time
+from backend.logging_system import StructuredLogger
+
+@app.before_request
+def log_request_start():
+    """Log request start time"""
+    request.start_time = time.time()
+
+@app.after_request
+def log_request_end(response):
+    """Log request completion"""
+    if hasattr(request, 'start_time'):
+        duration_ms = (time.time() - request.start_time) * 1000
+        user_id = getattr(request, 'user_id', None)
+        
+        StructuredLogger.log_request(
+            app.logger,
+            request,
+            response.status_code,
+            duration_ms,
+            user_id
+        )
+    
+    return response
 
 
 def initialize_database():
