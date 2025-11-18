@@ -88,6 +88,7 @@ from routes.chat import chat_bp
 from routes.auth import auth_bp
 from routes.lecture_routes import lecture_bp
 from routes.admin_lecture import admin_lecture_bp
+from routes.admin_advanced import admin_advanced_bp
 
 # Register blueprints
 app.register_blueprint(api_bp, url_prefix='/api')
@@ -96,6 +97,7 @@ app.register_blueprint(chat_bp, url_prefix='/')
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(lecture_bp, url_prefix='/api/lecture')
 app.register_blueprint(admin_lecture_bp, url_prefix='/admin/lecture')
+app.register_blueprint(admin_advanced_bp, url_prefix='/admin/advanced')
 
 # Initialize AIML Engine
 try:
@@ -116,6 +118,22 @@ try:
 except Exception as e:
     print(f"[WARNING] Database Manager failed: {e}")
     app.db_manager = None
+
+# Initialize Advanced Features
+try:
+    from backend.performance_monitor import performance_monitor
+    from backend.rate_limiter import rate_limiter
+    from backend.knowledge_gap_analyzer import KnowledgeGapAnalyzer
+    
+    app.performance_monitor = performance_monitor
+    app.rate_limiter = rate_limiter
+    app.knowledge_gap = KnowledgeGapAnalyzer(db)
+    
+    print("[OK] Performance Monitor initialized")
+    print("[OK] Rate Limiter initialized")
+    print("[OK] Knowledge Gap Analyzer initialized")
+except Exception as e:
+    print(f"[WARNING] Advanced features initialization failed: {e}")
 
 
 def initialize_database():
@@ -143,8 +161,70 @@ def initialize_database():
 
 @app.before_request
 def before_request():
-    """Before each request"""
+    """Before each request - rate limiting and performance tracking"""
+    import time
+    from flask import request, jsonify
+    
+    # Set session permanent
     session.permanent = True
+    
+    # Track request start time
+    request.start_time = time.time()
+    
+    # Get client identifier (IP or user_id)
+    client_ip = request.remote_addr
+    user_id = session.get('user_id')
+    identifier = f"user_{user_id}" if user_id else client_ip
+    
+    # Check rate limit for API endpoints
+    if request.path.startswith('/api/'):
+        try:
+            from backend.rate_limiter import rate_limiter
+            
+            limit_type = 'user' if user_id else 'ip'
+            result = rate_limiter.check_rate_limit(identifier, limit_type)
+            
+            if not result['allowed']:
+                response = jsonify({
+                    'error': 'Rate limit exceeded',
+                    'reason': result['reason'],
+                    'retry_after': result.get('retry_after'),
+                    'limit': result.get('limit'),
+                    'period': result.get('period')
+                })
+                response.status_code = 429
+                response.headers['Retry-After'] = str(result.get('retry_after', 60))
+                return response
+        except:
+            pass  # If rate limiter fails, allow request
+
+
+@app.after_request
+def after_request(response):
+    """After each request - track performance"""
+    import time
+    from flask import request
+    
+    # Calculate request duration
+    if hasattr(request, 'start_time'):
+        duration = time.time() - request.start_time
+        
+        # Track in performance monitor
+        try:
+            from backend.performance_monitor import performance_monitor
+            
+            user_id = session.get('user_id')
+            performance_monitor.track_request(
+                endpoint=request.endpoint or request.path,
+                method=request.method,
+                duration=duration,
+                status_code=response.status_code,
+                user_id=user_id
+            )
+        except:
+            pass  # If tracking fails, don't break request
+    
+    return response
 
 
 @app.errorhandler(404)

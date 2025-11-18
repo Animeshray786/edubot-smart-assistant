@@ -80,6 +80,25 @@ def chat():
         learning = LearningModule(db_manager, aiml_engine)
         sentiment, confidence = learning.analyze_sentiment(message)
         
+        # Track knowledge gaps for failed queries
+        is_successful = True
+        if response and any(phrase in response.lower() for phrase in [
+            "i don't understand", "i'm not sure", "could you rephrase", 
+            "i don't know", "sorry, i couldn't", "no information"
+        ]):
+            is_successful = False
+            # Track in knowledge gap analyzer
+            try:
+                knowledge_gap = current_app.knowledge_gap
+                knowledge_gap.analyze_failed_query(
+                    query=message,
+                    user_id=user_id,
+                    sentiment=sentiment,
+                    confidence=confidence
+                )
+            except Exception as e:
+                print(f"Knowledge gap tracking error: {e}")
+        
         # Save conversation only if user is logged in
         if user_id > 0:
             conversation = db_manager.create_conversation(

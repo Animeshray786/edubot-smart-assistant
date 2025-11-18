@@ -12,7 +12,8 @@ from database.models import Conversation
 class KnowledgeGapAnalyzer:
     """Analyzes conversations to detect knowledge gaps and suggest improvements"""
     
-    def __init__(self):
+    def __init__(self, db=None):
+        self.db = db
         self.failed_indicators = [
             'i don\'t understand',
             'i\'m not sure',

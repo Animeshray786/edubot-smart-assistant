@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Features - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .feature-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-pills .nav-link {
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .badge-custom {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-action {
+            margin: 0.25rem;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .status-healthy { color: #10b981; }
+        .status-warning { color: #f59e0b; }
+        .status-critical { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1><i class="fas fa-cogs"></i> Advanced Features</h1>
+                <p class="text-muted mb-0">Knowledge Gap Detection, Bulk AIML Editor, Pattern Testing, Performance Monitor, Rate Limiting</p>
+            </div>
+            <div>
+                <a href="/admin" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#gaps" type="button">
+                        <i class="fas fa-search"></i> Knowledge Gaps
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#bulk-editor" type="button">
+                        <i class="fas fa-edit"></i> Bulk AIML Editor
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#testing" type="button">
+                        <i class="fas fa-flask"></i> Pattern Testing
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#performance" type="button">
+                        <i class="fas fa-tachometer-alt"></i> Performance
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#rate-limit" type="button">
+                        <i class="fas fa-shield-alt"></i> Rate Limiting
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- Knowledge Gaps Tab -->
+                    <div class="tab-pane fade show active" id="gaps">
+                        <h3><i class="fas fa-search"></i> Knowledge Gap Detection</h3>
+                        <p class="text-muted">Analyze failed queries and suggest new AIML patterns</p>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Time Period</label>
+                                <select class="form-select" id="gapDays">
+                                    <option value="7">Last 7 days</option>
+                                    <option value="30" selected>Last 30 days</option>
+                                    <option value="90">Last 90 days</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Min Frequency</label>
+                                <input type="number" class="form-control" id="gapFrequency" value="3" min="1">
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary mb-3" onclick="loadKnowledgeGaps()">
+                            <i class="fas fa-sync"></i> Analyze Gaps
+                        </button>
+                        
+                        <div id="gapsResult"></div>
+                    </div>
+
+                    <!-- Bulk AIML Editor Tab -->
+                    <div class="tab-pane fade" id="bulk-editor">
+                        <h3><i class="fas fa-edit"></i> Bulk AIML Editor</h3>
+                        <p class="text-muted">Search, replace, and batch edit AIML patterns</p>
+                        
+                        <ul class="nav nav-tabs mb-3" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#search-tab">Search</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#replace-tab">Replace</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#backup-tab">Backups</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#stats-tab">Statistics</button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="search-tab">
+                                <div class="mb-3">
+                                    <label>Search Term</label>
+                                    <input type="text" class="form-control" id="searchTerm" placeholder="Enter search term...">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" class="form-check-input" id="caseSensitive">
+                                    <label class="form-check-label">Case Sensitive</label>
+                                </div>
+                                <button class="btn btn-primary" onclick="searchAIML()">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                                <div id="searchResults" class="mt-3"></div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="replace-tab">
+                                <div class="mb-3">
+                                    <label>Find</label>
+                                    <input type="text" class="form-control" id="findTerm">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Replace With</label>
+                                    <input type="text" class="form-control" id="replaceTerm">
+                                </div>
+                                <button class="btn btn-warning" onclick="replaceAIML(true)">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button class="btn btn-danger" onclick="replaceAIML(false)">
+                                    <i class="fas fa-exchange-alt"></i> Replace
+                                </button>
+                                <div id="replaceResults" class="mt-3"></div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="backup-tab">
+                                <button class="btn btn-success mb-3" onclick="createBackup()">
+                                    <i class="fas fa-save"></i> Create Backup
+                                </button>
+                                <div id="backupList"></div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="stats-tab">
+                                <button class="btn btn-info mb-3" onclick="loadPatternStats()">
+                                    <i class="fas fa-chart-bar"></i> Load Statistics
+                                </button>
+                                <div id="patternStats"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pattern Testing Tab -->
+                    <div class="tab-pane fade" id="testing">
+                        <h3><i class="fas fa-flask"></i> Pattern Testing Sandbox</h3>
+                        <p class="text-muted">Test patterns before deployment with A/B testing</p>
+                        
+                        <button class="btn btn-success mb-3" onclick="createSandbox()">
+                            <i class="fas fa-plus"></i> Create New Sandbox
+                        </button>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label>Test Input</label>
+                                <input type="text" class="form-control" id="testInput" placeholder="Enter message to test...">
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="runTest()">
+                            <i class="fas fa-play"></i> Run Test
+                        </button>
+                        
+                        <div id="testResults" class="mt-3"></div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>A/B Testing</h5>
+                        <p class="text-muted">Compare two different response variants</p>
+                        <div id="abTestSection"></div>
+                    </div>
+
+                    <!-- Performance Monitor Tab -->
+                    <div class="tab-pane fade" id="performance">
+                        <h3><i class="fas fa-tachometer-alt"></i> Performance Monitor</h3>
+                        <p class="text-muted">System metrics, slow endpoints, and bottlenecks</p>
+                        
+                        <button class="btn btn-primary mb-3" onclick="loadPerformanceMetrics()">
+                            <i class="fas fa-sync"></i> Refresh Metrics
+                        </button>
+                        
+                        <div class="row" id="performanceMetrics">
+                            <!-- Metrics will be loaded here -->
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Slow Endpoints</h5>
+                        <div id="slowEndpoints"></div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Bottlenecks</h5>
+                        <div id="bottlenecks"></div>
+                    </div>
+
+                    <!-- Rate Limiting Tab -->
+                    <div class="tab-pane fade" id="rate-limit">
+                        <h3><i class="fas fa-shield-alt"></i> Rate Limiting</h3>
+                        <p class="text-muted">Monitor API usage and block abusive users</p>
+                        
+                        <button class="btn btn-primary mb-3" onclick="loadRateLimitStats()">
+                            <i class="fas fa-sync"></i> Refresh Stats
+                        </button>
+                        
+                        <div class="row" id="rateLimitStats">
+                            <!-- Stats will be loaded here -->
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Abuse Suspects</h5>
+                        <button class="btn btn-danger mb-3" onclick="autoBlockAbusers()">
+                            <i class="fas fa-ban"></i> Auto-Block Abusers
+                        </button>
+                        <div id="abuseSuspects"></div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Recent Violations</h5>
+                        <div id="violations"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Knowledge Gaps Functions
+        async function loadKnowledgeGaps() {
+            const days = document.getElementById('gapDays').value;
+            const frequency = document.getElementById('gapFrequency').value;
+            
+            try {
+                const response = await fetch(`/admin/advanced/gaps/list?days=${days}&min_frequency=${frequency}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayGaps(data.data.gaps);
+                } else {
+                    alert('Failed to load gaps: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displayGaps(gaps) {
+            const container = document.getElementById('gapsResult');
+            
+            if (gaps.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No knowledge gaps found!</div>';
+                return;
+            }
+            
+            let html = '<div class="table-container"><table class="table table-striped"><thead><tr><th>Query</th><th>Frequency</th><th>Actions</th></tr></thead><tbody>';
+            
+            gaps.forEach(gap => {
+                html += `<tr>
+                    <td>${gap.query}</td>
+                    <td><span class="badge bg-warning">${gap.frequency}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="generateAIML('${gap.query}')">
+                            <i class="fas fa-magic"></i> Generate AIML
+                        </button>
+                    </td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+        
+        async function generateAIML(query) {
+            try {
+                const response = await fetch('/admin/advanced/gaps/generate-aiml', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({query: query, category: 'general'})
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const aiml = data.data.aiml;
+                    const modal = `
+                        <div class="modal fade show" style="display:block;" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5>Generated AIML Template</h5>
+                                        <button type="button" class="btn-close" onclick="this.closest('.modal').remove()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <pre class="code-block">${aiml}</pre>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Close</button>
+                                        <button class="btn btn-primary" onclick="copyToClipboard(\`${aiml.replace(/`/g, '\\`')}\`)">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    document.body.insertAdjacentHTML('beforeend', modal);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        // Bulk Editor Functions
+        async function searchAIML() {
+            const searchTerm = document.getElementById('searchTerm').value;
+            const caseSensitive = document.getElementById('caseSensitive').checked;
+            
+            if (!searchTerm) {
+                alert('Please enter a search term');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/admin/advanced/aiml/search', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({search_term: searchTerm, case_sensitive: caseSensitive})
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displaySearchResults(data.data.results);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displaySearchResults(results) {
+            const container = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No matches found</div>';
+                return;
+            }
+            
+            let html = `<div class="alert alert-success">Found ${results.length} matches</div>`;
+            html += '<div class="table-container"><table class="table"><thead><tr><th>File</th><th>Line</th><th>Context</th></tr></thead><tbody>';
+            
+            results.forEach(result => {
+                html += `<tr><td>${result.file}</td><td>${result.line}</td><td><code>${result.context}</code></td></tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+        
+        async function createBackup() {
+            const description = prompt('Enter backup description:');
+            
+            try {
+                const response = await fetch('/admin/advanced/aiml/backup', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({description: description || 'Manual backup'})
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    alert('Backup created: ' + data.data.backup_id);
+                    loadBackupHistory();
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function loadBackupHistory() {
+            try {
+                const response = await fetch('/admin/advanced/aiml/backups');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayBackups(data.data.backups);
+                }
+            } catch (error) {
+                console.error('Error loading backups:', error);
+            }
+        }
+        
+        function displayBackups(backups) {
+            const container = document.getElementById('backupList');
+            
+            if (backups.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No backups found</div>';
+                return;
+            }
+            
+            let html = '<div class="list-group">';
+            backups.forEach(backup => {
+                html += `<div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>${backup.id}</h6>
+                            <small class="text-muted">${backup.timestamp} - ${backup.description}</small>
+                        </div>
+                        <button class="btn btn-sm btn-success" onclick="restoreBackup('${backup.id}')">
+                            <i class="fas fa-undo"></i> Restore
+                        </button>
+                    </div>
+                </div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        // Performance Monitor Functions
+        async function loadPerformanceMetrics() {
+            try {
+                const response = await fetch('/admin/advanced/performance/metrics');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayPerformanceMetrics(data.data);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displayPerformanceMetrics(metrics) {
+            const container = document.getElementById('performanceMetrics');
+            
+            const html = `
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <h6>CPU Usage</h6>
+                        <h3 class="${metrics.system.cpu.percent > 80 ? 'status-critical' : 'status-healthy'}">
+                            ${metrics.system.cpu.percent}%
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <h6>Memory Usage</h6>
+                        <h3 class="${metrics.system.memory.percent > 85 ? 'status-critical' : 'status-healthy'}">
+                            ${metrics.system.memory.percent}%
+                        </h3>
+                        <small>${metrics.system.memory.used_gb} GB / ${metrics.system.memory.total_gb} GB</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <h6>Disk Usage</h6>
+                        <h3 class="${metrics.system.disk.percent > 90 ? 'status-critical' : 'status-healthy'}">
+                            ${metrics.system.disk.percent}%
+                        </h3>
+                        <small>${metrics.system.disk.free_gb} GB free</small>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            loadSlowEndpoints();
+            loadBottlenecks();
+        }
+        
+        async function loadSlowEndpoints() {
+            try {
+                const response = await fetch('/admin/advanced/performance/slow-endpoints?threshold=500');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displaySlowEndpoints(data.data.endpoints);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        function displaySlowEndpoints(endpoints) {
+            const container = document.getElementById('slowEndpoints');
+            
+            if (endpoints.length === 0) {
+                container.innerHTML = '<div class="alert alert-success">No slow endpoints detected!</div>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Endpoint</th><th>Avg Time (ms)</th><th>Requests</th><th>Error Rate</th></tr></thead><tbody>';
+            endpoints.forEach(ep => {
+                html += `<tr>
+                    <td>${ep.endpoint}</td>
+                    <td><span class="badge bg-warning">${ep.avg_duration_ms}</span></td>
+                    <td>${ep.count}</td>
+                    <td>${ep.error_rate}%</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        async function loadBottlenecks() {
+            try {
+                const response = await fetch('/admin/advanced/performance/bottlenecks');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayBottlenecks(data.data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        function displayBottlenecks(data) {
+            const container = document.getElementById('bottlenecks');
+            
+            if (data.bottlenecks.length === 0) {
+                container.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> System Health: Healthy - No bottlenecks detected!</div>';
+                return;
+            }
+            
+            let html = `<div class="alert alert-${data.system_health === 'critical' ? 'danger' : 'warning'}">
+                System Health: ${data.system_health.toUpperCase()}
+            </div>`;
+            
+            data.bottlenecks.forEach(b => {
+                html += `<div class="alert alert-${b.severity === 'critical' ? 'danger' : 'warning'}">
+                    <h6>${b.type}</h6>
+                    <p>${b.message}</p>
+                    <small><strong>Recommendation:</strong> ${b.recommendation}</small>
+                </div>`;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Rate Limiting Functions
+        async function loadRateLimitStats() {
+            try {
+                const response = await fetch('/admin/advanced/rate-limit/stats?hours=24');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayRateLimitStats(data.data);
+                }
+                
+                loadAbuseSuspects();
+                loadViolations();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displayRateLimitStats(stats) {
+            const container = document.getElementById('rateLimitStats');
+            
+            const html = `
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h6>Total Identifiers</h6>
+                        <h3>${stats.total_identifiers || 0}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h6>Total Requests</h6>
+                        <h3>${stats.total_requests || 0}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h6>Blocked IPs</h6>
+                        <h3 class="status-critical">${stats.blocked_count || 0}</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h6>Custom Limits</h6>
+                        <h3>${stats.custom_limits_count || 0}</h3>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        async function loadAbuseSuspects() {
+            try {
+                const response = await fetch('/admin/advanced/rate-limit/abuse-suspects');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayAbuseSuspects(data.data.suspects);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        function displayAbuseSuspects(suspects) {
+            const container = document.getElementById('abuseSuspects');
+            
+            if (suspects.length === 0) {
+                container.innerHTML = '<div class="alert alert-success">No abuse suspects detected</div>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Identifier</th><th>Score</th><th>Reasons</th><th>Actions</th></tr></thead><tbody>';
+            suspects.forEach(s => {
+                html += `<tr>
+                    <td>${s.identifier}</td>
+                    <td><span class="badge bg-danger">${s.abuse_score}</span></td>
+                    <td><small>${s.reasons.join(', ')}</small></td>
+                    <td>
+                        ${s.is_blocked ? '<span class="badge bg-secondary">Blocked</span>' : 
+                        `<button class="btn btn-sm btn-danger" onclick="blockIP('${s.identifier}')">Block</button>`}
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        async function blockIP(ip) {
+            if (!confirm(`Block IP ${ip}?`)) return;
+            
+            try {
+                const response = await fetch('/admin/advanced/rate-limit/block', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ip: ip, reason: 'Manual block from admin'})
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('IP blocked successfully');
+                    loadRateLimitStats();
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function autoBlockAbusers() {
+            if (!confirm('Auto-block all detected abusers?')) return;
+            
+            try {
+                const response = await fetch('/admin/advanced/rate-limit/auto-block', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({threshold_score: 5})
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert(`Blocked ${data.data.count} abusers`);
+                    loadRateLimitStats();
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function loadViolations() {
+            try {
+                const response = await fetch('/admin/advanced/rate-limit/violations?hours=24');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    displayViolations(data.data.violations);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        function displayViolations(violations) {
+            const container = document.getElementById('violations');
+            
+            if (violations.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No violations in last 24 hours</div>';
+                return;
+            }
+            
+            let html = '<table class="table table-sm"><thead><tr><th>Identifier</th><th>Period</th><th>Current/Limit</th><th>Time</th></tr></thead><tbody>';
+            violations.slice(0, 20).forEach(v => {
+                html += `<tr>
+                    <td>${v.identifier}</td>
+                    <td>${v.period}</td>
+                    <td>${v.current}/${v.limit}</td>
+                    <td><small>${new Date(v.timestamp).toLocaleString()}</small></td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        // Utility Functions
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+        
+        // Pattern Testing Functions
+        let currentSandboxId = null;
+        
+        async function createSandbox() {
+            try {
+                const response = await fetch('/admin/advanced/test/create-sandbox', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({copy_production: true})
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    currentSandboxId = data.data.sandbox_id;
+                    alert('Sandbox created: ' + currentSandboxId);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function runTest() {
+            const input = document.getElementById('testInput').value;
+            if (!input) {
+                alert('Please enter test input');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/admin/advanced/test/run', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({input: input, sandbox_id: currentSandboxId})
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    displayTestResult(data.data);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displayTestResult(result) {
+            const container = document.getElementById('testResults');
+            container.innerHTML = `
+                <div class="alert alert-success">
+                    <h6>Test Result:</h6>
+                    <p><strong>Response:</strong> ${result.response}</p>
+                    <p><strong>Confidence:</strong> ${result.confidence}%</p>
+                    <p><strong>Processing Time:</strong> ${result.duration}ms</p>
+                </div>
+            `;
+        }
+        
+        // Auto-load performance metrics on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPerformanceMetrics();
+        });
+    </script>
+</body>
+</html>
