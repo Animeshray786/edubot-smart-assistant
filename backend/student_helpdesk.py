@@ -322,55 +322,184 @@ Need help with any assignment? I can provide guidelines and resources!
     
     def _get_placement_info(self):
         """Get placement information"""
+        response = """
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h2 style="margin: 0; font-size: 24px;">💼 PLACEMENT & CAREER OPPORTUNITIES 2024-25</h2>
+</div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #28a745;">
+    <h3 style="color: #28a745; margin-top: 0;">📊 Placement Statistics (Academic Year 2024-25)</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        <li style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">✓ <strong>Students Placed:</strong> 450+ out of 500 (90%)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">✓ <strong>Average Package:</strong> ₹6.8 LPA</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">✓ <strong>Highest Package:</strong> ₹45 LPA (Google)</li>
+        <li style="padding: 8px 0;">✓ <strong>Companies Visited:</strong> 180+</li>
+    </ul>
+</div>
+
+<div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #ffc107;">
+    <h3 style="color: #856404; margin-top: 0;">🏢 Top Recruiters</h3>
+    
+    <div style="margin-bottom: 15px;">
+        <strong style="color: #dc3545;">TIER-1 COMPANIES (₹20+ LPA):</strong>
+        <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+            <li>Google</li>
+            <li>Microsoft</li>
+            <li>Amazon</li>
+            <li>Adobe</li>
+            <li>Oracle</li>
+            <li>Flipkart</li>
+        </ul>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <strong style="color: #0056b3;">TIER-2 COMPANIES (₹6-15 LPA):</strong>
+        <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+            <li>TCS</li>
+            <li>Infosys</li>
+            <li>Wipro</li>
+            <li>Cognizant</li>
+            <li>Accenture</li>
+            <li>HCL</li>
+        </ul>
+    </div>
+    
+    <div>
+        <strong style="color: #17a2b8;">FAST-GROWING STARTUPS (₹8-25 LPA):</strong>
+        <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+            <li>Razorpay</li>
+            <li>CRED</li>
+            <li>Meesho</li>
+            <li>Urban Company</li>
+            <li>PhonePe</li>
+            <li>Swiggy</li>
+        </ul>
+    </div>
+</div>
+
+<h3 style="color: #667eea;">📅 Upcoming Placement Drives</h3>
+
+<div style="background: white; border: 2px solid #dc3545; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: #dc3545; color: white; padding: 10px; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0;">
+        <strong>Nov 18, 2025 - AMAZON</strong>
+    </div>
+    <p style="margin: 10px 0;"><strong>Role:</strong> SDE-1 (Software Development Engineer)</p>
+    <p style="margin: 10px 0;"><strong>Package:</strong> ₹22 LPA + Signing Bonus</p>
+    <p style="margin: 10px 0;"><strong>Eligibility:</strong> 7.0+ CGPA, No backlogs</p>
+    <p style="margin: 10px 0;"><strong>Registration Deadline:</strong> Nov 16, 2025</p>
+    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+        <strong>🔥 HOT OPPORTUNITY - Apply Now!</strong>
+    </div>
+</div>
+
+<div style="background: white; border: 2px solid #0056b3; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: #0056b3; color: white; padding: 10px; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0;">
+        <strong>Nov 22, 2025 - MICROSOFT</strong>
+    </div>
+    <p style="margin: 10px 0;"><strong>Role:</strong> Software Engineer</p>
+    <p style="margin: 10px 0;"><strong>Package:</strong> ₹28 LPA + Relocation Assistance</p>
+    <p style="margin: 10px 0;"><strong>Eligibility:</strong> 7.5+ CGPA, Strong DSA skills</p>
+    <p style="margin: 10px 0;"><strong>Registration Deadline:</strong> Nov 19, 2025</p>
+    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+        <strong>⭐ PREMIUM OPPORTUNITY</strong>
+    </div>
+</div>
+
+<div style="background: white; border: 2px solid #28a745; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: #28a745; color: white; padding: 10px; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0;">
+        <strong>Nov 25, 2025 - TCS NINJA</strong>
+    </div>
+    <p style="margin: 10px 0;"><strong>Role:</strong> Assistant Systems Engineer</p>
+    <p style="margin: 10px 0;"><strong>Package:</strong> ₹3.6 LPA (Service Bond: 2 years)</p>
+    <p style="margin: 10px 0;"><strong>Eligibility:</strong> 6.0+ CGPA, All branches welcome</p>
+    <p style="margin: 10px 0;"><strong>Registration:</strong> OPEN - Apply anytime</p>
+    <div style="background: #d4edda; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+        <strong>🟢 MASS HIRING - High Selection Rate</strong>
+    </div>
+</div>
+
+<div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #4caf50;">
+    <h3 style="color: #2e7d32; margin-top: 0;">✅ Eligibility Requirements</h3>
+    <p><strong>Academic:</strong></p>
+    <ul>
+        <li>Minimum 60% aggregate (all semesters)</li>
+        <li>No active backlogs at time of interview</li>
+        <li>Consistent academic performance</li>
+    </ul>
+    <p><strong>Pre-Placement:</strong></p>
+    <ul>
+        <li>Updated resume on placement portal</li>
+        <li>Attend mandatory training sessions</li>
+        <li>Complete mock interviews</li>
+        <li>Pass aptitude screening test</li>
+    </ul>
+</div>
+
+<div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #2196f3;">
+    <h3 style="color: #1565c0; margin-top: 0;">📚 Preparation Resources</h3>
+    
+    <p><strong>CODING PRACTICE:</strong></p>
+    <ul>
+        <li>LeetCode (Solve 200+ problems)</li>
+        <li>HackerRank (Data Structures & Algorithms)</li>
+        <li>GeeksforGeeks (Company-wise questions)</li>
+        <li>CodeChef/Codeforces (Competitions)</li>
+    </ul>
+    
+    <p><strong>INTERVIEW PREPARATION:</strong></p>
+    <ul>
+        <li>InterviewBit (System Design + Coding)</li>
+        <li>Pramp (Mock peer interviews)</li>
+        <li>CareerCup (Real interview experiences)</li>
+        <li>YouTube (CS Dojo, TechLead)</li>
+    </ul>
+    
+    <p><strong>APTITUDE & REASONING:</strong></p>
+    <ul>
+        <li>IndiaBIX (Quantitative + Logical)</li>
+        <li>Freshersworld (Company test papers)</li>
+        <li>Aon Assessment (Practice tests)</li>
+    </ul>
+    
+    <p><strong>RESUME BUILDING:</strong></p>
+    <ul>
+        <li>Workshops every Friday (4-6 PM)</li>
+        <li>One-on-one resume reviews</li>
+        <li>ATS-friendly template library</li>
+        <li>LinkedIn profile optimization</li>
+    </ul>
+</div>
+
+<div style="background: #f3e5f5; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #9c27b0;">
+    <h3 style="color: #6a1b9a; margin-top: 0;">📧 Contact Placement Cell</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        <li style="padding: 5px 0;"><strong>Email:</strong> placements@nalanda.edu</li>
+        <li style="padding: 5px 0;"><strong>Portal:</strong> careers.nalanda.edu</li>
+        <li style="padding: 5px 0;"><strong>Phone:</strong> +91-80-2345-6789</li>
+        <li style="padding: 5px 0;"><strong>Office:</strong> Admin Block, 2nd Floor</li>
+        <li style="padding: 5px 0;"><strong>Hours:</strong> Mon-Fri: 9:00 AM - 5:30 PM</li>
+    </ul>
+</div>
+
+<div style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h3 style="margin-top: 0;">💡 Pro Tips for Success</h3>
+    <ol style="line-height: 1.8;">
+        <li>Start preparing 6 months before placements</li>
+        <li>Focus on Data Structures & Algorithms</li>
+        <li>Build 2-3 strong projects for resume</li>
+        <li>Practice mock interviews weekly</li>
+        <li>Network with alumni in target companies</li>
+        <li>Maintain GitHub profile with clean code</li>
+        <li>Learn system design basics</li>
+        <li>Polish communication & soft skills</li>
+    </ol>
+</div>
+
+<p style="text-align: center; margin-top: 20px; color: #667eea; font-weight: bold;">🎯 Use Quick Actions Below 👇</p>
+        """
+        
         return {
-            'response': """
-💼 **Placement & Career Opportunities**
-
-**Placement Statistics (Academic Year 2024-25):**
-📊 Total Students Placed: 450+ out of 500
-📊 Average Package: ₹6.8 LPA
-📊 Highest Package: ₹45 LPA (Google)
-📊 Companies Visited: 180+
-
-**Top Recruiters:**
-🏢 **Tier-1:** Google, Microsoft, Amazon, Adobe, Oracle
-🏢 **Tier-2:** TCS, Infosys, Wipro, Cognizant, Accenture
-🏢 **Startups:** Razorpay, CRED, Meesho, Urban Company
-
-**Upcoming Placement Drives:**
-📅 **Nov 18, 2025 - Amazon**
-   • Role: SDE-1
-   • Package: ₹22 LPA
-   • Eligibility: 7.0+ CGPA, No backlogs
-   • Registration: Open till Nov 16
-
-📅 **Nov 22, 2025 - Microsoft**
-   • Role: Software Engineer
-   • Package: ₹28 LPA
-   • Eligibility: 7.5+ CGPA
-   • Registration: Open till Nov 19
-
-📅 **Nov 25, 2025 - TCS Ninja**
-   • Role: Assistant Systems Engineer
-   • Package: ₹3.6 LPA
-   • Eligibility: 6.0+ CGPA
-   • Registration: Open
-
-**Eligibility Criteria:**
-✅ Minimum 60% aggregate in all semesters
-✅ No active backlogs
-✅ Updated resume on placement portal
-✅ Attend pre-placement training sessions
-
-**Preparation Resources:**
-📚 Coding Practice: LeetCode, HackerRank, GeeksforGeeks
-📚 Interview Prep: InterviewBit, Pramp
-📚 Aptitude: IndiaBIX, Freshersworld
-📚 Resume Building: Workshops every Friday
-
-📧 Register at: placements@college.edu
-🌐 Portal: careers.college.edu
-            """,
+            'response': response.strip(),
             'category': 'career',
             'quick_actions': ['Apply for Drive', 'Resume Tips', 'Interview Prep', 'Coding Practice']
         }
@@ -379,56 +508,86 @@ Need help with any assignment? I can provide guidelines and resources!
         """Get campus facilities overview"""
         return {
             'response': """
-🏫 **Campus Facilities & Amenities**
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h2 style="margin: 0;">🏫 Campus Facilities & Amenities</h2>
+</div>
 
-**Academic Facilities:**
-🏛️ Central Library (3 floors, 500+ seats)
-🏛️ Computer Labs (10 labs, 600+ systems)
-🏛️ Smart Classrooms (All AC, projector-equipped)
-🏛️ Research Labs & Innovation Center
-🏛️ Seminar Halls (Capacity: 300-500)
+<div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #ff9800;">
+    <h3 style="color: #e65100; margin-top: 0;">🏛️ Academic Facilities</h3>
+    <ul>
+        <li>Central Library (3 floors, 500+ seats)</li>
+        <li>Computer Labs (10 labs, 600+ systems)</li>
+        <li>Smart Classrooms (All AC, projector-equipped)</li>
+        <li>Research Labs & Innovation Center</li>
+        <li>Seminar Halls (Capacity: 300-500)</li>
+    </ul>
+</div>
 
-**Residential:**
-🏠 Boys Hostel: 800 rooms (AC & Non-AC)
-🏠 Girls Hostel: 600 rooms (AC & Non-AC)
-🏠 24/7 Security & CCTV surveillance
-🏠 WiFi connectivity (100 Mbps)
-🏠 Mess with multi-cuisine options
+<div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #4caf50;">
+    <h3 style="color: #2e7d32; margin-top: 0;">🏠 Residential</h3>
+    <ul>
+        <li>Boys Hostel: 800 rooms (AC & Non-AC)</li>
+        <li>Girls Hostel: 600 rooms (AC & Non-AC)</li>
+        <li>24/7 Security & CCTV surveillance</li>
+        <li>WiFi connectivity (100 Mbps)</li>
+        <li>Mess with multi-cuisine options</li>
+    </ul>
+</div>
 
-**Recreation & Sports:**
-⚽ Football & Cricket grounds
-🏀 Basketball & Volleyball courts
-🏊 Swimming pool (Olympic size)
-🎾 Indoor badminton & table tennis
-🏋️ Fully-equipped gymnasium
-🎮 Gaming & Recreation room
+<div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #2196f3;">
+    <h3 style="color: #1565c0; margin-top: 0;">⚽ Recreation & Sports</h3>
+    <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+        <li>Football & Cricket grounds</li>
+        <li>Basketball & Volleyball courts</li>
+        <li>Swimming pool (Olympic size)</li>
+        <li>Indoor badminton & table tennis</li>
+        <li>Fully-equipped gymnasium</li>
+        <li>Gaming & Recreation room</li>
+    </ul>
+</div>
 
-**Medical & Wellness:**
-🏥 Health Center (24/7)
-🏥 Ambulance service
-🏥 Counseling center
-🏥 Yoga & meditation center
+<div style="background: #fce4ec; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #e91e63;">
+    <h3 style="color: #880e4f; margin-top: 0;">🏥 Medical & Wellness</h3>
+    <ul>
+        <li>Health Center (24/7)</li>
+        <li>Ambulance service</li>
+        <li>Counseling center</li>
+        <li>Yoga & meditation center</li>
+    </ul>
+</div>
 
-**Food & Dining:**
-🍕 Main Canteen (Veg & Non-veg)
-☕ Coffee House & Juice Bar
-🍔 Food Court (Multiple cuisines)
-🍰 Bakery & Ice Cream Parlor
+<div style="background: #fff8e1; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #ffc107;">
+    <h3 style="color: #f57c00; margin-top: 0;">🍕 Food & Dining</h3>
+    <ul>
+        <li>Main Canteen (Veg & Non-veg)</li>
+        <li>Coffee House & Juice Bar</li>
+        <li>Food Court (Multiple cuisines)</li>
+        <li>Bakery & Ice Cream Parlor</li>
+    </ul>
+</div>
 
-**Banking & Services:**
-🏦 ATM (3 machines)
-🏦 Bank branch (on campus)
-📮 Post office
-📄 Photocopy & Printing centers
-🚐 College transport (15 routes)
+<div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #9c27b0;">
+    <h3 style="color: #6a1b9a; margin-top: 0;">🏦 Banking & Services</h3>
+    <ul>
+        <li>ATM (3 machines)</li>
+        <li>Bank branch (on campus)</li>
+        <li>Post office</li>
+        <li>Photocopy & Printing centers</li>
+        <li>College transport (15 routes)</li>
+    </ul>
+</div>
 
-**Student Amenities:**
-📚 Stationery shop
-👕 Laundry services
-📱 Mobile recharge & services
-🛒 General store
+<div style="background: #e0f2f1; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #009688;">
+    <h3 style="color: #00695c; margin-top: 0;">📚 Student Amenities</h3>
+    <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+        <li>Stationery shop</li>
+        <li>Laundry services</li>
+        <li>Mobile recharge & services</li>
+        <li>General store</li>
+    </ul>
+</div>
 
-Need specific information about any facility?
+<p style="text-align: center; color: #667eea; font-weight: bold;">Need specific information about any facility? Use Quick Actions! 👇</p>
             """,
             'category': 'campus',
             'quick_actions': ['Hostel Info', 'Canteen Menu', 'Transport Routes', 'Sports Booking']
