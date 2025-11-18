@@ -247,6 +247,14 @@ try:
 except Exception as e:
     print(f"[WARNING] Advanced features initialization failed: {e}")
 
+# Initialize API Documentation
+try:
+    from backend.api_documentation import init_api_docs
+    api_docs = init_api_docs(app)
+    app.api_docs = api_docs
+except Exception as e:
+    print(f"[WARNING] API Documentation initialization failed: {e}")
+
 
 # Request/Response Logging Middleware
 import time
