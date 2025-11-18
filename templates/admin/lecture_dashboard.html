@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture Notes Admin - EduBot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --danger-color: #f56565;
+            --info-color: #4299e1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+        }
+        
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .stat-card .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stat-card .stat-label {
+            color: #718096;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 2em;
+            opacity: 0.3;
+            float: right;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .table-container {
+            padding: 30px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .badge-processed {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-pending {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .badge-failed {
+            background: #f56565;
+            color: white;
+        }
+        
+        .search-filter-bar {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #718096;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1><i class="fas fa-book-reader"></i> Lecture Notes Management</h1>
+            <p class="mb-0">AI-Powered Lecture Summarization System</p>
+        </div>
+        
+        <!-- Stats Overview -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <i class="fas fa-file-alt stat-icon"></i>
+                <div class="stat-value" id="totalNotes">0</div>
+                <div class="stat-label">Total Notes</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-value" id="totalUsers">0</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-question-circle stat-icon"></i>
+                <div class="stat-value" id="totalQuestions">0</div>
+                <div class="stat-label">Study Questions</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-lightbulb stat-icon"></i>
+                <div class="stat-value" id="totalConcepts">0</div>
+                <div class="stat-label">Key Concepts</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-chart-line stat-icon"></i>
+                <div class="stat-value" id="answerRate">0%</div>
+                <div class="stat-label">Answer Rate</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-star stat-icon"></i>
+                <div class="stat-value" id="masteryRate">0%</div>
+                <div class="stat-label">Mastery Rate</div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="chart-container">
+            <h3><i class="fas fa-chart-bar"></i> Notes Timeline (Last 30 Days)</h3>
+            <canvas id="timelineChart" height="80"></canvas>
+        </div>
+        
+        <div class="row mx-0">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <h3><i class="fas fa-graduation-cap"></i> Top Subjects</h3>
+                    <canvas id="subjectsChart" height="200"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <h3><i class="fas fa-trophy"></i> Top Users</h3>
+                    <canvas id="usersChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notes Table -->
+        <div class="table-container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#allNotes">All Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#pendingNotes">Pending</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#analytics">Analytics</a>
+                </li>
+            </ul>
+            
+            <div class="tab-content mt-3">
+                <!-- All Notes Tab -->
+                <div id="allNotes" class="tab-pane fade show active">
+                    <div class="search-filter-bar">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Search notes...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="statusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="processed">Processed</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="failed">Failed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="subjectFilter">
+                                    <option value="">All Subjects</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary w-100" onclick="applyFilters()">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>User</th>
+                                    <th>Subject</th>
+                                    <th>Words</th>
+                                    <th>Questions</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notesTableBody">
+                                <tr>
+                                    <td colspan="9" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <nav>
+                        <ul class="pagination justify-content-center" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Pending Notes Tab -->
+                <div id="pendingNotes" class="tab-pane fade">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Notes pending processing will appear here
+                    </div>
+                </div>
+                
+                <!-- Analytics Tab -->
+                <div id="analytics" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Subject Distribution</h4>
+                            <div id="subjectStats"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Engagement Metrics</h4>
+                            <div id="engagementStats"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPage = 1;
+        let overviewData = null;
+        
+        // Load dashboard on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOverview();
+            loadNotes(1);
+            loadTimeline();
+            loadPopularSubjects();
+            loadTopUsers();
+        });
+        
+        // Load overview statistics
+        async function loadOverview() {
+            try {
+                const response = await fetch('/admin/lecture/overview');
+                const data = await response.json();
+                
+                if (data.success) {
+                    overviewData = data.data;
+                    
+                    // Update stats
+                    document.getElementById('totalNotes').textContent = overviewData.total_stats.total_notes;
+                    document.getElementById('totalUsers').textContent = overviewData.total_stats.total_users;
+                    document.getElementById('totalQuestions').textContent = overviewData.total_stats.total_questions;
+                    document.getElementById('totalConcepts').textContent = overviewData.total_stats.total_concepts;
+                    document.getElementById('answerRate').textContent = overviewData.engagement.answer_rate + '%';
+                    document.getElementById('masteryRate').textContent = overviewData.engagement.mastery_rate + '%';
+                    
+                    // Populate subject filter
+                    const subjectFilter = document.getElementById('subjectFilter');
+                    overviewData.subject_breakdown.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.subject;
+                        option.textContent = `${item.subject} (${item.count})`;
+                        subjectFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading overview:', error);
+            }
+        }
+        
+        // Load notes table
+        async function loadNotes(page = 1) {
+            try {
+                const status = document.getElementById('statusFilter')?.value || '';
+                const subject = document.getElementById('subjectFilter')?.value || '';
+                const search = document.getElementById('searchInput')?.value || '';
+                
+                let url = `/admin/lecture/notes?page=${page}&per_page=20`;
+                if (status) url += `&status=${status}`;
+                if (subject) url += `&subject=${encodeURIComponent(subject)}`;
+                if (search) url += `&search=${encodeURIComponent(search)}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const tbody = document.getElementById('notesTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.data.notes.forEach(note => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${note.note_id}</td>
+                            <td><strong>${note.title}</strong></td>
+                            <td>User #${note.user_id}</td>
+                            <td>${note.subject || '-'}</td>
+                            <td>${note.word_count}</td>
+                            <td>${note.summary_data?.study_questions?.length || 0}</td>
+                            <td><span class="badge-status badge-${note.status}">${note.status}</span></td>
+                            <td>${new Date(note.created_at).toLocaleDateString()}</td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="viewNote(${note.note_id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteNote(${note.note_id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    
+                    // Update pagination
+                    updatePagination(data.data.pagination);
+                }
+            } catch (error) {
+                console.error('Error loading notes:', error);
+            }
+        }
+        
+        // Update pagination
+        function updatePagination(pagination) {
+            const paginationEl = document.getElementById('pagination');
+            paginationEl.innerHTML = '';
+            
+            for (let i = 1; i <= pagination.pages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === pagination.page ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="loadNotes(${i}); return false;">${i}</a>`;
+                paginationEl.appendChild(li);
+            }
+        }
+        
+        // Load timeline chart
+        async function loadTimeline() {
+            try {
+                const response = await fetch('/admin/lecture/analytics/timeline?days=30');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const ctx = document.getElementById('timelineChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.data.timeline.map(item => new Date(item.date).toLocaleDateString()),
+                            datasets: [{
+                                label: 'Notes Created',
+                                data: data.data.timeline.map(item => item.count),
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+            }
+        }
+        
+        // Load popular subjects chart
+        async function loadPopularSubjects() {
+            try {
+                const response = await fetch('/admin/lecture/analytics/popular-subjects');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const ctx = document.getElementById('subjectsChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.data.subjects.map(s => s.subject),
+                            datasets: [{
+                                label: 'Number of Notes',
+                                data: data.data.subjects.map(s => s.note_count),
+                                backgroundColor: '#667eea'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+            }
+        }
+        
+        // Load top users chart
+        async function loadTopUsers() {
+            try {
+                const response = await fetch('/admin/lecture/analytics/top-users');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const ctx = document.getElementById('usersChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.data.top_users.map(u => u.username),
+                            datasets: [{
+                                data: data.data.top_users.map(u => u.note_count),
+                                backgroundColor: [
+                                    '#667eea', '#764ba2', '#48bb78', '#ed8936', '#f56565',
+                                    '#4299e1', '#9f7aea', '#38b2ac', '#f687b3', '#fc8181'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading top users:', error);
+            }
+        }
+        
+        // Apply filters
+        function applyFilters() {
+            loadNotes(1);
+        }
+        
+        // View note details
+        function viewNote(noteId) {
+            window.open(`/admin/lecture/notes/${noteId}`, '_blank');
+        }
+        
+        // Delete note
+        async function deleteNote(noteId) {
+            if (!confirm('Are you sure you want to delete this note?')) return;
+            
+            try {
+                const response = await fetch(`/admin/lecture/notes/${noteId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Note deleted successfully');
+                    loadNotes(currentPage);
+                    loadOverview();
+                } else {
+                    alert('Failed to delete note: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error deleting note:', error);
+                alert('Error deleting note');
+            }
+        }
+        
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            loadOverview();
+        }, 30000);
+    </script>
+</body>
+</html>

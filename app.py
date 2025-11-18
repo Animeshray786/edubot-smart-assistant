@@ -86,12 +86,16 @@ from routes.api import api_bp
 from routes.admin import admin_bp
 from routes.chat import chat_bp
 from routes.auth import auth_bp
+from routes.lecture_routes import lecture_bp
+from routes.admin_lecture import admin_lecture_bp
 
 # Register blueprints
 app.register_blueprint(api_bp, url_prefix='/api')
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(chat_bp, url_prefix='/')
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(lecture_bp, url_prefix='/api/lecture')
+app.register_blueprint(admin_lecture_bp, url_prefix='/admin/lecture')
 
 # Initialize AIML Engine
 try:
@@ -117,9 +121,13 @@ except Exception as e:
 def initialize_database():
     """Initialize database and create default admin"""
     with app.app_context():
+        # Import models to ensure they're registered
+        from database.lecture_notes_model import LectureNote, StudyQuestion, KeyConcept
+        
         # Create database tables
         db.create_all()
         print("[OK] Database tables created")
+        print("[OK] Database initialized")
         
         # Create default admin user if doesn't exist
         admin = db_manager.get_user_by_username(app.config['ADMIN_USERNAME'])

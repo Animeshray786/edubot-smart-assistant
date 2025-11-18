@@ -13,6 +13,8 @@ from backend.mega_features import mega_features
 from backend.ai_features import ai_features
 from backend.student_tools import student_tools
 from backend.intelligent_response_system import IntelligentResponseSystem
+from backend.text_formatter import TextFormatter
+from backend.html_formatter import HTMLFormatter
 from datetime import datetime
 import re
 
@@ -370,6 +372,45 @@ def handle_smart_features(message):
     # Features 31-60 Summary
     if 'more features' in msg_lower or 'all features' in msg_lower or 'feature list' in msg_lower:
         return mega_features.get_remaining_features_summary()
+    
+    # === LECTURE NOTE SUMMARIZER ===
+    
+    # Feature: Lecture Note Summarizer
+    if 'summarize' in msg_lower or 'lecture notes' in msg_lower or 'note summary' in msg_lower:
+        return """
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 12px; margin: 15px 0;">
+            <h2 style="margin: 0 0 15px 0;"><i class="fas fa-book-reader"></i> Lecture Note Summarizer</h2>
+            <p style="font-size: 1.1em; opacity: 0.95; margin-bottom: 20px;">
+                Upload your lecture notes or transcripts and get instant AI-powered summaries!
+            </p>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                <h3 style="margin-top: 0; font-size: 1.2em;">✨ What You Get:</h3>
+                <ul style="line-height: 2; margin: 0; padding-left: 20px;">
+                    <li>Concise bullet-point summaries</li>
+                    <li>Key concepts with definitions</li>
+                    <li>Auto-generated study questions</li>
+                    <li>Compression statistics</li>
+                    <li>Beautiful formatted output</li>
+                </ul>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                <h3 style="margin-top: 0; font-size: 1.2em;">🚀 How to Use:</h3>
+                <ol style="line-height: 2; margin: 0; padding-left: 20px;">
+                    <li>Go to <strong>Dashboard</strong> → <strong>Lecture Notes</strong></li>
+                    <li>Click <strong>"Upload New Note"</strong></li>
+                    <li>Paste your lecture content (min 50 words)</li>
+                    <li>Add title, subject, and tags</li>
+                    <li>Click <strong>"Summarize"</strong> and get instant results!</li>
+                </ol>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                <strong>💡 Pro Tip:</strong> The more detailed your notes, the better the summary and study questions!
+            </div>
+        </div>
+        """
     
     # === ORIGINAL FEATURES 1-10 ===
     
