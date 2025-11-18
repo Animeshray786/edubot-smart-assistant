@@ -3,6 +3,7 @@ Example: How to use TextFormatter in your bot responses
 """
 
 from backend.text_formatter import TextFormatter, fmt_header, fmt_list, fmt_success
+from datetime import datetime
 
 # Example 1: Format exam schedule
 def format_exam_schedule(exams):
