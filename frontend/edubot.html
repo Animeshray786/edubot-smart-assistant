@@ -495,6 +495,13 @@
             30% { transform: translateY(-10px); }
         }
 
+        /* Shake animation for validation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
         /* Input Area */
         .input-container {
             padding: 1.5rem;
@@ -982,19 +989,31 @@
             const message = input.value.trim();
             
             if (!message) {
-                window.AnimationUtils.ShakeEffect.shakeOnError(input);
+                // Shake animation fallback
+                if (window.AnimationUtils && window.AnimationUtils.ShakeEffect) {
+                    window.AnimationUtils.ShakeEffect.shakeOnError(input);
+                } else {
+                    input.style.animation = 'shake 0.5s';
+                    setTimeout(() => input.style.animation = '', 500);
+                }
                 return;
             }
 
             // Hide welcome screen
-            document.getElementById('welcomeScreen').style.display = 'none';
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'none';
+            }
 
             // Add user message with animation
             addMessage(message, 'user');
             input.value = '';
 
-            // Show skeleton loader instead of typing indicator
-            const loaderId = window.skeletonLoader.showMessageSkeleton(false);
+            // Show typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.classList.add('active');
+            }
 
             // Send to API
             fetch('/api/chat', {
@@ -1006,8 +1025,10 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Remove skeleton loader
-                window.skeletonLoader.remove(loaderId);
+                // Hide typing indicator
+                if (typingIndicator) {
+                    typingIndicator.classList.remove('active');
+                }
                 
                 if (data.status === 'success') {
                     const response = data.data.response;
@@ -1020,29 +1041,27 @@
                     const helpedTodayEl = document.getElementById('helpedToday');
                     
                     if (totalChatsEl) {
-                        window.AnimationUtils.CounterAnimation.animateElement(totalChatsEl, messageCount);
+                        totalChatsEl.textContent = messageCount;
                     }
                     if (helpedTodayEl) {
-                        window.AnimationUtils.CounterAnimation.animateElement(helpedTodayEl, Math.floor(messageCount / 2));
+                        helpedTodayEl.textContent = Math.floor(messageCount / 2);
                     }
 
                     // Success haptic feedback
                     if (window.hapticFeedback) {
                         window.hapticFeedback.light();
                     }
-
-                    // Show success toast
-                    window.toastManager.show('Response received!', 'success', 2000);
                 } else {
                     addMessage('Sorry, I encountered an error. Please try again.', 'bot');
-                    window.toastManager.show('Failed to get response', 'error');
+                    console.error('API Error:', data);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                window.skeletonLoader.remove(loaderId);
+                if (typingIndicator) {
+                    typingIndicator.classList.remove('active');
+                }
                 addMessage('Connection error. Please check your internet and try again.', 'bot');
-                window.toastManager.show('Connection error. Please try again.', 'error');
                 
                 if (window.hapticFeedback) {
                     window.hapticFeedback.error();
@@ -1103,27 +1122,24 @@
             if (saveToContext && window.contextMemory) {
                 window.contextMemory.addMessage(sender, text);
             }
-        }        // Voice input toggle
+        }
+
+        // Voice input toggle
         function toggleVoice() {
             if (window.voiceManager) {
                 window.voiceManager.toggleListening();
             } else {
-                window.toastManager.show('Voice feature not available in your browser', 'error');
+                console.log('Voice feature not available');
+                alert('Voice feature not available in your browser');
             }
         }
 
         // Handle Enter key
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
+                event.preventDefault();
                 sendMessage();
             }
-        }
-
-        // Quick message sender (for welcome screen buttons)
-        function sendQuickMessage(text) {
-            const input = document.getElementById('messageInput');
-            input.value = text;
-            sendMessage();
         }
 
         // Clear chat
@@ -1140,7 +1156,11 @@
             container.style.transition = 'opacity 0.3s ease';
             
             setTimeout(() => {
-                container.innerHTML = '';
+                // Clear messages
+                const messages = container.querySelectorAll('.message');
+                messages.forEach(msg => msg.remove());
+                
+                // Show welcome screen
                 const welcomeScreen = document.getElementById('welcomeScreen');
                 if (welcomeScreen) {
                     welcomeScreen.style.display = 'block';
@@ -1152,16 +1172,16 @@
                 const helpedTodayEl = document.getElementById('helpedToday');
                 
                 if (totalChatsEl) {
-                    window.AnimationUtils.CounterAnimation.animateElement(totalChatsEl, 0);
+                    totalChatsEl.textContent = '0';
                 }
                 if (helpedTodayEl) {
-                    window.AnimationUtils.CounterAnimation.animateElement(helpedTodayEl, 0);
+                    helpedTodayEl.textContent = '0';
                 }
                 
                 // Fade back in
                 container.style.opacity = '1';
                 
-                window.toastManager.show('✅ Chat history cleared!', 'success');
+                console.log('Chat cleared successfully');
                 
                 // Haptic feedback
                 if (window.hapticFeedback) {
@@ -1171,7 +1191,11 @@
             
             // Clear context memory
             if (window.contextMemory) {
-                await window.contextMemory.clearContext();
+                try {
+                    await window.contextMemory.clearContext();
+                } catch (error) {
+                    console.error('Error clearing context:', error);
+                }
             }
         }
 
@@ -1180,13 +1204,15 @@
             if (window.chatExporter) {
                 window.chatExporter.showExportModal();
             } else {
-                window.toastManager.show('Export feature not available', 'error');
+                console.log('Export feature not available');
+                alert('Chat export feature will be available soon!');
             }
         }
 
         // Show settings
         function showSettings() {
-            window.toastManager.show('Settings panel coming soon!', 'info');
+            console.log('Settings clicked');
+            alert('Settings panel coming soon!');
         }
 
         // Change language
@@ -1194,12 +1220,15 @@
             if (window.i18nManager) {
                 window.i18nManager.showLanguageSelector();
             } else {
-                window.toastManager.show('Language selector not available', 'error');
+                console.log('Language selector not available');
+                alert('Language selector not available');
             }
         }
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('EduBot initializing...');
+            
             initEduBackground();
             
             // Verify Font Awesome is loaded
@@ -1209,6 +1238,24 @@
                     console.warn('Font Awesome may not be loading properly');
                 }
             }, 1000);
+            
+            // Test all critical functions
+            console.log('Functions available:', {
+                sendMessage: typeof sendMessage,
+                sendQuickMessage: typeof sendQuickMessage,
+                handleKeyPress: typeof handleKeyPress,
+                addMessage: typeof addMessage,
+                clearChat: typeof clearChat
+            });
+            
+            // Add focus to input on load
+            const input = document.getElementById('messageInput');
+            if (input) {
+                input.focus();
+                console.log('Input field ready');
+            }
+            
+            console.log('EduBot initialized successfully!');
         });
     </script>
     <script src="/static/js/mobile.js"></script>
