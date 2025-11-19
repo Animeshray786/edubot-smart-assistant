@@ -658,7 +658,9 @@ class IntelligentResponseSystem:
         elif analysis['topic'] == 'career':
             return self.analyze_career_path({})
         
-        return self._default_helpful_response()
+        # Return None instead of default help message
+        # Let the AIML engine handle general queries
+        return None
     
     def _default_helpful_response(self):
         """Default helpful response when specific handler not found"""

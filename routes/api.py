@@ -56,7 +56,8 @@ def chat():
             
             if analysis_result:
                 response = analysis_result
-                quick_actions = ['Ask Another Question', 'Get More Help', 'Talk to Counselor']
+                # Only add generic quick actions for specific intent types
+                quick_actions = []
                 category = 'intelligent'
             else:
                 # Try Student Helpdesk for educational queries
