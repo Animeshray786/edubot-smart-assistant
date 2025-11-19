@@ -24,15 +24,23 @@ from backend.config_validator import ConfigValidator
 is_valid, errors, warnings = ConfigValidator.validate_environment()
 
 if errors:
-    print("\n[ERROR] Configuration errors found:")
+    print("\n" + "="*60)
+    print("⚠️  CONFIGURATION ERRORS DETECTED")
+    print("="*60)
     for error in errors:
-        print(f"  - {error}")
+        print(f"  ❌ {error}")
+    print("\n💡 Fix these errors in your .env file and restart the server.")
+    print("="*60 + "\n")
     sys.exit(1)
 
-if warnings:
-    print("\n[WARNING] Configuration warnings:")
+if warnings and os.getenv('SHOW_CONFIG_WARNINGS', 'False').lower() == 'true':
+    print("\n" + "="*60)
+    print("ℹ️  Configuration Notes")
+    print("="*60)
     for warning in warnings:
-        print(f"  - {warning}")
+        print(f"  ⚠️  {warning}")
+    print("\n💡 These are optional. Server will run normally.")
+    print("="*60 + "\n")
 
 # Production configuration class
 class ProductionConfig:

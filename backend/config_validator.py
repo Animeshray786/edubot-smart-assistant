@@ -18,12 +18,12 @@ class ConfigValidator:
         'CSRF_SECRET_KEY'
     ]
     
-    # Optional but recommended variables
+    # Optional but recommended variables (only warn if truly needed)
     RECOMMENDED_VARS = [
-        'DATABASE_URL',
-        'REDIS_URL',
-        'MAIL_SERVER',
-        'LOG_LEVEL'
+        # 'DATABASE_URL',  # Has default
+        # 'REDIS_URL',     # Optional, check REDIS_ENABLED
+        # 'MAIL_SERVER',   # Optional, for email features
+        # 'LOG_LEVEL'      # Has default
     ]
     
     # Security checks
@@ -61,6 +61,10 @@ class ConfigValidator:
         for var in ConfigValidator.RECOMMENDED_VARS:
             if not os.getenv(var):
                 warnings.append(f'Recommended environment variable not set: {var}')
+        
+        # Check Redis only if enabled
+        if os.getenv('REDIS_ENABLED', 'False').lower() == 'true' and not os.getenv('REDIS_URL'):
+            warnings.append('REDIS_ENABLED is True but REDIS_URL is not set')
         
         # Validate specific configurations
         
