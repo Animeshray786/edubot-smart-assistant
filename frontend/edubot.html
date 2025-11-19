@@ -985,8 +985,15 @@
 
         // Send message function
         function sendMessage() {
+            console.log('sendMessage called');
             const input = document.getElementById('messageInput');
+            if (!input) {
+                console.error('Input element not found!');
+                return;
+            }
+            
             const message = input.value.trim();
+            console.log('Message:', message);
             
             if (!message) {
                 // Shake animation fallback
@@ -1008,6 +1015,7 @@
             // Add user message with animation
             addMessage(message, 'user');
             input.value = '';
+            input.focus();
 
             // Show typing indicator
             const typingIndicator = document.getElementById('typingIndicator');
@@ -1166,6 +1174,25 @@
                     welcomeScreen.style.display = 'block';
                 }
                 
+                // Add EduBot welcome message
+                addMessage(
+                    '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion! 🎓<br><br>' +
+                    'I\'m here to help you with:<br>' +
+                    '📚 Academic queries & assignments<br>' +
+                    '🧠 Study planning & learning tips<br>' +
+                    '🏫 Campus information & facilities<br>' +
+                    '💼 Career guidance & placements<br><br>' +
+                    'How can I assist you today?',
+                    'bot',
+                    [],
+                    false
+                );
+                
+                // Hide welcome screen after showing bot message
+                if (welcomeScreen) {
+                    welcomeScreen.style.display = 'none';
+                }
+                
                 messageCount = 0;
                 
                 const totalChatsEl = document.getElementById('totalChats');
@@ -1181,7 +1208,7 @@
                 // Fade back in
                 container.style.opacity = '1';
                 
-                console.log('Chat cleared successfully');
+                console.log('Chat cleared successfully - EduBot greeting added');
                 
                 // Haptic feedback
                 if (window.hapticFeedback) {
@@ -1253,7 +1280,33 @@
             if (input) {
                 input.focus();
                 console.log('Input field ready');
+                
+                // Test send button click
+                const sendBtn = document.querySelector('.btn-send');
+                if (sendBtn) {
+                    console.log('Send button found, onclick:', sendBtn.onclick);
+                }
             }
+            
+            // Show initial EduBot greeting (hide welcome screen)
+            setTimeout(() => {
+                const welcomeScreen = document.getElementById('welcomeScreen');
+                if (welcomeScreen && welcomeScreen.style.display !== 'none') {
+                    addMessage(
+                        '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion! 🎓<br><br>' +
+                        'I\'m here to help you with:<br>' +
+                        '📚 Academic queries & assignments<br>' +
+                        '🧠 Study planning & learning tips<br>' +
+                        '🏫 Campus information & facilities<br>' +
+                        '💼 Career guidance & placements<br><br>' +
+                        'How can I assist you today?',
+                        'bot',
+                        ['What can you do?', 'Study Plan', 'Exam Schedule', 'Campus Info'],
+                        false
+                    );
+                    welcomeScreen.style.display = 'none';
+                }
+            }, 500);
             
             console.log('EduBot initialized successfully!');
         });
