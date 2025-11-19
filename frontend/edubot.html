@@ -1190,15 +1190,21 @@
                 
                 // Add EduBot welcome message
                 addMessage(
-                    '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion! 🎓<br><br>' +
-                    'I\'m here to help you with:<br>' +
-                    '📚 Academic queries & assignments<br>' +
-                    '🧠 Study planning & learning tips<br>' +
-                    '🏫 Campus information & facilities<br>' +
-                    '💼 Career guidance & placements<br><br>' +
-                    'How can I assist you today?',
+                    '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion for <strong>Nalanda Institute of Technology</strong>! 🎓<br><br>' +
+                    '<strong>🏫 Nalanda College Info:</strong><br>' +
+                    '📞 Contact: +91 99371 65074<br>' +
+                    '🌐 Website: <a href="https://www.thenalanda.com/" target="_blank">thenalanda.com</a><br>' +
+                    '📍 Location: Bhubaneswar, Odisha<br>' +
+                    '🏆 NAAC A+ Accredited | 15,000+ Students<br><br>' +
+                    '<strong>💡 I can help you with:</strong><br>' +
+                    '📚 Nalanda Admissions & Programs<br>' +
+                    '💼 Placement Info & Internships<br>' +
+                    '🏢 Campus Facilities & Hostel<br>' +
+                    '🧠 Smart Study Plans & Tips<br>' +
+                    '🎯 Exam Preparation & Stress Relief<br><br>' +
+                    'Choose an option below or ask me anything!',
                     'bot',
-                    [],
+                    ['Admissions', 'Placements', 'Smart Study', 'Campus Info', 'Fee Structure', 'Contact'],
                     false
                 );
                 
@@ -1324,15 +1330,21 @@
                 const welcomeScreen = document.getElementById('welcomeScreen');
                 if (welcomeScreen && welcomeScreen.style.display !== 'none') {
                     addMessage(
-                        '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion! 🎓<br><br>' +
-                        'I\'m here to help you with:<br>' +
-                        '📚 Academic queries & assignments<br>' +
-                        '🧠 Study planning & learning tips<br>' +
-                        '🏫 Campus information & facilities<br>' +
-                        '💼 Career guidance & placements<br><br>' +
-                        'How can I assist you today?',
+                        '👋 Hi! I\'m <strong>EduBot</strong>, your AI study companion for <strong>Nalanda Institute of Technology</strong>! 🎓<br><br>' +
+                        '<strong>🏫 Nalanda College Info:</strong><br>' +
+                        '📞 Contact: +91 99371 65074<br>' +
+                        '🌐 Website: <a href="https://www.thenalanda.com/" target="_blank">thenalanda.com</a><br>' +
+                        '📍 Location: Bhubaneswar, Odisha<br>' +
+                        '🏆 NAAC A+ Accredited | 15,000+ Students<br><br>' +
+                        '<strong>💡 I can help you with:</strong><br>' +
+                        '📚 Nalanda Admissions & Programs<br>' +
+                        '💼 Placement Info & Internships<br>' +
+                        '🏢 Campus Facilities & Hostel<br>' +
+                        '🧠 Smart Study Plans & Tips<br>' +
+                        '🎯 Exam Preparation & Stress Relief<br><br>' +
+                        'Choose an option below or ask me anything!',
                         'bot',
-                        ['What can you do?', 'Study Plan', 'Exam Schedule', 'Campus Info'],
+                        ['Admissions', 'Placements', 'Smart Study', 'Campus Info', 'Fee Structure', 'Contact'],
                         false
                     );
                     welcomeScreen.style.display = 'none';

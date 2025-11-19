@@ -294,6 +294,273 @@ def handle_smart_features(message):
     """
     msg_lower = message.lower()
     
+    # === NALANDA COLLEGE QUICK ACTIONS ===
+    
+    # Admissions Quick Action
+    if msg_lower in ['admissions', 'admission']:
+        return """
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>🎓 Nalanda Institute Admissions</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #667eea;">📋 Admission Process:</h3>
+    <ol style="line-height: 2;">
+        <li><strong>Apply Online:</strong> <a href="https://www.thenalanda.com/admissions" target="_blank">thenalanda.com/admissions</a></li>
+        <li><strong>Entrance Exam:</strong> JEE Main for B.Tech</li>
+        <li><strong>Merit Selection:</strong> Based on exam scores</li>
+        <li><strong>Document Verification:</strong> Original certificates</li>
+        <li><strong>Fee Payment:</strong> Multiple payment options</li>
+    </ol>
+    
+    <h3 style="color: #667eea; margin-top: 20px;">✅ Eligibility:</h3>
+    <ul style="line-height: 2;">
+        <li><strong>B.Tech:</strong> 10+2 PCM with 50%+ marks</li>
+        <li><strong>M.Tech:</strong> B.Tech/BE with 55%+ marks</li>
+    </ul>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+        <strong>📞 Contact:</strong> +91 99371 65074<br>
+        <strong>📧 Email:</strong> info@thenalanda.com<br>
+        <strong>🌐 Website:</strong> <a href="https://www.thenalanda.com" target="_blank">thenalanda.com</a>
+    </div>
+</div>
+"""
+    
+    # Placements Quick Action
+    if msg_lower in ['placements', 'placement', 'jobs']:
+        return """
+<div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>💼 Nalanda Placement Records</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #11998e;">📊 Placement Statistics 2024:</h3>
+    <ul style="line-height: 2;">
+        <li>🎯 <strong>Placement Rate:</strong> 85-90%</li>
+        <li>💰 <strong>Highest Package:</strong> Rs 45 LPA</li>
+        <li>💵 <strong>Average Package:</strong> Rs 6.5 LPA</li>
+        <li>🏢 <strong>Companies Visiting:</strong> 150+ annually</li>
+    </ul>
+    
+    <h3 style="color: #11998e; margin-top: 20px;">🌟 Top Recruiters:</h3>
+    <p style="line-height: 2;">
+        <strong>Tech Giants:</strong> Amazon, Microsoft, Google, Adobe<br>
+        <strong>IT Services:</strong> TCS, Infosys, Wipro, Accenture<br>
+        <strong>Core Companies:</strong> L&T, Siemens, ABB, BHEL, NTPC<br>
+        <strong>Consulting:</strong> Deloitte, E&Y, KPMG, PwC<br>
+        <strong>Startups:</strong> Flipkart, Paytm, PhonePe, Swiggy
+    </p>
+    
+    <h3 style="color: #11998e; margin-top: 20px;">🎓 Training & Preparation:</h3>
+    <ul style="line-height: 2;">
+        <li>✅ Aptitude & reasoning sessions</li>
+        <li>✅ Coding & technical training</li>
+        <li>✅ Soft skills development</li>
+        <li>✅ Mock interviews & GD practice</li>
+        <li>✅ Resume building workshops</li>
+    </ul>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
+        <strong>📞 Placement Cell:</strong> +91 99371 65074<br>
+        <strong>🌐 More Info:</strong> <a href="https://www.thenalanda.com/placement" target="_blank">thenalanda.com/placement</a>
+    </div>
+</div>
+"""
+    
+    # Smart Study Quick Action
+    if msg_lower in ['smart study', 'study smart', 'smart features']:
+        return """
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>🧠 Smart Study Features - AI-Powered Learning</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #f5576c;">🎯 Study Planning & Organization:</h3>
+    <ul style="line-height: 2;">
+        <li>📅 <strong>Custom Study Plans:</strong> Say "study plan 2025-12-31"</li>
+        <li>⏰ <strong>Pomodoro Timer:</strong> Say "pomodoro timer"</li>
+        <li>⚡ <strong>Quick Revision:</strong> Say "quick revision Math"</li>
+        <li>📊 <strong>Performance Prediction:</strong> Say "predict my performance"</li>
+    </ul>
+    
+    <h3 style="color: #f5576c; margin-top: 20px;">💡 Learning Techniques:</h3>
+    <ul style="line-height: 2;">
+        <li>🧠 <strong>Memory Techniques:</strong> Say "memory technique"</li>
+        <li>📝 <strong>Note-Taking Methods:</strong> Say "how to take notes"</li>
+        <li>🗺️ <strong>Mind Mapping:</strong> Say "mind map [topic]"</li>
+        <li>📚 <strong>Reading Strategies:</strong> Say "reading technique"</li>
+        <li>⚡ <strong>Speed Learning:</strong> Say "speed learning"</li>
+    </ul>
+    
+    <h3 style="color: #f5576c; margin-top: 20px;">🎓 Exam Preparation:</h3>
+    <ul style="line-height: 2;">
+        <li>✅ <strong>Exam Tips:</strong> Say "exam tips"</li>
+        <li>📋 <strong>Exam Pattern Analysis:</strong> Say "exam pattern"</li>
+        <li>😰 <strong>Anxiety Management:</strong> Say "exam anxiety"</li>
+        <li>📝 <strong>Flashcards:</strong> Say "flashcard [topic]"</li>
+    </ul>
+    
+    <h3 style="color: #f5576c; margin-top: 20px;">💪 Productivity & Wellness:</h3>
+    <ul style="line-height: 2;">
+        <li>🎯 <strong>Focus Improvement:</strong> Say "concentration"</li>
+        <li>😌 <strong>Stress Relief:</strong> Say "I am stressed"</li>
+        <li>⚡ <strong>Beat Procrastination:</strong> Say "procrastination"</li>
+        <li>💤 <strong>Sleep Optimization:</strong> Say "sleep optimization"</li>
+        <li>🍎 <strong>Brain Foods:</strong> Say "brain food"</li>
+        <li>🎵 <strong>Study Music:</strong> Say "study music"</li>
+    </ul>
+    
+    <h3 style="color: #f5576c; margin-top: 20px;">🎮 Gamification:</h3>
+    <ul style="line-height: 2;">
+        <li>🏆 <strong>Focus Challenge:</strong> Say "focus challenge"</li>
+        <li>👥 <strong>Study Buddy:</strong> Say "study buddy"</li>
+        <li>🔥 <strong>Habit Building:</strong> Say "build habit"</li>
+    </ul>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 8px; border-left: 4px solid #ff9800;">
+        <strong>💡 Pro Tip:</strong> Try asking specific questions like "How to prepare for exams in 30 days?" or "Best memory technique for history?"<br>
+        <strong>🚀 Quick Start:</strong> Say "motivate me" for instant inspiration!
+    </div>
+</div>
+"""
+    
+    # Campus Info Quick Action
+    if msg_lower in ['campus info', 'campus', 'facilities']:
+        return """
+<div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>🏫 Nalanda Campus & Facilities</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #fa709a;">📚 Academic Facilities:</h3>
+    <ul style="line-height: 2;">
+        <li>📖 <strong>Modern Library</strong> - Digital & physical resources</li>
+        <li>💻 <strong>Computer Labs</strong> - Latest technology</li>
+        <li>🔬 <strong>Research Centers</strong> - Innovation hubs</li>
+        <li>🎓 <strong>Smart Classrooms</strong> - Interactive learning</li>
+        <li>🧪 <strong>Advanced Laboratories</strong> - Hands-on practice</li>
+    </ul>
+    
+    <h3 style="color: #fa709a; margin-top: 20px;">🏠 Accommodation:</h3>
+    <ul style="line-height: 2;">
+        <li>🛏️ <strong>Separate Hostels</strong> - Boys & Girls</li>
+        <li>🔐 <strong>24/7 Security</strong> - Safe environment</li>
+        <li>📶 <strong>Wi-Fi Campus</strong> - High-speed internet</li>
+        <li>🍽️ <strong>Mess Facilities</strong> - Nutritious meals</li>
+        <li>💰 <strong>Hostel Fees:</strong> Rs 40,000-60,000/year</li>
+    </ul>
+    
+    <h3 style="color: #fa709a; margin-top: 20px;">🎯 Student Life:</h3>
+    <ul style="line-height: 2;">
+        <li>⚽ <strong>Sports Facilities</strong> - Cricket, Football, Badminton</li>
+        <li>🍕 <strong>Cafeteria</strong> - Various food options</li>
+        <li>🏥 <strong>Medical Center</strong> - 24/7 healthcare</li>
+        <li>🎨 <strong>Creativity Hub</strong> - Arts & culture</li>
+        <li>🎪 <strong>Multiple Clubs</strong> - Photography, Music, Tech, Sports</li>
+    </ul>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #e1f5fe; border-radius: 8px; border-left: 4px solid #03a9f4;">
+        <strong>📍 Location:</strong> Buddhist Villa, Chandaka, Bhubaneswar, Odisha 751024<br>
+        <strong>📞 Contact:</strong> +91 99371 65074<br>
+        <strong>🌐 More Info:</strong> <a href="https://www.thenalanda.com/facilities" target="_blank">thenalanda.com/facilities</a>
+    </div>
+</div>
+"""
+    
+    # Fee Structure Quick Action
+    if msg_lower in ['fee structure', 'fees', 'fee']:
+        return """
+<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>💰 Nalanda Fee Structure</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #4facfe;">📋 Academic Fees (Approximate):</h3>
+    <ul style="line-height: 2;">
+        <li>🎓 <strong>B.Tech:</strong> Rs 80,000 - Rs 1,20,000 per year</li>
+        <li>🎓 <strong>M.Tech:</strong> Rs 60,000 - Rs 90,000 per year</li>
+        <li>🏠 <strong>Hostel:</strong> Rs 40,000 - Rs 60,000 per year (AC/Non-AC)</li>
+        <li>🍽️ <strong>Mess:</strong> Rs 25,000 - Rs 30,000 per year</li>
+    </ul>
+    
+    <h3 style="color: #4facfe; margin-top: 20px;">💳 Payment Options:</h3>
+    <ul style="line-height: 2;">
+        <li>✅ Online payment portal</li>
+        <li>✅ Demand Draft (DD)</li>
+        <li>✅ Cash payment at office</li>
+        <li>✅ EMI options available</li>
+    </ul>
+    
+    <h3 style="color: #4facfe; margin-top: 20px;">🎁 Scholarships Available:</h3>
+    <p style="line-height: 2;">
+        Nalanda Institute offers various scholarships for deserving students based on:
+        <ul>
+            <li>Merit-based performance</li>
+            <li>Financial need</li>
+            <li>Sports achievements</li>
+            <li>Special categories</li>
+        </ul>
+    </p>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #fff9c4; border-radius: 8px; border-left: 4px solid #fbc02d;">
+        <strong>📞 For Exact Fee Details:</strong> +91 99371 65074<br>
+        <strong>📧 Email:</strong> info@thenalanda.com<br>
+        <strong>🌐 Fee Portal:</strong> <a href="https://www.thenalanda.com/fees" target="_blank">thenalanda.com/fees</a><br>
+        <strong>💡 Note:</strong> Fees are subject to change. Contact for current academic year fees.
+    </div>
+</div>
+"""
+    
+    # Contact Quick Action
+    if msg_lower in ['contact', 'contact info', 'phone']:
+        return """
+<div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+    <h2>📞 Contact Nalanda Institute</h2>
+</div>
+
+<div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="color: #667eea;">📱 Primary Contact:</h3>
+    <div style="padding: 15px; background: #e8eaf6; border-radius: 8px; margin: 10px 0;">
+        <p style="font-size: 18px; margin: 5px 0;"><strong>📞 Phone:</strong> <a href="tel:+919937165074">+91 99371 65074</a></p>
+        <p style="font-size: 18px; margin: 5px 0;"><strong>📧 Email:</strong> <a href="mailto:info@thenalanda.com">info@thenalanda.com</a></p>
+        <p style="font-size: 18px; margin: 5px 0;"><strong>🌐 Website:</strong> <a href="https://www.thenalanda.com" target="_blank">thenalanda.com</a></p>
+    </div>
+    
+    <h3 style="color: #667eea; margin-top: 20px;">📍 Address:</h3>
+    <div style="padding: 15px; background: #e8f5e9; border-radius: 8px; margin: 10px 0;">
+        <p style="line-height: 1.8;">
+            <strong>Nalanda Institute of Technology</strong><br>
+            Buddhist Villa, Chandaka<br>
+            Bhubaneswar, Odisha 751024<br>
+            India
+        </p>
+        <p style="margin-top: 10px;">
+            <a href="https://www.google.com/maps/dir//Nalanda+Institute+of+Technology" target="_blank" style="color: #4caf50; font-weight: bold;">📍 Get Directions on Google Maps</a>
+        </p>
+    </div>
+    
+    <h3 style="color: #667eea; margin-top: 20px;">🌐 Social Media:</h3>
+    <div style="padding: 15px; background: #fff3e0; border-radius: 8px; margin: 10px 0;">
+        <p style="line-height: 2;">
+            📘 <a href="https://www.facebook.com/share/1AG6TvcnQi/" target="_blank">Facebook</a><br>
+            📸 <a href="https://www.instagram.com/nalandabbsr" target="_blank">Instagram</a><br>
+            🐦 <a href="https://x.com/NALANDABHUBANE1" target="_blank">Twitter/X</a><br>
+            💼 <a href="https://www.linkedin.com/company/nalanda-institute-of-technology-bhubaneswar/" target="_blank">LinkedIn</a><br>
+            🎥 <a href="https://youtube.com/@nalandabhubaneswar4971" target="_blank">YouTube</a>
+        </p>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+        <strong>💡 Quick Links:</strong><br>
+        • <a href="https://www.thenalanda.com/admissions" target="_blank">Admissions</a><br>
+        • <a href="https://www.thenalanda.com/student-portal" target="_blank">Student Portal</a><br>
+        • <a href="https://www.thenalanda.com/placement" target="_blank">Placements</a><br>
+        • <a href="https://www.thenalanda.com/library" target="_blank">Library</a>
+    </div>
+</div>
+"""
+    
     # === FEATURES 11-20: Extended Features ===
     
     # Feature 11: Exam Pattern Analysis

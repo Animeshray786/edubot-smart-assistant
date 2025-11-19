@@ -596,85 +596,183 @@ Need help with any assignment? I can provide guidelines and resources!
     def _get_help_message(self):
         """Get help message"""
         return """
-╔══════════════════════════════════════════════════════╗
-║     👋 Welcome to EduBot - Your AI Study Companion!     ║
-╚══════════════════════════════════════════════════════╝
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h1 style="margin: 0; font-size: 28px;">👋 Welcome to EduBot!</h1>
+    <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.95;">Your AI-Powered Study Companion 🚀</p>
+</div>
 
-I'm here to supercharge your academic journey! 🚀
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    
+    <!-- Academics Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #f8f9fa, #e9ecef); border-radius: 10px; border-left: 5px solid #667eea;">
+        <h3 style="color: #667eea; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">📚</span> ACADEMICS - Master Your Courses
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>📋 Course syllabi & credit details</li>
+            <li>👨‍🏫 Faculty profiles & office hours</li>
+            <li>🕐 Class schedules & room locations</li>
+            <li>🎯 Subject prerequisites & learning outcomes</li>
+        </ul>
+    </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    <!-- Examinations Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fff3e0, #ffe0b2); border-radius: 10px; border-left: 5px solid #ff9800;">
+        <h3 style="color: #ff9800; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">📅</span> EXAMINATIONS - Ace Your Tests
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>📆 Exam timetables & hall tickets</li>
+            <li>⚡ Results & grade reports (instant access!)</li>
+            <li>🔄 Re-evaluation & reappear procedures</li>
+            <li>💡 Smart exam preparation strategies</li>
+        </ul>
+    </div>
 
-📚 **ACADEMICS** | Master Your Courses
-   ✦ Course syllabi & credit details
-   ✦ Faculty profiles & office hours
-   ✦ Class schedules & room locations
-   ✦ Subject prerequisites & outcomes
+    <!-- Assignments Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e8f5e9, #c8e6c9); border-radius: 10px; border-left: 5px solid #4caf50;">
+        <h3 style="color: #4caf50; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">📝</span> ASSIGNMENTS - Stay On Track
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>⏰ Pending assignments & deadlines tracker</li>
+            <li>📤 Submission portals & accepted formats</li>
+            <li>🙋 Extension request procedures</li>
+            <li>💼 Project guidance & helpful resources</li>
+        </ul>
+    </div>
 
-📅 **EXAMINATIONS** | Ace Your Tests
-   ✦ Exam timetables & hall tickets
-   ✦ Results & grade reports (instant!)
-   ✦ Re-evaluation & reappear info
-   ✦ Smart exam prep strategies
+    <!-- Library Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e3f2fd, #bbdefb); border-radius: 10px; border-left: 5px solid #2196f3;">
+        <h3 style="color: #2196f3; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">📖</span> LIBRARY - Access Knowledge
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>🔍 Search 10,000+ books instantly</li>
+            <li>⚡ Issue/return books in 30 seconds</li>
+            <li>💻 Digital library with 24/7 access</li>
+            <li>🪑 Study room reservations</li>
+        </ul>
+    </div>
 
-📝 **ASSIGNMENTS** | Stay On Track
-   ✦ Pending work & deadlines
-   ✦ Submission portals & formats
-   ✦ Extension request procedures
-   ✦ Project guidance & resources
+    <!-- Campus Life Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fce4ec, #f8bbd0); border-radius: 10px; border-left: 5px solid #e91e63;">
+        <h3 style="color: #e91e63; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">🏫</span> CAMPUS LIFE - Live Better
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>🏠 Hostel facilities & mess menu</li>
+            <li>🚌 Transport schedules & routes</li>
+            <li>⚽ Sports complex bookings</li>
+            <li>🏥 Medical center timings & services</li>
+        </ul>
+    </div>
 
-📖 **LIBRARY** | Access Knowledge
-   ✦ Book search (10,000+ titles!)
-   ✦ Issue/return in 30 seconds
-   ✦ Digital library 24/7 access
-   ✦ Study room reservations
+    <!-- Administration Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #f3e5f5, #e1bee7); border-radius: 10px; border-left: 5px solid #9c27b0;">
+        <h3 style="color: #9c27b0; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">💰</span> ADMIN - Handle Paperwork Fast
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>💳 Fee payment & instant receipts</li>
+            <li>📊 Attendance tracker (75% alerts!)</li>
+            <li>📜 Certificates issued in 48 hours</li>
+            <li>📋 Leave applications made easy</li>
+        </ul>
+    </div>
 
-🏫 **CAMPUS LIFE** | Live Better
-   ✦ Hostel facilities & mess menu
-   ✦ Transport schedules & routes
-   ✦ Sports complex bookings
-   ✦ Medical center timings
+    <!-- Career Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fff9c4, #fff59d); border-radius: 10px; border-left: 5px solid #fbc02d;">
+        <h3 style="color: #f57f17; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">💼</span> CAREER - Launch Your Future
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>📈 Placement statistics & top recruiters</li>
+            <li>🏢 Upcoming company drives & openings</li>
+            <li>🎤 Mock interviews & preparation sessions</li>
+            <li>💼 Internship opportunities & guidance</li>
+        </ul>
+    </div>
 
-💰 **ADMIN** | Handle Paperwork Fast
-   ✦ Fee payment & receipts
-   ✦ Attendance tracker (75% alerts!)
-   ✦ Certificates in 48 hours
-   ✦ Leave applications made easy
+    <!-- Events Section -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e0f2f1, #b2dfdb); border-radius: 10px; border-left: 5px solid #009688;">
+        <h3 style="color: #009688; margin: 0 0 15px 0; font-size: 20px;">
+            <span style="font-size: 24px;">🎉</span> EVENTS - Never Miss Out
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>🎭 Campus fests & cultural nights</li>
+            <li>💻 Tech workshops & hackathons</li>
+            <li>🏆 Competitions with exciting prizes</li>
+            <li>🎨 Club activities & social gatherings</li>
+        </ul>
+    </div>
 
-💼 **CAREER** | Launch Your Future
-   ✦ Placement stats & top recruiters
-   ✦ Upcoming company drives
-   ✦ Mock interviews & prep
-   ✦ Internship opportunities
+    <!-- Smart Features Highlight -->
+    <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 12px; text-align: center; box-shadow: 0 3px 12px rgba(0,0,0,0.15);">
+        <h3 style="margin: 0 0 15px 0; font-size: 22px; color: white;">
+            ✨ PLUS: 30+ Smart Study Features! ✨
+        </h3>
+        <div style="background: rgba(255,255,255,0.95); padding: 20px; border-radius: 8px; text-align: left;">
+            <ul style="margin: 0; padding-left: 20px; line-height: 2.2; color: #333;">
+                <li>🎯 <strong>Study Planner</strong> - Personalized schedules</li>
+                <li>⏰ <strong>Pomodoro Timer</strong> - Focused study sessions</li>
+                <li>🧠 <strong>Memory Techniques</strong> - Ace any subject</li>
+                <li>🗺️ <strong>Mind Maps</strong> - Visual learning tools</li>
+                <li>📊 <strong>Exam Anxiety Help</strong> - Stay calm & confident</li>
+                <li>⚡ <strong>Speed Learning</strong> - Learn 2x faster</li>
+                <li>🎵 <strong>Study Music</strong> - Perfect focus playlist</li>
+                <li>💪 <strong>Focus Hacks</strong> - Beat distractions</li>
+            </ul>
+            <p style="margin: 15px 0 0 0; text-align: center; color: #667eea; font-weight: bold;">
+                💡 Type <strong>"Smart Study"</strong> to see all features!
+            </p>
+        </div>
+    </div>
 
-🎉 **EVENTS** | Never Miss Out
-   ✦ Campus fests & cultural nights
-   ✦ Tech workshops & hackathons
-   ✦ Competitions with prizes
-   ✦ Club activities & socials
+    <!-- Quick Start Section -->
+    <div style="margin-top: 30px; padding: 25px; background: #f5f5f5; border-radius: 10px; border: 2px dashed #667eea;">
+        <h3 style="color: #667eea; margin: 0 0 20px 0; text-align: center; font-size: 20px;">
+            🎯 Quick Start - Try These Commands:
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #4caf50;">
+                💬 "Show pending assignments"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #ff9800;">
+                💬 "When is next exam?"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #2196f3;">
+                💬 "Library timings"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #9c27b0;">
+                💬 "Placement drives this month"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #e91e63;">
+                💬 "Study plan for tomorrow"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #009688;">
+                💬 "I'm stressed about exams"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #f57f17;">
+                💬 "Math shortcuts"
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px; border-left: 3px solid #d32f2f;">
+                💬 "Memory technique"
+            </div>
+        </div>
+    </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    <!-- Footer CTA -->
+    <div style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; text-align: center; color: white;">
+        <p style="margin: 0; font-size: 18px; font-weight: bold;">
+            🔥 Type anything to get started! I understand natural language. 🔥
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">
+            Just ask your question in plain English - I'm here to help! 😊
+        </p>
+    </div>
 
-💡 **PLUS: 30+ Smart Study Features!**
-   🎯 Study planner & Pomodoro timer
-   🧠 Memory techniques & mind maps
-   📊 Exam anxiety management
-   ⚡ Speed learning & focus hacks
-   🎵 Study music recommendations
-   
-   Type "what can you do" to see all features!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🎯 **QUICK START - Try These:**
-   💬 "Show pending assignments"
-   💬 "When is next exam?"
-   💬 "Library timings"
-   💬 "Placement drives this month"
-   💬 "Study plan for tomorrow"
-   💬 "I'm stressed about exams"
-   💬 "Math shortcuts"
-
-🔥 Type anything to get started! I understand natural language. 🔥
+</div>
         """
     
     def _get_exam_tips(self):
