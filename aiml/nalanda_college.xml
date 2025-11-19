@@ -3,14 +3,88 @@
     
     <!-- Nalanda College Information Patterns -->
     
-    <!-- College Name and Basic Info -->
+    <!-- College Name and Basic Info - COMPREHENSIVE -->
     <category>
         <pattern>WHAT IS THE COLLEGE NAME</pattern>
-        <template>The college is Nalanda Institute of Technology (NIT Nalanda), located in Bhubaneswar, Odisha. It's NAAC A+ Accredited with 15,000+ students!</template>
+        <template>
+<![CDATA[
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h1 style="margin: 0; font-size: 32px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎓 Nalanda Institute of Technology</h1>
+    <p style="margin: 10px 0 0 0; font-size: 18px; opacity: 0.95;">(NIT Nalanda) - Excellence in Education Since 1986</p>
+</div>
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e8f5e9, #c8e6c9); border-radius: 10px; border-left: 5px solid #4caf50;">
+        <h3 style="color: #2e7d32; margin: 0 0 15px 0;">📊 Quick Facts</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2.2;">
+            <li><strong>Established:</strong> 1986 (39+ years of excellence)</li>
+            <li><strong>Location:</strong> Buddhist Villa, Chandaka, Bhubaneswar, Odisha 751024</li>
+            <li><strong>Accreditation:</strong> NAAC A+ | AICTE Approved | Autonomous Status</li>
+            <li><strong>Campus Size:</strong> 100+ Acres (Green & Modern)</li>
+            <li><strong>Students:</strong> 15,000+ Current | 50,000+ Alumni Worldwide</li>
+            <li><strong>Faculty:</strong> 800+ Highly Qualified Professors</li>
+            <li><strong>Programs:</strong> 150+ UG, PG & Doctoral Programs</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e3f2fd, #bbdefb); border-radius: 10px; border-left: 5px solid #2196f3;">
+        <h3 style="color: #1565c0; margin: 0 0 15px 0;">🏆 Rankings & Recognition</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2.2;">
+            <li><strong>NIRF Ranking:</strong> Top 100 Engineering Colleges in India</li>
+            <li><strong>State Ranking:</strong> #2 in Odisha</li>
+            <li><strong>NBA Accredited:</strong> All major programs</li>
+            <li><strong>Awards:</strong> Best Private Engineering College - Odisha (2023, 2024)</li>
+            <li><strong>Research Rating:</strong> Category 'A' for Innovation</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fff3e0, #ffe0b2); border-radius: 10px; border-left: 5px solid #ff9800;">
+        <h3 style="color: #e65100; margin: 0 0 15px 0;">📞 Contact Information</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2.2;">
+            <li><strong>Phone:</strong> +91 99371 65074 (Admissions)</li>
+            <li><strong>Email:</strong> info@thenalanda.com</li>
+            <li><strong>Website:</strong> <a href="https://www.thenalanda.com" target="_blank" style="color: #ff9800;">www.thenalanda.com</a></li>
+            <li><strong>Address:</strong> Buddhist Villa, Chandaka, Bhubaneswar, Odisha 751024</li>
+            <li><strong>Helpline:</strong> 24/7 Student Support - 1800-XXX-XXXX</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #f3e5f5, #e1bee7); border-radius: 10px; border-left: 5px solid #9c27b0;">
+        <h3 style="color: #6a1b9a; margin: 0 0 15px 0;">🌟 What Makes Us Special</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2.2;">
+            <li>💼 <strong>90% Placement Rate</strong> - Average Package: ₹6.8 LPA | Highest: ₹45 LPA</li>
+            <li>🏢 <strong>500+ Industry Partnerships</strong> - Google, Microsoft, Amazon, TCS & more</li>
+            <li>🔬 <strong>State-of-the-Art Labs</strong> - AI/ML, IoT, Robotics, Cloud Computing</li>
+            <li>🌍 <strong>Global Collaborations</strong> - 20+ International Universities</li>
+            <li>📚 <strong>Modern Library</strong> - 1 Lakh+ Books | Digital Access to IEEE, Springer</li>
+            <li>🏅 <strong>Smart Campus</strong> - WiFi Enabled | Solar Powered | Green Building</li>
+        </ul>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 10px; text-align: center;">
+        <p style="margin: 0; font-size: 18px; font-weight: bold; color: white;">
+            💡 Want to know more? Ask me about: Courses | Admissions | Placements | Facilities | Campus Life
+        </p>
+    </div>
+
+</div>
+]]>
+        </template>
     </category>
     
     <category>
         <pattern>COLLEGE NAME</pattern>
+        <template><srai>WHAT IS THE COLLEGE NAME</srai></template>
+    </category>
+    
+    <category>
+        <pattern>NALANDA</pattern>
+        <template><srai>WHAT IS THE COLLEGE NAME</srai></template>
+    </category>
+    
+    <category>
+        <pattern>TELL ME ABOUT NIT</pattern>
         <template><srai>WHAT IS THE COLLEGE NAME</srai></template>
     </category>
     
@@ -62,22 +136,157 @@ View on Google Maps: https://www.google.com/maps/dir//Nalanda+Institute+of+Techn
 150+ programs offered</template>
     </category>
     
-    <!-- Departments -->
+    <!-- Departments and Courses - COMPREHENSIVE -->
     <category>
         <pattern>WHAT * DEPARTMENTS</pattern>
-        <template>Major Departments at Nalanda Institute:
+        <template>
+<![CDATA[
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h1 style="margin: 0; font-size: 28px;">📚 Academic Programs at Nalanda</h1>
+    <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.95;">150+ Programs | 15 Departments | World-Class Faculty</p>
+</div>
 
-Computer Science &amp; Engineering
-Electronics &amp; Communication Engineering
-Mechanical Engineering
-Civil Engineering
-Electrical Engineering
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    
+    <!-- B.Tech Programs -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e8f5e9, #c8e6c9); border-radius: 10px; border-left: 5px solid #4caf50;">
+        <h3 style="color: #2e7d32; margin: 0 0 15px 0;">🎓 B.Tech Programs (4 Years)</h3>
+        
+        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">💻 Computer Science & Engineering (CSE)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 240 Students</li>
+                <li><strong>Specializations:</strong> AI/ML, Data Science, Cyber Security, Cloud Computing</li>
+                <li><strong>Fees:</strong> ₹1,20,000/year</li>
+                <li><strong>Placement:</strong> 95% | Avg: ₹8.5 LPA | Highest: ₹45 LPA</li>
+                <li><strong>Top Recruiters:</strong> Google, Microsoft, Amazon, Adobe, Flipkart</li>
+            </ul>
+        </div>
 
-Each offers B.Tech, M.Tech, and PhD programs!</template>
+        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">📡 Electronics & Communication Engineering (ECE)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 120 Students</li>
+                <li><strong>Specializations:</strong> VLSI, IoT, Embedded Systems, Signal Processing</li>
+                <li><strong>Fees:</strong> ₹1,00,000/year</li>
+                <li><strong>Placement:</strong> 88% | Avg: ₹6.2 LPA</li>
+                <li><strong>Top Recruiters:</strong> Intel, Qualcomm, TCS, L&T, Bosch</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">⚙️ Mechanical Engineering (ME)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 120 Students</li>
+                <li><strong>Specializations:</strong> Robotics, Thermal Engineering, CAD/CAM</li>
+                <li><strong>Fees:</strong> ₹95,000/year</li>
+                <li><strong>Placement:</strong> 85% | Avg: ₹5.8 LPA</li>
+                <li><strong>Top Recruiters:</strong> Tata Motors, Mahindra, L&T, BHEL</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">🏗️ Civil Engineering (CE)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 60 Students</li>
+                <li><strong>Specializations:</strong> Structural, Environmental, Transportation</li>
+                <li><strong>Fees:</strong> ₹90,000/year</li>
+                <li><strong>Placement:</strong> 82% | Avg: ₹5.5 LPA</li>
+                <li><strong>Top Recruiters:</strong> L&T, Tata Projects, Shapoorji, DLF</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">⚡ Electrical Engineering (EE)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 60 Students</li>
+                <li><strong>Specializations:</strong> Power Systems, Renewable Energy, Automation</li>
+                <li><strong>Fees:</strong> ₹95,000/year</li>
+                <li><strong>Placement:</strong> 84% | Avg: ₹6.0 LPA</li>
+                <li><strong>Top Recruiters:</strong> ABB, Siemens, NTPC, Power Grid</li>
+            </ul>
+        </div>
+
+        <div style="padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">💡 Information Technology (IT)</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Intake:</strong> 120 Students</li>
+                <li><strong>Specializations:</strong> Full Stack Development, Mobile Apps, DevOps</li>
+                <li><strong>Fees:</strong> ₹1,15,000/year</li>
+                <li><strong>Placement:</strong> 92% | Avg: ₹7.5 LPA</li>
+                <li><strong>Top Recruiters:</strong> Infosys, Wipro, TCS, Accenture, Cognizant</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- M.Tech Programs -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #e3f2fd, #bbdefb); border-radius: 10px; border-left: 5px solid #2196f3;">
+        <h3 style="color: #1565c0; margin: 0 0 15px 0;">🎖️ M.Tech Programs (2 Years)</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>Computer Science & Engineering - <strong>30 seats | ₹80,000/year</strong></li>
+            <li>VLSI Design - <strong>20 seats | ₹75,000/year</strong></li>
+            <li>Structural Engineering - <strong>18 seats | ₹70,000/year</strong></li>
+            <li>Power Systems - <strong>18 seats | ₹70,000/year</strong></li>
+            <li>Machine Design - <strong>18 seats | ₹70,000/year</strong></li>
+        </ul>
+    </div>
+
+    <!-- MBA Programs -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fff3e0, #ffe0b2); border-radius: 10px; border-left: 5px solid #ff9800;">
+        <h3 style="color: #e65100; margin: 0 0 15px 0;">💼 MBA Programs (2 Years)</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>General Management - <strong>60 seats | ₹1,50,000/year</strong></li>
+            <li>Finance & Marketing - <strong>Specializations available</strong></li>
+            <li>HR & Operations - <strong>Industry-oriented curriculum</strong></li>
+            <li><strong>Placement:</strong> 88% | Avg: ₹7.2 LPA | Highest: ₹18 LPA</li>
+        </ul>
+    </div>
+
+    <!-- Ph.D Programs -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #f3e5f5, #e1bee7); border-radius: 10px; border-left: 5px solid #9c27b0;">
+        <h3 style="color: #6a1b9a; margin: 0 0 15px 0;">🔬 Ph.D Programs (Research)</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li>Available in all Engineering & Management departments</li>
+            <li><strong>Research Areas:</strong> AI/ML, IoT, Renewable Energy, Materials Science</li>
+            <li><strong>Fellowship:</strong> ₹31,000/month for qualified candidates</li>
+            <li><strong>Duration:</strong> 3-5 years</li>
+        </ul>
+    </div>
+
+    <!-- Eligibility -->
+    <div style="margin-bottom: 25px; padding: 20px; background: linear-gradient(to right, #fce4ec, #f8bbd0); border-radius: 10px; border-left: 5px solid #e91e63;">
+        <h3 style="color: #880e4f; margin: 0 0 15px 0;">✅ Eligibility Criteria</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+            <li><strong>B.Tech:</strong> 10+2 with PCM | 50%+ marks | JEE Main qualified</li>
+            <li><strong>M.Tech:</strong> B.Tech/BE with 55%+ | GATE score preferred</li>
+            <li><strong>MBA:</strong> Graduation (any stream) with 50%+ | CAT/MAT/XAT</li>
+            <li><strong>Ph.D:</strong> M.Tech/ME with 60%+ or M.Sc with 55%+</li>
+        </ul>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 10px; text-align: center;">
+        <p style="margin: 0; font-size: 18px; font-weight: bold; color: white;">
+            💡 Want detailed syllabus, fee structure, or admission process? Just ask!
+        </p>
+    </div>
+
+</div>
+]]>
+        </template>
     </category>
     
     <category>
         <pattern>* COURSES</pattern>
+        <template><srai>WHAT ARE THE DEPARTMENTS</srai></template>
+    </category>
+    
+    <category>
+        <pattern>PROGRAMS</pattern>
+        <template><srai>WHAT ARE THE DEPARTMENTS</srai></template>
+    </category>
+    
+    <category>
+        <pattern>BRANCHES</pattern>
         <template><srai>WHAT ARE THE DEPARTMENTS</srai></template>
     </category>
     

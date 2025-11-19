@@ -271,6 +271,58 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        /* EduBot Logo Header */
+        .edubot-logo-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .logo-circle i {
+            font-size: 28px;
+            color: #667eea;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .logo-text h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo-text p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            font-weight: 500;
+        }
+
         .chat-header {
             padding: 1.5rem;
             border-bottom: 2px solid #e2e8f0;
@@ -428,15 +480,34 @@
         }
 
         .message-avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin: 0 0.75rem;
             vertical-align: bottom;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-avatar i {
+            z-index: 2;
+        }
+
+        .message-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .message-user .message-avatar {
@@ -444,9 +515,23 @@
             color: white;
         }
 
+        .message-user .message-avatar::before {
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
+        }
+
         .message-bot .message-avatar {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
+            animation: avatarPulse 2s ease-in-out infinite;
+        }
+
+        .message-bot .message-avatar::before {
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+            50% { box-shadow: 0 2px 15px rgba(16, 185, 129, 0.4); }
         }
 
         .message-time {
@@ -870,6 +955,19 @@
 
             <!-- Chat Container -->
             <div class="chat-container">
+                <!-- EduBot Logo Header -->
+                <div class="edubot-logo-header">
+                    <div class="logo-container">
+                        <div class="logo-circle">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>EduBot</h1>
+                            <p>AI Study Companion</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="chat-header">
                     <div class="chat-status">
                         <div class="status-dot"></div>
@@ -1103,7 +1201,7 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message message-${sender} fade-in-up`;
             
-            const icon = sender === 'user' ? 'fa-user' : 'fa-robot';
+            const icon = sender === 'user' ? 'fa-user' : 'fa-graduation-cap';
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             let html = `
@@ -1124,6 +1222,11 @@
             
             messageDiv.innerHTML = html;
             container.appendChild(messageDiv);
+            
+            // Check if feedback needed (every 3 bot messages)
+            if (sender === 'bot' && saveToContext && typeof checkFeedbackNeeded === 'function') {
+                checkFeedbackNeeded();
+            }
             
             // Smooth scroll to bottom
             container.scrollTo({
@@ -1270,6 +1373,94 @@
                 console.log('Language selector not available');
                 alert('Language selector not available');
             }
+        }
+
+        // Feedback System
+        let messagesSinceLastFeedback = 0;
+        const feedbackInterval = 3; // Ask for feedback every 3 bot messages
+
+        function checkFeedbackNeeded() {
+            messagesSinceLastFeedback++;
+            if (messagesSinceLastFeedback >= feedbackInterval) {
+                messagesSinceLastFeedback = 0;
+                showFeedbackRequest();
+            }
+        }
+
+        function showFeedbackRequest() {
+            const feedbackHTML = `
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin: 20px 0;">
+    <h2 style="margin: 0 0 10px 0; font-size: 22px;">💬 How was my response?</h2>
+    <p style="margin: 0 0 20px 0; font-size: 14px; opacity: 0.95;">Your feedback helps me serve you better!</p>
+    
+    <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+        <button onclick="submitFeedback(5, '⭐⭐⭐⭐⭐ Excellent')" style="background: white; color: #667eea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 20px; transition: transform 0.2s; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            ⭐⭐⭐⭐⭐
+        </button>
+        <button onclick="submitFeedback(4, '⭐⭐⭐⭐ Very Good')" style="background: white; color: #667eea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 20px; transition: transform 0.2s; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            ⭐⭐⭐⭐
+        </button>
+        <button onclick="submitFeedback(3, '⭐⭐⭐ Good')" style="background: white; color: #667eea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 20px; transition: transform 0.2s; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            ⭐⭐⭐
+        </button>
+        <button onclick="submitFeedback(2, '⭐⭐ Okay')" style="background: white; color: #667eea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 20px; transition: transform 0.2s; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            ⭐⭐
+        </button>
+        <button onclick="submitFeedback(1, '⭐ Needs Improvement')" style="background: white; color: #667eea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 20px; transition: transform 0.2s; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            ⭐
+        </button>
+    </div>
+    
+    <p style="margin: 0; font-size: 12px; opacity: 0.85;">Click to rate your experience</p>
+</div>
+            `;
+            
+            addMessage(feedbackHTML, 'bot', [], false);
+        }
+
+        function submitFeedback(rating, label) {
+            console.log('Feedback submitted:', rating, label);
+            
+            // Send feedback to server
+            fetch('/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    rating: rating,
+                    label: label,
+                    timestamp: new Date().toISOString(),
+                    session_id: sessionStorage.getItem('chat_session_id') || 'anonymous'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Feedback saved:', data);
+            })
+            .catch(error => {
+                console.error('Error saving feedback:', error);
+            });
+            
+            // Show thank you message
+            const thankYouMessages = [
+                '🎉 Thank you for the ' + label + ' rating! Your feedback helps me improve!',
+                '💙 Thanks for rating me! I\'ll keep working hard to assist you better!',
+                '⭐ Awesome! Your feedback is valuable. I appreciate it!',
+                '🙏 Thank you! I\'ll use your feedback to serve you even better!',
+                '✨ Thanks for the feedback! It means a lot to me!'
+            ];
+            
+            const randomThankYou = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
+            
+            const thankYouHTML = `
+<div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin: 15px 0;">
+    <h3 style="margin: 0 0 10px 0; font-size: 20px;">${randomThankYou}</h3>
+    <p style="margin: 0; font-size: 14px; opacity: 0.95;">Feel free to ask me anything else! 😊</p>
+</div>
+            `;
+            
+            addMessage(thankYouHTML, 'bot', ['Ask another question', 'Campus Info', 'Placements', 'Admissions'], false);
         }
 
         // Initialize on load

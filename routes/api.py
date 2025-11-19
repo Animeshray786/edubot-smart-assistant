@@ -789,3 +789,43 @@ def get_user_stats():
     except Exception as e:
         print(f"Error getting user stats: {str(e)}")
         return error_response('Failed to get stats', 500)
+
+
+@api_bp.route('/feedback', methods=['POST'])
+def submit_feedback():
+    """Submit user feedback for conversation satisfaction"""
+    try:
+        data = request.get_json()
+        rating = data.get('rating')
+        label = data.get('label', '')
+        session_id = data.get('session_id', 'anonymous')
+        timestamp = data.get('timestamp', datetime.now().isoformat())
+        
+        if not rating:
+            return error_response('Rating required', 400)
+        
+        # Store feedback in database
+        feedback_data = {
+            'user_id': session.get('user_id', 0),
+            'session_id': session_id,
+            'rating': rating,
+            'label': label,
+            'timestamp': timestamp,
+            'created_at': datetime.now()
+        }
+        
+        # Log feedback
+        current_app.logger.info(f"Feedback received: {rating} stars - {label} (Session: {session_id})")
+        
+        # You can save to database here
+        # db_manager.save_feedback(feedback_data)
+        
+        return success_response({
+            'message': 'Feedback received successfully',
+            'rating': rating,
+            'thank_you': True
+        })
+        
+    except Exception as e:
+        print(f"Error submitting feedback: {str(e)}")
+        return error_response('Failed to submit feedback', 500)
