@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduBot - Smart Student Assistant</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Font Awesome 6.4.0 - Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Fallback Font Awesome from jsdelivr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
     <link rel="stylesheet" href="/static/css/animations.css">
@@ -30,14 +33,25 @@
         }
 
         /* Ensure Font Awesome icons display */
-        .fas, .far, .fab {
+        .fas, .far, .fab, .fa {
+            font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', 'FontAwesome' !important;
+            font-weight: 900 !important;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            display: inline-block;
-            font-style: normal;
-            font-variant: normal;
+            display: inline-block !important;
+            font-style: normal !important;
+            font-variant: normal !important;
             text-rendering: auto;
             line-height: 1;
+        }
+        
+        .far {
+            font-weight: 400 !important;
+        }
+        
+        .fab {
+            font-family: 'Font Awesome 6 Brands', 'Font Awesome 5 Brands' !important;
+            font-weight: 400 !important;
         }
 
         body {
@@ -1261,8 +1275,25 @@
             // Verify Font Awesome is loaded
             setTimeout(() => {
                 const testIcon = document.querySelector('.fas');
-                if (testIcon && window.getComputedStyle(testIcon).fontFamily.indexOf('Font Awesome') === -1) {
-                    console.warn('Font Awesome may not be loading properly');
+                if (testIcon) {
+                    const computedStyle = window.getComputedStyle(testIcon);
+                    const fontFamily = computedStyle.fontFamily;
+                    console.log('Icon font family:', fontFamily);
+                    
+                    if (fontFamily.indexOf('Font Awesome') === -1 && fontFamily.indexOf('FontAwesome') === -1) {
+                        console.error('⚠️ Font Awesome NOT loaded! Current font:', fontFamily);
+                        console.log('Attempting to reload Font Awesome...');
+                        
+                        // Try to reload Font Awesome
+                        const link = document.createElement('link');
+                        link.rel = 'stylesheet';
+                        link.href = 'https://use.fontawesome.com/releases/v6.4.0/css/all.css';
+                        document.head.appendChild(link);
+                    } else {
+                        console.log('✅ Font Awesome loaded successfully!');
+                    }
+                } else {
+                    console.warn('⚠️ No icon elements found yet');
                 }
             }, 1000);
             
